@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GeoTracker</string>
+
+    <!-- General Map -->
+    <string name="txtLat">Latitude: </string>
+    <string name="txtLong">Longitude: </string>
 </resources>
