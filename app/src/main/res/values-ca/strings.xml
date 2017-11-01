@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GeoTracker</string>
+    <string name="sendrecords">Enviar registres</string>
+    <string name="recordhistory">Històric registres</string>
+    <string name="recordsmap">Mapa registres</string>
+    <string name="options">Opcions</string>
+</resources>
