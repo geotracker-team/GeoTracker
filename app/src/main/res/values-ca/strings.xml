@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Login Activity -->
+    <string name="txtLoginMail">Introdueix un usuari</string>
+    <string name="txtLoginPassword">Introdueix una contrassenya</string>
+    <string name="btnLogin">Entrar</string>
+  
+   <!-- Menu Activity -->
     <string name="app_name">GeoTracker</string>
     <string name="sendrecords">Enviar registres</string>
     <string name="recordhistory">Històric registres</string>
