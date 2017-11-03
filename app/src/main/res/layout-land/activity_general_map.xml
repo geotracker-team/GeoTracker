@@ -37,7 +37,7 @@
             android:id="@+id/txtLat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="41.84654" />
+            android:text="41.6082347" />
 
         <Space
             android:layout_width="25dp"
@@ -57,12 +57,12 @@
             android:id="@+id/txtLen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1.465498" />
+            android:text="0.6234154" />
     </LinearLayout>
 
     <fragment
-        android:id="@+id/fragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
