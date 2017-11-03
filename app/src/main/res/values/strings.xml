@@ -11,4 +11,15 @@
     <string name="recordhistory">Record history</string>
     <string name="recordsmap">Records map</string>
     <string name="options">Options</string>
+  
+    <!-- General Map -->
+    <string name="txtLat">Latitude: </string>
+    <string name="txtLong">Longitude: </string>
+    <string name="txtProject">Choose a project</string>
+
+    <string-array name="spinnerProj">
+        <item>Poject One</item>
+        <item>Poject Two</item>
+        <item>Poject Three</item>
+    </string-array>
 </resources>
