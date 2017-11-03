@@ -32,5 +32,8 @@ public class GeneralMapActivity extends Activity implements OnMapReadyCallback {
         if(mMap == null) mMap = map;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(41.6082347, 0.6234154), 19,0,0)));
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(new LatLng(41.6082347, 0.6234154));
+        mMap.addMarker(markerOptions);
     }//onMapReady
 }
