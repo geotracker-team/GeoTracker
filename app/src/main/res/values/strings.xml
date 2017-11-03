@@ -21,4 +21,14 @@
         <item>Poject Two</item>
         <item>Poject Three</item>
     </string-array>
+
+    <!-- Record Registration -->
+    <string name="txtProj">Project: EPS tracking project</string>
+    <string name="txtDate">Date of the record: 17:14 – 2/11/2017</string>
+    <string name="txtPosition">Position: </string>
+    <string name="txtDescription">Description</string>
+    <string name="txtTemp">Temperature (Cº)</string>
+    <string name="txtHum">Relative Humidity (%)</string>
+    <string name="btnAddField">+</string>
+    <string name="btnSend">Send Record</string>
 </resources>
