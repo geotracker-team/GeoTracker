@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="#a9a7a7">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Project: EPS tracking project" />
+        android:text="Project: EPS tracking project"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="Date of the record: 17:14 - 2/11/2017" />
+        android:text="Date of the record: 17:14 - 2/11/2017"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingTop="0dp"
-                android:text="EPS building   " />
+                android:text="EPS building   "/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:text="20" />
+                android:text="20"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:text="55" />
+                android:text="55"/>
 
         </LinearLayout>
 
@@ -105,17 +108,18 @@
         android:id="@+id/btnaddfield"
         android:layout_width="55dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="#797979"
-        android:text="+"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:layout_marginTop="10dp"
+        android:text="+"/>
 
     <Button
         android:id="@+id/btnsendid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="#797979"
-        android:text="Send Record" />
+        android:layout_marginTop="10dp"
+        android:text="Send Record"/>
+
 
 </android.widget.LinearLayout>
