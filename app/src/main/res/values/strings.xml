@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">GeoTracker</string>
 
+    <!-- Login Activity -->
+    <string name="txtLoginMail">Introduce an user</string>
+    <string name="txtLoginPassword">Introduce a password</string>
+    <string name="btnLogin">Login</string>
+  
+    <!-- Menu Activity -->
+    <string name="sendrecords">Send records</string>
+    <string name="recordhistory">Record history</string>
+    <string name="recordsmap">Records map</string>
+    <string name="options">Options</string>
+  
     <!-- General Map -->
     <string name="txtLat">Latitude: </string>
     <string name="txtLong">Longitude: </string>
