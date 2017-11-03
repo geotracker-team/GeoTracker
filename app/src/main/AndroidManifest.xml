@@ -22,6 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity"/>
+        <activity android:name=".GeneralMapActivity"/>
+        <activity android:name=".RecordRegistrationActivity"/>
     </application>
 
 </manifest>

@@ -32,13 +32,13 @@
             android:id="@+id/latid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123123" />
+            android:text="41.6082347" />
 
         <EditText
             android:id="@+id/lenid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="321321" />
+            android:text="0.6234154" />
 
     </LinearLayout>
 

@@ -16,16 +16,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Button btSend = (Button) findViewById(R.id.btsend);
-        btSend.setOnClickListener( new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent();
-//                                            Intent intent = new Intent(v.getContext(), SendRecordActivity.class );
-                                            startActivity(intent);                                        }
-                                    }
-        );
-
         Button btHistory = (Button) findViewById(R.id.bthistory);
         btHistory.setOnClickListener( new View.OnClickListener() {
                                        @Override
@@ -36,15 +26,14 @@ public class MenuActivity extends AppCompatActivity {
                                    }
         );
 
-        Button btMap = (Button) findViewById(R.id.btmap);
+        Button btMap = findViewById(R.id.btmap);
         btMap.setOnClickListener( new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              Intent intent = new Intent();
-//                                            Intent intent = new Intent(v.getContext(), SendRecordActivity.class );
-                                              startActivity(intent);                                        }
-                                      }
-        );
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, GeneralMapActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button btOptions = (Button) findViewById(R.id.btoptions);
         btOptions.setOnClickListener( new View.OnClickListener() {
