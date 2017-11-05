@@ -11,4 +11,13 @@
     <string name="recordhistory">Històric registres</string>
     <string name="recordsmap">Mapa registres</string>
     <string name="options">Opcions</string>
+
+    <!--Options-->
+    <string name="Use_mobile_sensors">Utilitza els sensors del mobil</string>
+    <string name="temperature_sensor">Sensor de temperatura</string>
+    <string name="humidity_sensor">Sensor d\'humitat</string>
+    <string name="magnetic_field_sensor">Sensor de camp magnètic</string>
+    <string name="pressure_sensor">Sensor de pressió</string>
+    <string name="enable_data_use">Activa l\'ús de dades</string>
+    
 </resources>
