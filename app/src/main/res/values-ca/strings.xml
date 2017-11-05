@@ -11,4 +11,7 @@
     <string name="recordhistory">Històric registres</string>
     <string name="recordsmap">Mapa registres</string>
     <string name="options">Opcions</string>
+    <string name="txtLat">" "</string>
+    <string name="txtLong">" "</string>
+    <string name="txtProject">" "</string>
 </resources>
