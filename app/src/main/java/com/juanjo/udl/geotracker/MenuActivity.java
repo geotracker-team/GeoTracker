@@ -20,9 +20,9 @@ public class MenuActivity extends AppCompatActivity {
         btHistory.setOnClickListener( new View.OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
-                                           Intent intent = new Intent();
 //                                            Intent intent = new Intent(v.getContext(), SendRecordActivity.class );
-                                           startActivity(intent);                                        }
+                                           //startActivity(intent);
+                                           }
                                    }
         );
 
@@ -36,14 +36,13 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         Button btOptions = (Button) findViewById(R.id.btoptions);
-        btOptions.setOnClickListener( new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              Intent intent = new Intent();
-//                                            Intent intent = new Intent(v.getContext(), SendRecordActivity.class );
-                                              startActivity(intent);                                        }
-                                      }
-        );
+        btOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, OptionsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

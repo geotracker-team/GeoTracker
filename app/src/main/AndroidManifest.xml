@@ -25,6 +25,7 @@
         <activity android:name=".GeneralMapActivity"/>
         <activity android:name=".RecordRegistrationActivity"/>
         <activity android:name=".RecordViewActivity"/>
+        <activity android:name=".OptionsActivity"/>
     </application>
 
 </manifest>
