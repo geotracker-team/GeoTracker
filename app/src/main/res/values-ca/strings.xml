@@ -56,4 +56,7 @@
     </string-array>
     <string name="create_field">Crear camp</string>
 
+    <!-- View Record -->
+    <string name="btnSaveChanges">Guardar Canvis</string>
+
 </resources>

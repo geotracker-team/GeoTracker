@@ -63,12 +63,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txtDescription" />
 
-            <TextView
+            <EditText
                 android:id="@+id/desid"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:paddingTop="0dp"
-                android:text="EPS building   " />
+                android:text="EPS building   "
+                android:textColor="@android:color/darker_gray"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,12 +78,14 @@
                 android:paddingTop="10dp"
                 android:text="@string/txtTemp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/temid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:text="20" />
+                android:background="@android:color/transparent"
+                android:text="20"
+                android:textColor="@android:color/darker_gray"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,14 +93,23 @@
                 android:paddingTop="10dp"
                 android:text="@string/txtHum" />
 
-            <TextView
+            <EditText
                 android:id="@+id/humid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:text="55" />
+                android:background="@android:color/transparent"
+                android:text="55"
+                android:textColor="@android:color/darker_gray"/>
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSaveChanges"
+        android:visibility="gone" />
 </android.widget.LinearLayout>

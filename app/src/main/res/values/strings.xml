@@ -55,4 +55,7 @@
         <item>@string/magnetic_field_sensor</item>
     </string-array>
     <string name="create_field">Create field</string>
+
+    <!-- View Record -->
+    <string name="btnSaveChanges">Save Changes</string>
 </resources>
