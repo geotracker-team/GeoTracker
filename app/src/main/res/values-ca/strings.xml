@@ -7,10 +7,37 @@
   
    <!-- Menu Activity -->
     <string name="app_name">GeoTracker</string>
-    <string name="sendrecords">Enviar registres</string>
     <string name="recordhistory">Històric registres</string>
     <string name="recordsmap">Mapa registres</string>
     <string name="options">Opcions</string>
+
+    <!-- General Map -->
+    <string name="txtLat">Latitud: </string>
+    <string name="txtLong">Longitud: </string>
+    <string name="txtProject">Elegeix un projecte</string>
+
+    <string-array name="spinnerProj">
+        <item>Pojecte 1</item>
+        <item>Pojecte 2</item>
+        <item>Pojecte 3</item>
+    </string-array>
+
+    <!-- Historic -->
+    <string name="user">Usuari</string>
+    <string name="project">Projecte</string>
+    <string name="date">Data</string>
+    <string name="search">Cerca</string>
+
+
+    <!-- Record Registration -->
+    <string name="txtProj">Projecte: EPS tracking project</string>
+    <string name="txtDate">Data del registre: 17:14 – 2/11/2017</string>
+    <string name="txtPosition">Posició: </string>
+    <string name="txtDescription">Descripció</string>
+    <string name="txtTemp">Temperatura (Cº)</string>
+    <string name="txtHum">Humitat Relativa (%)</string>
+    <string name="btnAddField">+</string>
+    <string name="btnSend">Enviar Registre</string>
 
     <!--Options-->
     <string name="Use_mobile_sensors">Utilitza els sensors del mobil</string>
@@ -35,5 +62,8 @@
         <item>@string/magnetic_field_sensor</item>
     </string-array>
     <string name="create_field">Crear camp</string>
-    
+
+    <!-- View Record -->
+    <string name="btnSaveChanges">Guardar Canvis</string>
+
 </resources>

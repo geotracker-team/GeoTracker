@@ -5,26 +5,63 @@
     <string name="txtLoginMail">Introduce an user</string>
     <string name="txtLoginPassword">Introduce a password</string>
     <string name="btnLogin">Login</string>
-
+  
     <!-- Menu Activity -->
-    <string name="sendrecords">Send records</string>
     <string name="recordhistory">Record history</string>
-    <string name="recordsmap">Records map</string>
+    <string name="recordsmap">General map</string>
     <string name="options">Options</string>
-
+  
     <!-- General Map -->
     <string name="txtLat">Latitude: </string>
     <string name="txtLong">Longitude: </string>
     <string name="txtProject">Choose a project</string>
-
-    <string name="user">User</string>
-    <string name="project">Project</string>
-    <string name="date">Date</string>
-    <string name="search">Search</string>
 
     <string-array name="spinnerProj">
         <item>Poject One</item>
         <item>Poject Two</item>
         <item>Poject Three</item>
     </string-array>
+
+    <!-- Historic -->
+    <string name="user">User</string>
+    <string name="project">Project</string>
+    <string name="date">Date</string>
+    <string name="search">Search</string>
+
+    <!-- Record Registration -->
+    <string name="txtProj">Project: EPS tracking project</string>
+    <string name="txtDate">Date of the record: 17:14 – 2/11/2017</string>
+    <string name="txtPosition">Position: </string>
+    <string name="txtDescription">Description</string>
+    <string name="txtTemp">Temperature (Cº)</string>
+    <string name="txtHum">Relative Humidity (%)</string>
+    <string name="btnAddField">+</string>
+    <string name="btnSend">Send Record</string>
+
+    <!--Options-->
+    <string name="Use_mobile_sensors">Use mobile sensors</string>
+    <string name="temperature_sensor">Temperature sensor</string>
+    <string name="humidity_sensor">Humidity sensor</string>
+    <string name="magnetic_field_sensor">Magnetic field sensor</string>
+    <string name="pressure_sensor">Pressure sensor</string>
+    <string name="enable_data_use">Enable data use</string>
+
+    <!--Add field-->
+    <string name="field_title">Field title</string>
+    <string name="plain_text">Plain text</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="magnetic_field">Magnetic field</string>
+    <string-array name="field_types">
+        <item>@string/plain_text</item>
+        <item>@string/temperature</item>
+        <item>@string/humidity</item>
+        <item>@string/pressure</item>
+        <item>@string/magnetic_field_sensor</item>
+    </string-array>
+    <string name="create_field">Create field</string>
+
+    <!-- View Record -->
+    <string name="btnSaveChanges">Save Changes</string>
 </resources>

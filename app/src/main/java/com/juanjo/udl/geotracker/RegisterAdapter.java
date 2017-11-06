@@ -1,15 +1,14 @@
 package com.juanjo.udl.geotracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by David on 05/11/2017.
@@ -31,6 +30,14 @@ public class RegisterAdapter extends ArrayAdapter {
         }
 
         Register currentReg = (Register) getItem(position);
+
+        listItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(getContext(), RecordViewActivity.class);
+                getContext().startActivity(it);
+            }
+        });
 
         TextView projectTextView = (TextView) listItemView.findViewById(R.id.project);
         projectTextView.setText(currentReg.getProjectName());

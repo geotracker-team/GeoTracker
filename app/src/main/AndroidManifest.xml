@@ -9,7 +9,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -17,12 +18,16 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HistoricActivity" />
-        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".MenuActivity"/>
+        <activity android:name=".GeneralMapActivity"/>
+        <activity android:name=".RecordRegistrationActivity"/>
+        <activity android:name=".RecordViewActivity"/>
+        <activity android:name=".OptionsActivity"/>
+        <activity android:name=".AddFieldActivity"/>
+        <activity android:name=".HistoricActivity"/>
     </application>
 
 </manifest>

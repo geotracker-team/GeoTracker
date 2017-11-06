@@ -1,6 +1,7 @@
 package com.juanjo.udl.geotracker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -9,6 +10,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GeneralMapActivity extends Activity implements OnMapReadyCallback {
@@ -35,5 +37,20 @@ public class GeneralMapActivity extends Activity implements OnMapReadyCallback {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(41.6082347, 0.6234154));
         mMap.addMarker(markerOptions);
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                Intent it = new Intent(GeneralMapActivity.this, RecordRegistrationActivity.class);
+                startActivity(it);
+            }
+        });
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
+                startActivity(it);
+                return false;
+            }
+        });
     }//onMapReady
 }

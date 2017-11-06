@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp"
-    android:background="#a9a7a7">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Project: EPS tracking project"/>
+        android:text="@string/txtProj" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="Date of the record: 17:14 - 2/11/2017"/>
+        android:text="@string/txtDate" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,19 +23,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Position" />
+            android:text="@string/txtPosition" />
 
-        <EditText
+        <TextView
             android:id="@+id/latid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123123" />
+            android:text="41.6082347 " />
 
-        <EditText
+        <TextView
             android:id="@+id/lenid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="321321" />
+            android:text="0.6234154" />
 
     </LinearLayout>
 
@@ -64,62 +61,55 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description" />
+                android:text="@string/txtDescription" />
 
             <EditText
                 android:id="@+id/desid"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:paddingTop="0dp"
-                android:text="EPS building   "/>
+                android:text="EPS building   "
+                android:textColor="@android:color/darker_gray"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Temperature (Cº)" />
+                android:text="@string/txtTemp" />
 
             <EditText
                 android:id="@+id/temid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:text="20"/>
+                android:background="@android:color/transparent"
+                android:text="20"
+                android:textColor="@android:color/darker_gray"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Relative Humidity (%)" />
+                android:text="@string/txtHum" />
 
             <EditText
                 android:id="@+id/humid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:text="55"/>
+                android:background="@android:color/transparent"
+                android:text="55"
+                android:textColor="@android:color/darker_gray"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <!--Content pending to change-->
     <Button
-        android:id="@+id/btnaddfield"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:background="#797979"
-        android:textSize="40dp"
-        android:layout_marginTop="10dp"
-        android:text="+"/>
-
-    <Button
-        android:id="@+id/btnsendid"
+        android:id="@+id/btnSaveChanges"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#797979"
-        android:layout_marginTop="10dp"
-        android:text="Send Record"/>
-
-
+        android:text="@string/btnSaveChanges"
+        android:visibility="gone" />
 </android.widget.LinearLayout>
