@@ -17,33 +17,14 @@
     <string name="txtLong">Longitude: </string>
     <string name="txtProject">Choose a project</string>
 
+    <string name="user">User</string>
+    <string name="project">Project</string>
+    <string name="date">Date</string>
+    <string name="search">Search</string>
+
     <string-array name="spinnerProj">
         <item>Poject One</item>
         <item>Poject Two</item>
         <item>Poject Three</item>
     </string-array>
-
-    <!--Options-->
-    <string name="Use_mobile_sensors">Use mobile sensors</string>
-    <string name="temperature_sensor">Temperature sensor</string>
-    <string name="humidity_sensor">Humidity sensor</string>
-    <string name="magnetic_field_sensor">Magnetic field sensor</string>
-    <string name="pressure_sensor">Pressure sensor</string>
-    <string name="enable_data_use">Enable data use</string>
-
-    <!--Add field-->
-    <string name="field_title">Field title</string>
-    <string name="plain_text">Plain text</string>
-    <string name="temperature">Temperature</string>
-    <string name="humidity">Humidity</string>
-    <string name="pressure">Pressure</string>
-    <string name="magnetic_field">Magnetic field</string>
-    <string-array name="field_types">
-        <item>@string/plain_text</item>
-        <item>@string/temperature</item>
-        <item>@string/humidity</item>
-        <item>@string/pressure</item>
-        <item>@string/magnetic_field_sensor</item>
-    </string-array>
-    <string name="create_field">Create field</string>
 </resources>
