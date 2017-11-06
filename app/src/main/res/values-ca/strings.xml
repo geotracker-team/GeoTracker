@@ -19,5 +19,21 @@
     <string name="magnetic_field_sensor">Sensor de camp magnètic</string>
     <string name="pressure_sensor">Sensor de pressió</string>
     <string name="enable_data_use">Activa l\'ús de dades</string>
+
+    <!--Add field-->
+    <string name="field_title">Titol del camp</string>
+    <string name="plain_text">Text plat</string>
+    <string name="temperature">Temperatura</string>
+    <string name="humidity">Humitat</string>
+    <string name="pressure">Pressió</string>
+    <string name="magnetic_field">Camp magnètic</string>
+    <string-array name="field_types">
+        <item>@string/plain_text</item>
+        <item>@string/temperature</item>
+        <item>@string/humidity</item>
+        <item>@string/pressure</item>
+        <item>@string/magnetic_field_sensor</item>
+    </string-array>
+    <string name="create_field">Crear camp</string>
     
 </resources>
