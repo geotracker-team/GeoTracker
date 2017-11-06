@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GeoTracker</string>
+    <string name="sendrecords">" "</string>
+    <string name="txtLoginMail">" "</string>
+    <string name="txtLoginPassword">" "</string>
+    <string name="btnLogin">" "</string>
+    <string name="recordhistory">" "</string>
+    <string name="recordsmap">" "</string>
+    <string name="options">" "</string>
+    <string name="txtLat">" "</string>
+    <string name="txtLong">" "</string>
+    <string name="txtProject">" "</string>
 </resources>

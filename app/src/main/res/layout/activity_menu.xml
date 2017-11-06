@@ -6,6 +6,7 @@
     android:orientation="vertical"
     tools:context="com.juanjo.udl.geotracker.MenuActivity">
 
+
     <Button
         android:id="@+id/bthistory"
         android:layout_width="match_parent"
@@ -24,6 +25,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/options"/>
-
 
 </LinearLayout>

@@ -22,6 +22,12 @@
         <item>Poject Three</item>
     </string-array>
 
+    <!-- Historic -->
+    <string name="user">User</string>
+    <string name="project">Project</string>
+    <string name="date">Date</string>
+    <string name="search">Search</string>
+
     <!-- Record Registration -->
     <string name="txtProj">Project: EPS tracking project</string>
     <string name="txtDate">Date of the record: 17:14 – 2/11/2017</string>
