@@ -5,4 +5,10 @@
     <string name="recordhistory">Histórico registros</string>
     <string name="recordsmap">Mapa registros</string>
     <string name="options">Opciones</string>
+    <string name="txtLoginMail">"Introduzca un usuario"</string>
+    <string name="txtLoginPassword">"Introduzca una contraseña"</string>
+    <string name="btnLogin">"Entrar"</string>
+    <string name="txtLat">" "</string>
+    <string name="txtLong">" "</string>
+    <string name="txtProject">" "</string>
 </resources>
