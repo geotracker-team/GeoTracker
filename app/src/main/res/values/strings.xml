@@ -31,4 +31,28 @@
     <string name="txtHum">Relative Humidity (%)</string>
     <string name="btnAddField">+</string>
     <string name="btnSend">Send Record</string>
+
+    <!--Options-->
+    <string name="Use_mobile_sensors">Use mobile sensors</string>
+    <string name="temperature_sensor">Temperature sensor</string>
+    <string name="humidity_sensor">Humidity sensor</string>
+    <string name="magnetic_field_sensor">Magnetic field sensor</string>
+    <string name="pressure_sensor">Pressure sensor</string>
+    <string name="enable_data_use">Enable data use</string>
+
+    <!--Add field-->
+    <string name="field_title">Field title</string>
+    <string name="plain_text">Plain text</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="magnetic_field">Magnetic field</string>
+    <string-array name="field_types">
+        <item>@string/plain_text</item>
+        <item>@string/temperature</item>
+        <item>@string/humidity</item>
+        <item>@string/pressure</item>
+        <item>@string/magnetic_field_sensor</item>
+    </string-array>
+    <string name="create_field">Create field</string>
 </resources>
