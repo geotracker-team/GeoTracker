@@ -3,6 +3,7 @@ package com.juanjo.udl.geotracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +40,33 @@ public class AddFieldActivity extends Activity {
                 // Log.d("!!!!!!!!!!!!!!!","title:" + titleValue +" type: " + typeValue + " child: " + textFiled.getText().toString() + " enum " + FieldType.HUMIDITY);
                 //fieldSet.removeAllViews();
 
-                LinearLayout fieldSet = (LinearLayout) findViewById(R.id.add_field_id);
-                fieldSet.addView(createTextView(), fieldSet.getChildCount()-1);
-                fieldSet.addView(createInputField(), fieldSet.getChildCount()-1);
 
+
+                /*LinearLayout fieldSet = (LinearLayout) findViewById(R.id.add_field_id);
+                fieldSet.addView(createTextView(), fieldSet.getChildCount()-1);
+                fieldSet.addView(createInputField(), fieldSet.getChildCount()-1);*/
 //                Intent intent = new Intent(AddFieldActivity.this, RecordRegistrationActivity.class);
 //                startActivity(intent);
+
+
+                EditText editText = (EditText) findViewById(R.id.fildetitle);
+                String titleValue = editText.getText().toString();
+
+                Spinner fieldType = (Spinner) findViewById(R.id.fieldtype);
+                String typeValue = fieldType.getSelectedItem().toString();
+
+                // put the String to pass back into an Intent and close this activity
+
+                Log.d("################# " , "text");
+
+                Intent intent = new Intent();
+                intent.putExtra("title", titleValue);
+                //intent.putExtra("type", typeValue);
+                Log.d("################# " , "finish");
+                setResult(RESULT_OK, intent);
+                finish();
+
+
             }
         });
     }//onCreate
@@ -63,6 +85,7 @@ public class AddFieldActivity extends Activity {
         Spinner fieldType = (Spinner) findViewById(R.id.fieldtype);
         String typeValue = fieldType.getSelectedItem().toString();
         EditText textInput = new EditText(AddFieldActivity.this);
+        textInput.setInputType(InputType.TYPE_CLASS_TEXT);
         //FieldType type = FieldType.valueOf(fieldType.getSelectedItem().toString().toUpperCase());
 
        /* switch (type){
