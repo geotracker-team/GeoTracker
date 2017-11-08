@@ -8,7 +8,13 @@
     <string name="txtLoginMail">"Introduzca un usuario"</string>
     <string name="txtLoginPassword">"Introduzca una contraseña"</string>
     <string name="btnLogin">"Entrar"</string>
-    <string name="txtLat">" "</string>
-    <string name="txtLong">" "</string>
-    <string name="txtProject">" "</string>
+    <string name="txtLat">" Latitud:"</string>
+    <string name="txtLong">" Longitud:"</string>
+    <string name="txtProject">" Escoja un proyecto"</string>
+    <string name="txtLoginMail">Introduzca un usuario</string>
+    <string name="txtLoginPassword">Introduzca un password</string>
+    <string name="btnLogin">Entrar</string>
+    <string name="txtLat">Latitud:</string>
+    <string name="txtLong">Longitud:</string>
+    <string name="txtProject">Escoja un proyecto</string>
 </resources>

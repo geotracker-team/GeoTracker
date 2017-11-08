@@ -65,5 +65,8 @@
 
     <!-- View Record -->
     <string name="btnSaveChanges">Guardar Canvis</string>
+    <string name="txtLat">Latitud:</string>
+    <string name="txtLong">Longitud:</string>
+    <string name="txtProject">Seleccioni un projecte:</string>
 
 </resources>
