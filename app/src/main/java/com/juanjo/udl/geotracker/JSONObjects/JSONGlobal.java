@@ -63,7 +63,7 @@ public abstract class JSONGlobal extends JSONObject implements Serializable{
     }//saveJsonFileInAsyncTask
 
     //Abstract functions to be implemented
-    abstract String getFileRoute();
+    abstract String getFileRoute() throws IOException;
 
     abstract String getFileName();
 }
