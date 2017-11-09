@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class JSONRecord extends JSONGlobal {
     private final String description, date, username;
@@ -65,9 +64,9 @@ public class JSONRecord extends JSONGlobal {
         put("otherFields", otherFields);
     }//putValues
 
-    public void addNewField(String name, String type, String content) throws JSONException {
+    public void addNewField(String name, Constants.FieldTypes type, String content) throws JSONException {
         JSONObject obj = new JSONObject();
-        obj.put(type, content);
+        obj.put(type.toString(), content);
         otherFields.put(name, obj);//Save into the JSONObject the new field with it's content
         putValues();
     }//addNewField

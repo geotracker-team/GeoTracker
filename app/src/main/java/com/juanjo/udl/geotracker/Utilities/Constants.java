@@ -6,4 +6,10 @@ public class Constants {
 
         public static String getFolderOfRecords() { return folderOfRecords; }//getFolderOfRecords
     }//StaticFields
+
+    public enum FieldTypes {
+        Text,
+        Numeric,
+
+    }//FieldTypes
 }//Constants
