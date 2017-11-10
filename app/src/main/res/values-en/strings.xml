@@ -29,5 +29,11 @@
         <item>@string/magnetic_field_sensor</item>
     </string-array>
     <string name="create_field">Create field</string>
+    <string name="txtLoginMail">Introduce an user</string>
+    <string name="txtLoginPassword">Introduce an password</string>
+    <string name="btnLogin">Login</string>
+    <string name="txtLat">Latitude:</string>
+    <string name="txtLong">Longitude:</string>
+    <string name="txtProject">Choose a project:</string>
 
 </resources>
