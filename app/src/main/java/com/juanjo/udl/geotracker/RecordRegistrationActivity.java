@@ -3,8 +3,6 @@ package com.juanjo.udl.geotracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,27 +32,18 @@ public class RecordRegistrationActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // check that it is the SecondActivity with an OK result
-        Log.d("type!!!!!!!!!!!!!! " , "response");
         if (requestCode == FIELD_ADDED_SUCCESSFULLY) {
-            Log.d("type!!!!!!!!!!!!!! " , "success");
-            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-
-                // get String data from Intent
-
+            if (resultCode == RESULT_OK) {
 
                 TextView textFiled = new TextView(RecordRegistrationActivity.this);
                 textFiled.setText(data.getStringExtra("title"));
 
                 EditText textInput = new EditText(RecordRegistrationActivity.this);
-                textInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                textInput.setInputType(data.getIntExtra("type", 1));
 
-                LinearLayout fieldSet = (LinearLayout) findViewById(R.id.record_layout);
+                LinearLayout fieldSet = findViewById(R.id.record_layout);
                 fieldSet.addView(textFiled, fieldSet.getChildCount()-2);
                 fieldSet.addView(textInput, fieldSet.getChildCount()-2);
-                // set text view with string
-                /*TextView textView = (TextView) findViewById(R.id.textView);
-                textView.setText(returnString);*/
             }
         }
     }

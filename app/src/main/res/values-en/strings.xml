@@ -16,17 +16,17 @@
 
     <!--Add field-->
     <string name="field_title">Field title</string>
-    <string name="plain_text">Plain text</string>
+    <string name="text">Plain text</string>
     <string name="temperature">Temperature</string>
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
     <string name="magnetic_field">Magnetic field</string>
     <string-array name="field_types">
-        <item>@string/plain_text</item>
+        <item>@string/text</item>
+        <item>@string/numeric</item>
         <item>@string/temperature</item>
         <item>@string/humidity</item>
         <item>@string/pressure</item>
-        <item>@string/magnetic_field_sensor</item>
     </string-array>
     <string name="create_field">Create field</string>
 
