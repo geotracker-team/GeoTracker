@@ -15,16 +15,16 @@
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
-                android:text="14/10/17" />
+                android:text="14/10/17 10:00:00" />
 
             <TextView
                 android:id="@+id/latitude"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/longitude"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
@@ -41,17 +41,18 @@
 
             <TextView
                 android:id="@+id/user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="20dp"
                 android:layout_margin="1dp"
                 android:paddingHorizontal="2dp"
                 android:background="#ffffff"
-                android:text="David" />
+                android:text="David"
+                />
 
             <TextView
                 android:id="@+id/project"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
