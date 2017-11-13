@@ -2,6 +2,10 @@ package com.juanjo.udl.geotracker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -13,9 +17,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 
-public class AddFieldActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class AddFieldActivity extends Activity implements AdapterView.OnItemSelectedListener, SensorEventListener {
 
     private int inputType = InputType.TYPE_CLASS_TEXT;
+    private SensorManager sensorManager;
+    private Sensor sensor;
+    private EditText editText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +38,18 @@ public class AddFieldActivity extends Activity implements AdapterView.OnItemSele
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        editText = findViewById(R.id.fildetitle);
+
         Button btnCreateField = findViewById(R.id.btncreatefield);
         btnCreateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText = findViewById(R.id.fildetitle);
-                String titleValue = editText.getText().toString();
-
                 Intent intent = new Intent();
-                intent.putExtra("title", titleValue);
+                intent.putExtra("title", editText.getText().toString());
                 intent.putExtra("type", inputType);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -56,12 +67,15 @@ public class AddFieldActivity extends Activity implements AdapterView.OnItemSele
                 inputType = InputType.TYPE_CLASS_NUMBER;
                 break;
             case 2: //Temperature
+                editText.setText(getResources().getString(R.string.temperature));
                 inputType = InputType.TYPE_CLASS_TEXT; //Pending to change
                 break;
             case 3: //Humidity
+                editText.setText(getResources().getString(R.string.humidity));
                 inputType = InputType.TYPE_CLASS_TEXT; //Pending to change
                 break;
             case 4: //Pressure
+                editText.setText(getResources().getString(R.string.pressure));
                 inputType = InputType.TYPE_CLASS_TEXT; //Pending to change
                 break;
         }
@@ -70,5 +84,18 @@ public class AddFieldActivity extends Activity implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         inputType = InputType.TYPE_CLASS_TEXT;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float ambient_temperature = event.values[0];
+        EditText editText = findViewById(R.id.fildetitle);
+        editText.setText(String.valueOf(ambient_temperature) + " Cº");
+        Log.d("Sensor log: ", Float.toString(ambient_temperature));
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        Log.d("Sensor log:  ", "Changed");
     }
 }
