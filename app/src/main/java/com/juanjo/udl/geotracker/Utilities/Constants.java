@@ -8,8 +8,10 @@ public class Constants {
     }//StaticFields
 
     public enum FieldTypes {
-        Text,
-        Numeric,
-
+        TEXT,
+        NUMERIC,
+        TEMPERATURE,
+        HUMIDITY,
+        PRESSURE
     }//FieldTypes
 }//Constants
