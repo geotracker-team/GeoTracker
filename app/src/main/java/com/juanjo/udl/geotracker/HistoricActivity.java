@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecordAdapter;
@@ -17,8 +18,8 @@ import java.util.Date;
 
 public class HistoricActivity extends AppCompatActivity {
 
-    EditText fUser;
-    EditText fProject;
+    Spinner fUser;
+    Spinner fProject;
     EditText fDateIni;
     EditText fDateFin;
     Button btSearch;

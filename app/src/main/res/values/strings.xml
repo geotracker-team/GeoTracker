@@ -16,10 +16,19 @@
     <string name="txtLong">Longitude: </string>
     <string name="txtProject">Choose a project</string>
 
+    <string-array name="spinnerUsers">
+        <item>Joan Josep</item>
+        <item>Xavier</item>
+        <item>Dejan</item>
+        <item>David</item>
+        <item>All</item>
+    </string-array>
+
     <string-array name="spinnerProj">
-        <item>Poject One</item>
-        <item>Poject Two</item>
-        <item>Poject Three</item>
+        <item>Project One</item>
+        <item>Project Two</item>
+        <item>Project Three</item>
+        <item>All</item>
     </string-array>
 
     <!-- Historic -->
