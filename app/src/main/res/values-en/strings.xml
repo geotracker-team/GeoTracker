@@ -36,4 +36,8 @@
     <string name="txtLong">Longitude:</string>
     <string name="txtProject">Choose a project:</string>
 
+    <!-- Menu -->
+    <string name="txtAddRecord">Add record</string>
+    <string name="txtHistoricRecord">Historic records</string>
+    <string name="txtOptions">Options</string>
 </resources>
