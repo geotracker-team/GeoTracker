@@ -10,4 +10,5 @@ public class OptionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.options);
     }//onCreate
+
 }

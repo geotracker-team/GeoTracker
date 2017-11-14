@@ -55,13 +55,18 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     @Override
     protected void displayLocation(){
         super.displayLocation();
-        LatLng position = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        moveCamera(position);
-        if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
-        mCurrLocationMarker = addMarkerToMap(position, "");
+        LatLng position;
+        if(mLastLocation != null) {
+            position = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            moveCamera(position);
+            if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
+            mCurrLocationMarker = addMarkerToMap(position, "");
+            txtLat.setText(String.valueOf(position.latitude));
+            txtLon.setText(String.valueOf(position.longitude));
+        }
 
-        txtLat.setText(String.valueOf(position.latitude));
-        txtLon.setText(String.valueOf(position.longitude));
+
+
     }//displayLocation
 
     //MENU
