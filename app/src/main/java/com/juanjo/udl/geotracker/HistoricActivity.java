@@ -31,9 +31,9 @@ public class HistoricActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historic);
 
-//        SampleData sample = new SampleData();
+        SampleData sample = new SampleData();
 //        sample.delete(this);
-//        sample.create(this);
+        sample.create(this);
 
         fUser = findViewById(R.id.fUser);
         fProject = findViewById(R.id.fProject);

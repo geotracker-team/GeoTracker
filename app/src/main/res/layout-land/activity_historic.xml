@@ -27,26 +27,26 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="@string/user" />
-
-                <EditText
+                <Spinner
                     android:id="@+id/fUser"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:inputType="text"
-                    android:text="David"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:entries="@array/spinnerUsers"
+                    />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/project" />
 
-                <EditText
+
+                <Spinner
                     android:id="@+id/fProject"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="EPS tracking project"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:entries="@array/spinnerProj"
+                    />
+
             </LinearLayout>
 
             <LinearLayout
