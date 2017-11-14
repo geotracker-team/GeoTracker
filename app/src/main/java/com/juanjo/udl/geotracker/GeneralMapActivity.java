@@ -1,11 +1,8 @@
 package com.juanjo.udl.geotracker;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,10 +13,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
 
-public class GeneralMapActivity extends AppCompatActivity implements OnMapReadyCallback {
-
-    protected GoogleMap mMap;
+public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +31,29 @@ public class GeneralMapActivity extends AppCompatActivity implements OnMapReadyC
     //MAPS
     @Override
     public void onMapReady(GoogleMap map) {
-        if(mMap == null) mMap = map;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(41.6082347, 0.6234154), 19,0,0)));
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(41.6082347, 0.6234154));
-        mMap.addMarker(markerOptions);
+        super.onMapReady(map);
+
+        addMarkerToMap(new LatLng(41.6082347, 0.6234154), "Test");
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
-                startActivity(it);
-                return false;
+                if(!marker.equals(mCurrLocationMarker)){
+                    Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
+                    startActivity(it);
+                }
+                return true;
             }
         });
     }//onMapReady
+
+    @Override
+    protected void displayLocation(){
+        super.displayLocation();
+        LatLng position = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        moveCamera(position);
+        if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
+        mCurrLocationMarker = addMarkerToMap(position, "");
+    }//displayLocation
 
     //MENU
     @Override
