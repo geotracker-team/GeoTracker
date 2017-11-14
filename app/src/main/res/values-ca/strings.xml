@@ -30,8 +30,9 @@
 
 
     <!-- Record Registration -->
+    <string name="createdBy">Creat per:</string>
     <string name="txtProj">Projecte: EPS tracking project</string>
-    <string name="txtDate">Data del registre: 17:14 – 2/11/2017</string>
+    <string name="txtDate">Data del registre:</string>
     <string name="txtPosition">Posició: </string>
     <string name="txtDescription">Descripció</string>
     <string name="txtTemp">Temperatura (Cº)</string>

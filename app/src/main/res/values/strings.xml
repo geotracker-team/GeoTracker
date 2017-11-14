@@ -29,8 +29,9 @@
     <string name="search">Search</string>
 
     <!-- Record Registration -->
+    <string name="createdBy">Created by:</string>
     <string name="txtProj">Project: EPS tracking project</string>
-    <string name="txtDate">Date of the record: 17:14 – 2/11/2017</string>
+    <string name="txtDate">Date of the record:</string>
     <string name="txtPosition">Position: </string>
     <string name="txtDescription">Description</string>
     <string name="txtTemp">Temperature (Cº)</string>

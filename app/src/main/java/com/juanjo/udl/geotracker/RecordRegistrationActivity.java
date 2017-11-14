@@ -3,16 +3,20 @@ package com.juanjo.udl.geotracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AppSensor;
-import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
+
+import org.json.JSONException;
 
 public class RecordRegistrationActivity extends Activity {
 
@@ -23,7 +27,7 @@ public class RecordRegistrationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
 
-        Button btnAddField = findViewById(R.id.btnaddfield);
+        Button btnAddField = findViewById(R.id.btnAddFieldId);
         btnAddField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,6 +35,33 @@ public class RecordRegistrationActivity extends Activity {
                 startActivityForResult(intent, 0);
             }
         });
+
+        Button btnSend = findViewById(R.id.btnSendId);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText description = findViewById(R.id.desid);
+                EditText date = findViewById(R.id.dateId);
+                EditText creator = findViewById(R.id.creatorId);
+                EditText latitude = findViewById(R.id.latid);
+                EditText longitude = findViewById(R.id.lenid);
+
+                try {
+                    JSONRecord jsonRecord = new JSONRecord(v.getContext(),
+                            description.getText().toString(),
+                            date.getText().toString(),
+                            creator.getText().toString(),
+                            Double.valueOf(latitude.getText().toString()),
+                            Double.valueOf(longitude.getText().toString()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Intent in = new Intent(RecordRegistrationActivity.this, GeneralMapActivity.class);
+                startActivity(in);
+            }
+        });
+
     }//onCreate
 
     @Override
@@ -42,17 +73,20 @@ public class RecordRegistrationActivity extends Activity {
 
                 TextView textFiled = new TextView(RecordRegistrationActivity.this);
                 textFiled.setText(data.getStringExtra("title"));
-
                 EditText textInput = new EditText(RecordRegistrationActivity.this);
-                textInput.setInputType(data.getIntExtra("inputType", 1));
-
                 FieldTypes type = (FieldTypes) data.getSerializableExtra("type");
 
-                if(type == FieldTypes.TEMPERATURE || type == FieldTypes.HUMIDITY || type == FieldTypes.PRESSURE){
-                    AppSensor sensor = new AppSensor(type);
-                    textInput.setEnabled(false);
-                    textInput.setBackgroundColor(Color.TRANSPARENT);
-                    textInput.setText(String.valueOf(sensor.getValue()));
+                switch (type){
+                    case TEXT:
+                        textInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                        break;
+                    case NUMERIC:
+                    textInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        break;
+                    default:
+                        textInput.setText(getSensorValue(type));
+                        textInput.setEnabled(false);
+                        textInput.setBackgroundColor(Color.TRANSPARENT);
                 }
 
                 LinearLayout fieldSet = findViewById(R.id.record_layout);
@@ -60,5 +94,23 @@ public class RecordRegistrationActivity extends Activity {
                 fieldSet.addView(textInput, fieldSet.getChildCount()-2);
             }
         }
+    }
+
+    private String getSensorValue(FieldTypes type){
+        AppSensor sensor;
+        switch (type){
+            case TEMPERATURE:
+                sensor = new AppSensor(Sensor.TYPE_AMBIENT_TEMPERATURE, this);
+                break;
+            case HUMIDITY:
+                sensor = new AppSensor(Sensor.TYPE_RELATIVE_HUMIDITY, this);
+                break;
+            case PRESSURE:
+                sensor = new AppSensor(Sensor.TYPE_PRESSURE, this);
+                break;
+            default:
+                sensor = new AppSensor(Sensor.TYPE_AMBIENT_TEMPERATURE, this);
+        }
+        return  String.valueOf(sensor.getValue());
     }
 }
