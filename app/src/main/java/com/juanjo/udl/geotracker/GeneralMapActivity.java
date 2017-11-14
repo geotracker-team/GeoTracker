@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +18,8 @@ import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
 
 public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {
 
+    private TextView txtLat, txtLon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +28,9 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
+
+        txtLat = findViewById(R.id.txtLat);
+        txtLon = findViewById(R.id.txtLon);
 
     }//onCreate
 
@@ -53,6 +59,9 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         moveCamera(position);
         if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
         mCurrLocationMarker = addMarkerToMap(position, "");
+
+        txtLat.setText(String.valueOf(position.latitude));
+        txtLon.setText(String.valueOf(position.longitude));
     }//displayLocation
 
     //MENU
