@@ -66,4 +66,8 @@
     <!-- View Record -->
     <string name="btnSaveChanges">Guardar Canvis</string>
 
+    <!-- Menu -->
+    <string name="txtAddRecord">Afegir registre</string>
+    <string name="txtHistoricRecord">Històric registres</string>
+    <string name="txtOptions">Opcions</string>
 </resources>

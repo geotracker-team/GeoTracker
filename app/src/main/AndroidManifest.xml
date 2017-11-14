@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity"/>
         <activity android:name=".GeneralMapActivity"/>
         <activity android:name=".RecordRegistrationActivity"/>
         <activity android:name=".RecordViewActivity"/>

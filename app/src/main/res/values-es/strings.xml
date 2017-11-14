@@ -11,4 +11,9 @@
     <string name="txtLat">" Latitud:"</string>
     <string name="txtLong">" Longitud:"</string>
     <string name="txtProject">" Escoja un proyecto"</string>
+
+    <!-- Menu -->
+    <string name="txtAddRecord">Añadir registro</string>
+    <string name="txtHistoricRecord">Historico registros</string>
+    <string name="txtOptions">Opciones</string>
 </resources>

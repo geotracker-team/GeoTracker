@@ -64,4 +64,9 @@
 
     <!-- View Record -->
     <string name="btnSaveChanges">Save Changes</string>
+
+    <!-- Menu -->
+    <string name="txtAddRecord">Add record</string>
+    <string name="txtHistoricRecord">Historic records</string>
+    <string name="txtOptions">Options</string>
 </resources>

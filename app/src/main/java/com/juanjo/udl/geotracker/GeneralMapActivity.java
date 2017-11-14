@@ -3,6 +3,10 @@ package com.juanjo.udl.geotracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GeneralMapActivity extends Activity implements OnMapReadyCallback {
+public class GeneralMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     protected GoogleMap mMap;
 
@@ -37,13 +41,6 @@ public class GeneralMapActivity extends Activity implements OnMapReadyCallback {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(41.6082347, 0.6234154));
         mMap.addMarker(markerOptions);
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                Intent it = new Intent(GeneralMapActivity.this, RecordRegistrationActivity.class);
-                startActivity(it);
-            }
-        });
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -53,4 +50,32 @@ public class GeneralMapActivity extends Activity implements OnMapReadyCallback {
             }
         });
     }//onMapReady
+
+    //MENU
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }//onCreateOptionsMenu
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.menu_add_record:
+                intent = new Intent(this, RecordRegistrationActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_history:
+                intent = new Intent(this, HistoricActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_options:
+                intent = new Intent(this, OptionsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }//onOptionsItemSelected
 }
