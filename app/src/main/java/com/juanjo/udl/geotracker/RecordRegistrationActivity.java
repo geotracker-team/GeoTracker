@@ -16,10 +16,13 @@ import android.widget.TextView;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.AppSensor;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +52,12 @@ public class RecordRegistrationActivity extends Activity {
             public void onClick(View v) {
                 saveJsonFile(v);
 
+               /* try {
+                    retrieveJson();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                    test function*/
                 Intent in = new Intent(RecordRegistrationActivity.this, GeneralMapActivity.class);
                 startActivity(in);
             }
@@ -136,5 +145,24 @@ public class RecordRegistrationActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void retrieveJson() throws Exception {
+        ArrayList<JSONRecord> records = new ArrayList<>();
+
+        File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords());
+        File[] files = dir.listFiles();
+        if(files != null){
+            for(File f : files){
+                if(f.isFile()){
+                    JSONRecord j = new JSONRecord(this, f);
+                    Log.d("JSON", j.toString());
+                    records.add(j);
+
+                }
+            }
+        }
+
+
     }
 }
