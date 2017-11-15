@@ -24,6 +24,7 @@ import org.json.JSONException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,12 +53,12 @@ public class RecordRegistrationActivity extends Activity {
             public void onClick(View v) {
                 saveJsonFile(v);
 
-               /* try {
+                try {
                     retrieveJson();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                    test function*/
+
                 Intent in = new Intent(RecordRegistrationActivity.this, GeneralMapActivity.class);
                 startActivity(in);
             }
@@ -71,6 +72,8 @@ public class RecordRegistrationActivity extends Activity {
 
         if (requestCode == FIELD_ADDED_SUCCESSFULLY) {
             if (resultCode == RESULT_OK) {
+
+
 
                 String title = data.getStringExtra("title");
                 TextView textFiled = new TextView(RecordRegistrationActivity.this);
@@ -122,7 +125,7 @@ public class RecordRegistrationActivity extends Activity {
 
     private void saveJsonFile(View v){
         EditText description = findViewById(R.id.desid);
-        EditText date = findViewById(R.id.dateId);
+        //EditText date = findViewById(R.id.dateId);
         EditText creator = findViewById(R.id.creatorId);
         EditText latitude = findViewById(R.id.latid);
         EditText longitude = findViewById(R.id.lenid);
@@ -130,7 +133,7 @@ public class RecordRegistrationActivity extends Activity {
         try {
             jsonRecord = new JSONRecord(v.getContext(),
                     description.getText().toString(),
-                    date.getText().toString(),
+                    Calendar.getInstance().getTime().toString(),
                     creator.getText().toString(),
                     Double.valueOf(latitude.getText().toString()),
                     Double.valueOf(longitude.getText().toString()));
@@ -148,21 +151,9 @@ public class RecordRegistrationActivity extends Activity {
     }
 
     private void retrieveJson() throws Exception {
-        ArrayList<JSONRecord> records = new ArrayList<>();
-
-        File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords());
-        File[] files = dir.listFiles();
-        if(files != null){
-            for(File f : files){
-                if(f.isFile()){
-                    JSONRecord j = new JSONRecord(this, f);
-                    Log.d("JSON", j.toString());
-                    records.add(j);
-
-                }
-            }
+        List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
+        for(JSONRecord j : records){
+            Log.d("Json: ", j.toString());
         }
-
-
     }
 }

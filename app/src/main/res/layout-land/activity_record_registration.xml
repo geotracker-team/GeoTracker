@@ -1,55 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txtProj" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/txtDate" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/record_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txtPosition" />
+            android:text="@string/txtProj" />
 
-        <EditText
-            android:id="@+id/latid"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="41.6082347" />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/createdBy" />
+            <EditText
+                android:id="@+id/creatorId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_marginStart="10dp"
+                android:text="someone"
+                android:enabled="false"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/lenid"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0.6234154" />
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtPosition" />
 
+            <EditText
+                android:id="@+id/latid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="41.6082347" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/lenid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.6234154" />
+
+        </LinearLayout>
 
 
         <ImageView
             android:id="@+id/imgid"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/epsmaps" />
 
@@ -66,58 +79,31 @@
 
             <EditText
                 android:id="@+id/desid"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
-                android:paddingTop="0dp"
-                android:text="EPS building   " />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="@string/txtTemp" />
-
-            <EditText
-                android:id="@+id/temid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="0dp"
-                android:text="20" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="@string/txtHum" />
-
-            <EditText
-                android:id="@+id/humid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="0dp"
-                android:text="55" />
+                android:paddingTop="0dp"/>
 
         </LinearLayout>
 
+        <!--Content pending to change-->
+        <Button
+            android:id="@+id/btnAddFieldId"
+            android:layout_width="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#797979"
+            android:text="@string/btnAddField"
+            android:textSize="40dp" />
+
+        <Button
+            android:id="@+id/btnSendId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#797979"
+            android:text="@string/btnSend" />
+
+
     </LinearLayout>
-
-    <!--Content pending to change-->
-    <Button
-        android:id="@+id/btnaddfield"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#797979"
-        android:text="@string/btnAddField"
-        android:textSize="40dp" />
-
-    <Button
-        android:id="@+id/btnsendid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#797979"
-        android:text="@string/btnSend" />
-
-
-</android.widget.LinearLayout>
+</ScrollView>
