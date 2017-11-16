@@ -30,8 +30,9 @@
 
 
     <!-- Record Registration -->
+    <string name="createdBy">Creat per:</string>
     <string name="txtProj">Projecte: EPS tracking project</string>
-    <string name="txtDate">Data del registre: 17:14 – 2/11/2017</string>
+    <string name="txtDate">Data del registre:</string>
     <string name="txtPosition">Posició: </string>
     <string name="txtDescription">Descripció</string>
     <string name="txtTemp">Temperatura (Cº)</string>
@@ -49,17 +50,18 @@
 
     <!--Add field-->
     <string name="field_title">Titol del camp</string>
-    <string name="plain_text">Text plat</string>
+    <string name="text">Text plat</string>
+    <string name="numeric">Numèric</string>
     <string name="temperature">Temperatura</string>
     <string name="humidity">Humitat</string>
     <string name="pressure">Pressió</string>
     <string name="magnetic_field">Camp magnètic</string>
     <string-array name="field_types">
-        <item>@string/plain_text</item>
+        <item>@string/text</item>
+        <item>@string/numeric</item>
         <item>@string/temperature</item>
         <item>@string/humidity</item>
         <item>@string/pressure</item>
-        <item>@string/magnetic_field_sensor</item>
     </string-array>
     <string name="create_field">Crear camp</string>
 

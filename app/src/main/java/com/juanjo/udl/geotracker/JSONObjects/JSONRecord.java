@@ -76,7 +76,7 @@ public class JSONRecord extends JSONGlobal {
     }//getFileRoute
 
     String getFileName() {
-        return this.username + "_" + this.date.replace(" ", "_") + ".json";
+        return this.username + "_" + this.date.replace(" ", "_").replace("/", "-") + ".json";
     }//getFileName
 
     //GETERS

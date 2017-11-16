@@ -49,7 +49,7 @@ public abstract class JSONGlobal extends JSONObject implements Serializable{
         String fileName = getFileName();
         String json = jsonObject.toString();
         File dir = new File(route);
-        dir.mkdir(); // Make the directory if doesn't exsits
+        if(!dir.exists())dir.mkdirs(); // Make the directory if doesn't exsits
         File file = new File(dir, fileName);
 
         if(file.exists()) file.delete(); //If it exists delete it

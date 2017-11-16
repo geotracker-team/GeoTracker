@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_field_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,6 +13,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/fildetitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/field_title"
@@ -20,8 +22,9 @@
         <Spinner
             android:id="@+id/fieldtype"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/field_types" />
+            android:layout_height="wrap_content"/>
+
+
 
     </LinearLayout>
 
