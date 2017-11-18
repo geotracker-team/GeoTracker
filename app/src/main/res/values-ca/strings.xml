@@ -31,7 +31,7 @@
 
     <!-- Record Registration -->
     <string name="createdBy">Creat per:</string>
-    <string name="txtProj">Projecte: EPS tracking project</string>
+    <string name="txtProj">Projecte: </string>
     <string name="txtDate">Data del registre:</string>
     <string name="txtPosition">Posició: </string>
     <string name="txtDescription">Descripció</string>
@@ -52,9 +52,9 @@
     <string name="field_title">Titol del camp</string>
     <string name="text">Text plat</string>
     <string name="numeric">Numèric</string>
-    <string name="temperature">Temperatura</string>
-    <string name="humidity">Humitat</string>
-    <string name="pressure">Pressió</string>
+    <string name="temperature">Temperatura (Cº)</string>
+    <string name="humidity">Humitat (%)</string>
+    <string name="pressure">Pressió (Pa)</string>
     <string name="magnetic_field">Camp magnètic</string>
     <string-array name="field_types">
         <item>@string/text</item>

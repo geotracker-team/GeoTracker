@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/record_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="30dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/txtProj" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtProj" />
+
+            <EditText
+                android:id="@+id/projId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_marginStart="10dp"
+                android:text="EPS Tracking Project"
+                android:enabled="false"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,12 +67,14 @@
                 android:id="@+id/latid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:text="41.6082347" />
 
             <EditText
                 android:id="@+id/lenid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:text="0.6234154" />
 
         </LinearLayout>
@@ -64,28 +84,21 @@
             android:id="@+id/imgid"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_margin="5dp"
             android:src="@drawable/epsmaps" />
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="10dp">
+            android:text="@string/txtDescription" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txtDescription" />
+        <EditText
+            android:id="@+id/desid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="0dp"/>
 
-            <EditText
-                android:id="@+id/desid"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:paddingTop="0dp"/>
 
-        </LinearLayout>
-
-        <!--Content pending to change-->
         <Button
             android:id="@+id/btnAddFieldId"
             android:layout_width="55dp"
@@ -104,6 +117,6 @@
             android:background="#797979"
             android:text="@string/btnSend" />
 
-
     </LinearLayout>
+
 </ScrollView>

@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
-public class AppSensor implements SensorEventListener {
+public class AppSensor implements SensorEventListener {  // DEPRECATED!
 
    private float value;
 
@@ -16,11 +16,14 @@ public class AppSensor implements SensorEventListener {
        value = 0;
        SensorManager sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
        Sensor sensor = sensorManager.getDefaultSensor(type);
-       sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+       if(sensor != null){
+           sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+       }
    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        //Log.d("Sensor log:  ", Float.toString(event.values[0]));
         value = event.values[0];
     }
 

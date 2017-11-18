@@ -17,9 +17,9 @@
     <!--Add field-->
     <string name="field_title">Field title</string>
     <string name="text">Plain text</string>
-    <string name="temperature">Temperature</string>
-    <string name="humidity">Humidity</string>
-    <string name="pressure">Pressure</string>
+    <string name="temperature">Temperature (Cº)</string>
+    <string name="humidity">Humidity (%)</string>
+    <string name="pressure">Pressure (Pa)</string>
     <string name="magnetic_field">Magnetic field</string>
     <string-array name="field_types">
         <item>@string/text</item>

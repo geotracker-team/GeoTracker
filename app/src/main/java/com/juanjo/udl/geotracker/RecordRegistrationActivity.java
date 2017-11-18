@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -15,28 +18,27 @@ import android.widget.TextView;
 
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
-import com.juanjo.udl.geotracker.Utilities.AppSensor;
-import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import org.json.JSONException;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
-public class RecordRegistrationActivity extends Activity {
+public class RecordRegistrationActivity extends Activity implements SensorEventListener {
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
-    private List<AdditionalField> newFieldsList = new ArrayList<>();
+    private HashMap<FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();
+    private SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
+
+        findViewById(R.id.desid).requestFocus();
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         Button btnAddField = findViewById(R.id.btnAddFieldId);
         btnAddField.setOnClickListener(new View.OnClickListener() {
@@ -53,17 +55,16 @@ public class RecordRegistrationActivity extends Activity {
             public void onClick(View v) {
                 saveJsonFile(v);
 
-                try {
+                /*try {
                     retrieveJson();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
 
                 Intent in = new Intent(RecordRegistrationActivity.this, GeneralMapActivity.class);
                 startActivity(in);
             }
         });
-
     }//onCreate
 
     @Override
@@ -73,8 +74,6 @@ public class RecordRegistrationActivity extends Activity {
         if (requestCode == FIELD_ADDED_SUCCESSFULLY) {
             if (resultCode == RESULT_OK) {
 
-
-
                 String title = data.getStringExtra("title");
                 TextView textFiled = new TextView(RecordRegistrationActivity.this);
                 textFiled.setText(title);
@@ -83,19 +82,17 @@ public class RecordRegistrationActivity extends Activity {
                 EditText textInput = new EditText(RecordRegistrationActivity.this);
 
                 AdditionalField additionalField = new AdditionalField(title, type, textInput);
-                newFieldsList.add(additionalField);
+                additionalFieldHash.put(type, additionalField);
 
-                switch (type){
+                switch (type) {
                     case TEXT:
                         textInput.setInputType(InputType.TYPE_CLASS_TEXT);
                         break;
                     case NUMERIC:
-                    textInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        textInput.setInputType(InputType.TYPE_CLASS_NUMBER);
                         break;
                     default:
-                        textInput.setText(getSensorValue(type));
-                        textInput.setEnabled(false);
-                        textInput.setBackgroundColor(Color.TRANSPARENT);
+                        createNewSensor(type);
                 }
 
                 LinearLayout fieldSet = findViewById(R.id.record_layout);
@@ -103,29 +100,83 @@ public class RecordRegistrationActivity extends Activity {
                 fieldSet.addView(textInput, fieldSet.getChildCount()-2);
             }
         }
-    }
+    }  // onActivityResult
 
-    private String getSensorValue(FieldTypes type){
-        AppSensor sensor;
+    private void createNewSensor(FieldTypes type){
+        boolean initialized = false;
+
         switch (type){
             case TEMPERATURE:
-                sensor = new AppSensor(Sensor.TYPE_AMBIENT_TEMPERATURE, this);
+                initialized = initializeSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
                 break;
             case HUMIDITY:
-                sensor = new AppSensor(Sensor.TYPE_RELATIVE_HUMIDITY, this);
+                initialized = initializeSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
                 break;
             case PRESSURE:
-                sensor = new AppSensor(Sensor.TYPE_PRESSURE, this);
+                initialized = initializeSensor(Sensor.TYPE_PRESSURE);
                 break;
-            default:
-                sensor = new AppSensor(Sensor.TYPE_AMBIENT_TEMPERATURE, this);
         }
-        return  String.valueOf(sensor.getValue());
+        if (!initialized){
+            additionalFieldHash.get(type).getContent().setText("n/a");
+            additionalFieldHash.get(type).getContent().setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+        else{
+            additionalFieldHash.get(type).getContent().setEnabled(false);
+            additionalFieldHash.get(type).getContent().setBackgroundColor(Color.TRANSPARENT);
+        }
+
+    }  // createNewSensor
+
+    private boolean initializeSensor(int type){
+        if(sensorManager != null){
+            Sensor sensor = sensorManager.getDefaultSensor(type);
+            if(sensor != null){
+                sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+                return true;
+            }
+        }
+        return false;
     }
+
+    @Override
+        public void onPause() {
+            super.onPause();
+            sensorManager.unregisterListener(this);
+        }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        for(AdditionalField a : additionalFieldHash.values()){
+            createNewSensor(a.getType());
+        }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        setSensorFieldValues(event);
+        Log.d("Sensor: ", String.valueOf(event.values[0]));
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+    private void setSensorFieldValues(SensorEvent event){
+        switch (event.sensor.getType()){
+            case Sensor.TYPE_AMBIENT_TEMPERATURE:
+                additionalFieldHash.get(FieldTypes.TEMPERATURE).getContent().setText(String.valueOf(event.values[0]));
+                break;
+            case Sensor.TYPE_RELATIVE_HUMIDITY:
+                additionalFieldHash.get(FieldTypes.HUMIDITY).getContent().setText(String.valueOf(event.values[0]));
+                break;
+            case Sensor.TYPE_PRESSURE:
+                additionalFieldHash.get(FieldTypes.PRESSURE).getContent().setText(String.valueOf(event.values[0]));
+                break;
+        }
+    }  // setSensorFieldValues
 
     private void saveJsonFile(View v){
         EditText description = findViewById(R.id.desid);
-        //EditText date = findViewById(R.id.dateId);
         EditText creator = findViewById(R.id.creatorId);
         EditText latitude = findViewById(R.id.latid);
         EditText longitude = findViewById(R.id.lenid);
@@ -138,8 +189,7 @@ public class RecordRegistrationActivity extends Activity {
                     Double.valueOf(latitude.getText().toString()),
                     Double.valueOf(longitude.getText().toString()));
 
-            for(AdditionalField a : newFieldsList){
-                Log.d("New field: ", a.getName() + " " + a.getType().toString() + " " + a.getContent().getText());
+            for(AdditionalField a : additionalFieldHash.values()){
                 jsonRecord.addNewField(a.getName(), a.getType(), a.getContent().getText().toString());
             }
 
@@ -148,12 +198,12 @@ public class RecordRegistrationActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }  // saveJsonFile
 
-    private void retrieveJson() throws Exception {
+    /*private void retrieveJson() throws Exception {
         List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
         for(JSONRecord j : records){
             Log.d("Json: ", j.toString());
         }
-    }
+    }*/
 }
