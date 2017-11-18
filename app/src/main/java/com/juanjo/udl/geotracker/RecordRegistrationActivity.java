@@ -33,11 +33,16 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();
+    private SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
+
+        findViewById(R.id.desid).requestFocus();
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         Button btnAddField = findViewById(R.id.btnAddFieldId);
         btnAddField.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +101,6 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
                         textInput.setBackgroundColor(Color.TRANSPARENT);
                 }
 
-
                 LinearLayout fieldSet = findViewById(R.id.record_layout);
                 fieldSet.addView(textFiled, fieldSet.getChildCount()-2);
                 fieldSet.addView(textInput, fieldSet.getChildCount()-2);
@@ -118,28 +122,42 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
                 initialized = initializeSensor(Sensor.TYPE_PRESSURE);
                 break;
         }
-        if (initialized) additionalFieldHash.get(type).getContent().setText("n/a");
+        if (!initialized) additionalFieldHash.get(type).getContent().setText("n/a");
     }  // createNewSensor
 
     private boolean initializeSensor(int type){
-        SensorManager sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor(type);
-        if(sensor != null){
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-            return true;
+        if(sensorManager != null){
+            Sensor sensor = sensorManager.getDefaultSensor(type);
+            if(sensor != null){
+                sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+                return true;
+            }
         }
         return false;
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event) {
-        setSensorFieldValues(event);
+        public void onPause() {
+            super.onPause();
+            sensorManager.unregisterListener(this);
+        }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        for(AdditionalField a : additionalFieldHash.values()){
+            createNewSensor(a.getType());
+        }
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+    public void onSensorChanged(SensorEvent event) {
+        setSensorFieldValues(event);
+        Log.d("Sensor: ", String.valueOf(event.values[0]));
     }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     private void setSensorFieldValues(SensorEvent event){
         switch (event.sensor.getType()){
