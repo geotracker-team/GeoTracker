@@ -1,7 +1,6 @@
 package com.juanjo.udl.geotracker;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -19,15 +18,12 @@ import android.widget.TextView;
 
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
-import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import org.json.JSONException;
 
-
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 public class RecordRegistrationActivity extends Activity implements SensorEventListener {
 
@@ -88,7 +84,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
                 AdditionalField additionalField = new AdditionalField(title, type, textInput);
                 additionalFieldHash.put(type, additionalField);
 
-                switch (type){
+                switch (type) {
                     case TEXT:
                         textInput.setInputType(InputType.TYPE_CLASS_TEXT);
                         break;
@@ -97,8 +93,6 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
                         break;
                     default:
                         createNewSensor(type);
-                        textInput.setEnabled(false);
-                        textInput.setBackgroundColor(Color.TRANSPARENT);
                 }
 
                 LinearLayout fieldSet = findViewById(R.id.record_layout);
@@ -122,7 +116,15 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
                 initialized = initializeSensor(Sensor.TYPE_PRESSURE);
                 break;
         }
-        if (!initialized) additionalFieldHash.get(type).getContent().setText("n/a");
+        if (!initialized){
+            additionalFieldHash.get(type).getContent().setText("n/a");
+            additionalFieldHash.get(type).getContent().setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+        else{
+            additionalFieldHash.get(type).getContent().setEnabled(false);
+            additionalFieldHash.get(type).getContent().setBackgroundColor(Color.TRANSPARENT);
+        }
+
     }  // createNewSensor
 
     private boolean initializeSensor(int type){
@@ -198,10 +200,10 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
         }
     }  // saveJsonFile
 
-    private void retrieveJson() throws Exception {
+    /*private void retrieveJson() throws Exception {
         List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
         for(JSONRecord j : records){
             Log.d("Json: ", j.toString());
         }
-    }
+    }*/
 }
