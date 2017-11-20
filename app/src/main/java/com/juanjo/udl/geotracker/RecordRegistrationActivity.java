@@ -16,6 +16,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
@@ -31,6 +37,8 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     private HashMap<FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();
     private SensorManager sensorManager;
     private EditText description, creator, latitude, longitude;
+    private Double lat, lon;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
         setContentView(R.layout.activity_record_registration);
 
         findViewById(R.id.desid).requestFocus();
+        mapView = findViewById(R.id.mapView);
         description = findViewById(R.id.desid);
         creator = findViewById(R.id.creatorId);
         latitude = findViewById(R.id.latid);
@@ -45,9 +54,26 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
 
         Intent it = getIntent();
         if(it != null){
-            if(it.hasExtra("latitude")) latitude.setText(String.valueOf(it.getDoubleExtra("latitude",0)));
-            if(it.hasExtra("longitude")) longitude.setText(String.valueOf(it.getDoubleExtra("longitude",0)));
-        }
+            lat = it.getDoubleExtra("latitude",0);
+            lon = it.getDoubleExtra("longitude",0);
+            latitude.setText(String.valueOf(lat));
+            longitude.setText(String.valueOf(lon));
+        }//If the intent exists
+
+        mapView.onCreate(savedInstanceState);
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                LatLng position = new LatLng(lat, lon);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+                googleMap.moveCamera(CameraUpdateFactory.zoomTo(19)); //Initial zoom
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); //Hibrid Map
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(position);
+                googleMap.addMarker(markerOptions);
+            }
+        });
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -150,10 +176,11 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     }
 
     @Override
-        public void onPause() {
-            super.onPause();
-            sensorManager.unregisterListener(this);
-        }
+    public void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+        mapView.onPause();
+    }
 
     @Override
     public void onResume(){
@@ -161,6 +188,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
         for(AdditionalField a : additionalFieldHash.values()){
             createNewSensor(a.getType());
         }
+        mapView.onResume();
     }
 
     @Override
