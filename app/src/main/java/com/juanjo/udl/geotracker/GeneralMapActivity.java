@@ -79,6 +79,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         switch (item.getItemId()){
             case R.id.menu_add_record:
                 intent = new Intent(this, RecordRegistrationActivity.class);
+                intent.putExtra("latitude", mLastLocation.getLatitude());
+                intent.putExtra("longitude", mLastLocation.getLongitude());
                 startActivity(intent);
                 return true;
             case R.id.menu_history:
