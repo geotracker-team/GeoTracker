@@ -30,6 +30,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();
     private SensorManager sensorManager;
+    private EditText description, creator, latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,16 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
         setContentView(R.layout.activity_record_registration);
 
         findViewById(R.id.desid).requestFocus();
+        description = findViewById(R.id.desid);
+        creator = findViewById(R.id.creatorId);
+        latitude = findViewById(R.id.latid);
+        longitude = findViewById(R.id.lenid);
+
+        Intent it = getIntent();
+        if(it != null){
+            if(it.hasExtra("latitude")) latitude.setText(String.valueOf(it.getDoubleExtra("latitude",0)));
+            if(it.hasExtra("longitude")) longitude.setText(String.valueOf(it.getDoubleExtra("longitude",0)));
+        }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -176,10 +187,6 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     }  // setSensorFieldValues
 
     private void saveJsonFile(View v){
-        EditText description = findViewById(R.id.desid);
-        EditText creator = findViewById(R.id.creatorId);
-        EditText latitude = findViewById(R.id.latid);
-        EditText longitude = findViewById(R.id.lenid);
         JSONRecord jsonRecord;
         try {
             jsonRecord = new JSONRecord(v.getContext(),
