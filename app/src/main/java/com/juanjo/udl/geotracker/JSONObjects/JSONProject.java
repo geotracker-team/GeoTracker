@@ -16,11 +16,11 @@ import java.io.IOException;
  * Created by David on 13/11/2017.
  */
 
-public class JSONUser extends JSONGlobal {
+public class JSONProject extends JSONGlobal {
     private final int id;
     private final String description;
 
-    public JSONUser(Context context, int id, String description) throws JSONException {
+    public JSONProject(Context context, int id, String description) throws JSONException {
         this.context = context;
         this.id = id;
         this.description = description;
@@ -28,7 +28,7 @@ public class JSONUser extends JSONGlobal {
         putValues();
     }
 
-    public JSONUser(Context context, File file) throws IOException, JSONException {
+    public JSONProject(Context context, File file) throws IOException, JSONException {
 
         BufferedReader br = new BufferedReader(new FileReader(file)); //Open JSON file
         String line;
@@ -54,11 +54,11 @@ public class JSONUser extends JSONGlobal {
     }//putValues
 
     String getFileRoute() throws IOException {
-        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers();
+        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects();
     }//getFileRoute
 
     String getFileName() {
-        return "users_" + this.id + ".json";
+        return "project_" + this.id + ".json";
     }//getFileName
 
     //GETERS

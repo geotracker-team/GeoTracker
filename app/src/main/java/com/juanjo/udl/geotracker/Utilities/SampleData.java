@@ -2,8 +2,10 @@ package com.juanjo.udl.geotracker.Utilities;
 
 import android.content.Context;
 
+import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecordAdapter;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
 
@@ -16,7 +18,29 @@ import java.util.ArrayList;
 
 public class SampleData {
 
-    public boolean create(Context context) {
+    public boolean createProjects(Context context) {
+
+        JSONProject project = null;
+        try {
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+            File[] files = dir.listFiles();
+            if ((files == null) || (files.length == 0)) {
+                project = new JSONProject(context, 1, "Pest control");
+                project.save();
+                project = new JSONProject(context, 2, "Mushroom predictor");
+                project.save();
+                project = new JSONProject(context, 3, "Excursion tracker");
+                project.save();
+                project = new JSONProject(context, 4, "EPS project tracker");
+                project.save();
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean createRecords(Context context) {
 
         JSONRecord record = null;
         try {
@@ -42,9 +66,49 @@ public class SampleData {
         }
     }
 
+    public boolean createUsers(Context context) {
 
+        JSONProject project = null;
+        try {
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers());
+            File[] files = dir.listFiles();
+            if ((files == null) || (files.length == 0)) {
+                project = new JSONProject(context, 1, "Joan Josep");
+                project.save();
+                project = new JSONProject(context, 2, "Xavier");
+                project.save();
+                project = new JSONProject(context, 3, "David");
+                project.save();
+                project = new JSONProject(context, 4, "Dejan");
+                project.save();
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-    public boolean delete(Context context)  {
+    public boolean deleteProjects(Context context)  {
+
+        try {
+            ArrayList<JSONProject> records = new ArrayList<JSONProject>();
+
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean deleteRecords(Context context)  {
 
         try {
             ArrayList<JSONRecord> records = new ArrayList<JSONRecord>();
@@ -64,6 +128,24 @@ public class SampleData {
         }
     }
 
+    public boolean deleteUsers(Context context)  {
 
+        try {
+
+            ArrayList<JSONUser> records = new ArrayList<JSONUser>();
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers());
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
