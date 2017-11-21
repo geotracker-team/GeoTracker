@@ -1,24 +1,32 @@
 package com.juanjo.udl.geotracker;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.Utilities.Constants;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {
 
     private TextView txtLat, txtLon;
+    private List<JSONRecord> records;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +42,49 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     }//onCreate
 
+    private void fillMap() throws IOException, JSONException {
+        loadData();
+        addRecordsToMap();
+    }//fillMap
+
+    private void loadData() throws IOException, JSONException {
+        if(records!= null) records.clear();
+        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
+    }//loadData
+
+    private void addRecordsToMap() {
+        mMap.clear();
+        for (JSONRecord r : records) {
+            Bitmap icon;
+            String title = r.getDescription();
+            IconGenerator iconGenerator = new IconGenerator(this);
+            iconGenerator.setTextAppearance(android.R.style.TextAppearance_Holo_Widget_ActionBar_Title_Inverse);
+            iconGenerator.setColor(Color.BLUE);
+            icon = iconGenerator.makeIcon(title);
+
+            Marker m = addMarkerToMap(new LatLng(r.getLatitude(), r.getLongitude()), r.getDescription(), icon);
+            m.setTag(r);
+        }
+    }//addRecordsToMap
+
     //MAPS
     @Override
     public void onMapReady(GoogleMap map) {
         super.onMapReady(map);
 
-        addMarkerToMap(new LatLng(41.6082347, 0.6234154), "Test");
+        try {
+            fillMap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if(!marker.equals(mCurrLocationMarker)){
+                    JSONRecord record = (JSONRecord) marker.getTag();
                     Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
+                    it.putExtra("record", record);
                     startActivity(it);
                 }
                 return true;
@@ -59,7 +99,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
             LatLng position = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             moveCamera(position);
             if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
-            mCurrLocationMarker = addMarkerToMap(position, "");
+            mCurrLocationMarker = addMarkerToMap(position, getString(R.string.txtCurrLocation));
 
             txtLat.setText(String.valueOf(position.latitude));
             txtLon.setText(String.valueOf(position.longitude));

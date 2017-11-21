@@ -15,10 +15,10 @@ import java.io.IOException;
 public class JSONRecord extends JSONGlobal {
     private final String description, date, username;
     private final Double latitude, longitude;
-    private JSONObject otherFields;
+    private JSONObjectImplSerializable otherFields;
 
     public JSONRecord(Context context, String description, String date, String username, Double latitude, Double longitude) throws JSONException {
-        otherFields = new JSONObject();
+        otherFields = new JSONObjectImplSerializable();
         this.context = context;
         this.description = description;
         this.date = date;
@@ -30,7 +30,7 @@ public class JSONRecord extends JSONGlobal {
     }//Constructor with generic fields
 
     public JSONRecord(Context context, File file) throws IOException, JSONException {
-        otherFields = new JSONObject();
+        otherFields = new JSONObjectImplSerializable();
         BufferedReader br = new BufferedReader(new FileReader(file)); //Open JSON file
         String line;
         StringBuilder text = new StringBuilder();
@@ -48,7 +48,7 @@ public class JSONRecord extends JSONGlobal {
         this.username = jsonObject.getString("username");
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
-        this.otherFields = jsonObject.getJSONObject("otherFields");
+        this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));
 
         putValues();//Save the values in the inner JSON form
     }//Constructor with file

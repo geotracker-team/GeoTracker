@@ -98,8 +98,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
                     e.printStackTrace();
                 }*/
 
-                Intent in = new Intent(RecordRegistrationActivity.this, GeneralMapActivity.class);
-                startActivity(in);
+                finish();
             }
         });
     }//onCreate
