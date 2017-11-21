@@ -2,19 +2,15 @@ package com.juanjo.udl.geotracker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.Constants;
@@ -22,7 +18,6 @@ import com.juanjo.udl.geotracker.Utilities.Constants;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {
@@ -71,11 +66,14 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if(!marker.equals(mCurrLocationMarker)){
+                    JSONRecord record = (JSONRecord) marker.getTag();
                     Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
+                    it.putExtra("record", record);
                     startActivity(it);
                 }
                 return true;
@@ -90,7 +88,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
             LatLng position = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             moveCamera(position);
             if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
-            mCurrLocationMarker = addMarkerToMap(position, "");
+            mCurrLocationMarker = addMarkerToMap(position, getString(R.string.txtCurrLocation));
 
             txtLat.setText(String.valueOf(position.latitude));
             txtLon.setText(String.valueOf(position.longitude));

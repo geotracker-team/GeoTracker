@@ -15,6 +15,7 @@
     <string name="txtLat">Latitude: </string>
     <string name="txtLong">Longitude: </string>
     <string name="txtProject">Choose a project</string>
+    <string name="txtCurrLocation">Current location</string>
 
     <string-array name="spinnerUsers">
         <item>Joan Josep</item>
