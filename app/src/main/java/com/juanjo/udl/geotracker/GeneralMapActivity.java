@@ -2,6 +2,7 @@ package com.juanjo.udl.geotracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,10 +16,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.Utilities.Constants;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {
 
     private TextView txtLat, txtLon;
+    private List<JSONRecord> records;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +44,33 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     }//onCreate
 
+    private void fillMap() throws IOException, JSONException {
+        loadData();
+        addRecordsToMap();
+    }//fillMap
+
+    private void loadData() throws IOException, JSONException {
+        if(records!= null) records.clear();
+        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
+    }//loadData
+
+    private void addRecordsToMap() {
+        mMap.clear();
+        for (JSONRecord r : records) {
+            Marker m = addMarkerToMap(new LatLng(r.getLatitude(), r.getLongitude()), r.getDescription());
+        }
+    }//addRecordsToMap
+
     //MAPS
     @Override
     public void onMapReady(GoogleMap map) {
         super.onMapReady(map);
 
-        addMarkerToMap(new LatLng(41.6082347, 0.6234154), "Test");
+        try {
+            fillMap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
