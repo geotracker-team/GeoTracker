@@ -1,6 +1,8 @@
 package com.juanjo.udl.geotracker;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.maps.android.ui.IconGenerator;
 import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.Constants;
@@ -52,7 +55,15 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     private void addRecordsToMap() {
         mMap.clear();
         for (JSONRecord r : records) {
-            Marker m = addMarkerToMap(new LatLng(r.getLatitude(), r.getLongitude()), r.getDescription());
+            Bitmap icon;
+            String title = r.getDescription();
+            IconGenerator iconGenerator = new IconGenerator(this);
+            iconGenerator.setTextAppearance(android.R.style.TextAppearance_Holo_Widget_ActionBar_Title_Inverse);
+            iconGenerator.setColor(Color.BLUE);
+            icon = iconGenerator.makeIcon(title);
+
+            Marker m = addMarkerToMap(new LatLng(r.getLatitude(), r.getLongitude()), r.getDescription(), icon);
+            m.setTag(r);
         }
     }//addRecordsToMap
 
