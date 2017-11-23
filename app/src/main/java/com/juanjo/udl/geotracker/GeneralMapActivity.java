@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -27,11 +28,16 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     private TextView txtLat, txtLon;
     private List<JSONRecord> records;
+    private boolean followGPS = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_map);
+
+        if (savedInstanceState != null) {
+            followGPS = savedInstanceState.getBoolean("followGPS");
+        }//Restore saved data
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragment);
@@ -41,6 +47,12 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         txtLon = findViewById(R.id.txtLon);
 
     }//onCreate
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("followGPS", followGPS);//Save data
+        super.onSaveInstanceState(savedInstanceState);
+    }//onSaveInstanceState
 
     private void fillMap() throws IOException, JSONException {
         loadData();
@@ -97,7 +109,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         super.displayLocation();
         if(mLastLocation != null){
             LatLng position = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            moveCamera(position);
+            if(followGPS) moveCamera(position); //Move the position if follow GPS is enabled
             if(mCurrLocationMarker != null) mCurrLocationMarker.remove();
             mCurrLocationMarker = addMarkerToMap(position, getString(R.string.txtCurrLocation));
 
@@ -110,6 +122,14 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem item = menu.findItem(R.id.menuFollowGPS);
+        if(item != null){
+            if(followGPS) {
+                item.setIcon(R.drawable.ic_media_pause_dark);
+            } else {
+                item.setIcon(R.drawable.ic_media_play_dark);
+            }
+        }
         return true;
     }//onCreateOptionsMenu
 
@@ -126,6 +146,18 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
             case R.id.menu_history:
                 intent = new Intent(this, HistoricActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.menuFollowGPS:
+                followGPS = !followGPS; //Change follow state
+                if(followGPS) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.txtFollowGPSOn),
+                            Toast.LENGTH_SHORT).show();
+                    item.setIcon(R.drawable.ic_media_pause_dark);
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.txtFollowGPSOff),
+                            Toast.LENGTH_SHORT).show();
+                    item.setIcon(R.drawable.ic_media_play_dark);
+                }
                 return true;
             case R.id.menu_options:
                 intent = new Intent(this, OptionsActivity.class);

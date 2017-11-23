@@ -81,4 +81,7 @@
     <string name="txtAddRecord">Add record</string>
     <string name="txtHistoricRecord">Historic records</string>
     <string name="txtOptions">Options</string>
+    <string name="txtFollowGPS">Follow GPS</string>
+    <string name="txtFollowGPSOn">Follow GPS On</string>
+    <string name="txtFollowGPSOff">Follow GPS Off</string>
 </resources>
