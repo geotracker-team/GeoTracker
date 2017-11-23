@@ -12,6 +12,11 @@
         android:title="@string/txtHistoricRecord"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menuFollowGPS"
+        android:icon="@drawable/ic_media_play_dark"
+        android:title="@string/txtFollowGPS"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_options"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/txtOptions"
