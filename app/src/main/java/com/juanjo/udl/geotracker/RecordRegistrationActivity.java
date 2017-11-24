@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
@@ -25,7 +26,7 @@ import org.json.JSONException;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class RecordRegistrationActivity extends Activity implements SensorEventListener {
+public class RecordRegistrationActivity extends GlobalActivity implements SensorEventListener {
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();

@@ -17,5 +17,4 @@ public class GlobalActivity extends AppCompatActivity {
             }
         });
     }
-
 }
