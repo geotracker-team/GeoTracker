@@ -151,6 +151,8 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
             case PRESSURE:
                 initialized = initializeSensor(Sensor.TYPE_PRESSURE);
                 break;
+            default:
+                return;
         }
         if (!initialized){
             additionalFieldHash.get(type).getContent().setText("n/a");
