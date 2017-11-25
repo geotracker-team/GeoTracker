@@ -11,20 +11,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.juanjo.udl.geotracker.JSONObjects.JSONObjectImplSerializable;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
-import com.juanjo.udl.geotracker.Utilities.AdditionalField;
-import com.juanjo.udl.geotracker.Utilities.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 public class
 RecordViewActivity extends Activity{
 
-    private HashMap<Constants.FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();
+    // private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private EditText description;
     private TextView latitude, longitude, date, user;
     private Button btnSaveChanges;
@@ -44,7 +39,7 @@ RecordViewActivity extends Activity{
         description = findViewById(R.id.desid);
 
         prepareDefaultFields();
-        prepareExtraFields();
+       // prepareExtraFields();
 
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
@@ -87,8 +82,8 @@ RecordViewActivity extends Activity{
             Log.d("json: ", jsonRecord.toString());
             user.setText(jsonRecord.getUsername());
             date.setText(jsonRecord.getDate());
-            longitude.setText(jsonRecord.getLongitude().toString());
-            latitude.setText(jsonRecord.getLatitude().toString());
+            longitude.setText(String.valueOf(jsonRecord.getLongitude()));
+            latitude.setText(String.valueOf(jsonRecord.getLatitude()));
 
             description.setText(jsonRecord.getDescription());
 //            description.setFocusableInTouchMode(false);
@@ -110,8 +105,8 @@ RecordViewActivity extends Activity{
             TextView fieldName = new TextView(RecordViewActivity.this);
             EditText fieldValue = new EditText(RecordViewActivity.this);
 
-            fieldName.setText("Teeeeeeeeeeeest");
-            fieldValue.setText("valueeeeeeee");
+            fieldName.setText("Tile test");
+            fieldValue.setText("Value test");
             fieldValue.setBackgroundColor(Color.TRANSPARENT);
             fieldValue.setTextColor(Color.GRAY);
 //            fieldValue.setFocusableInTouchMode(false);
@@ -130,6 +125,8 @@ RecordViewActivity extends Activity{
 //        while (otherFields.keys().hasNext()){
 
 //            otherFields.put(otherFields.keys().next(), )
+
+
         jsonRecord.putValues();
         jsonRecord.save();
     }
