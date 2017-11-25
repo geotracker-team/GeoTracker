@@ -1,6 +1,7 @@
 package com.juanjo.udl.geotracker.JSONObjects;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
@@ -13,16 +14,38 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONRecord extends JSONGlobal {
-    private final String description, date, username;
+    private String description, date;
+    private final String userName, projectName;
     private final Double latitude, longitude;
+    private final int userId, projectId;
     private JSONObjectImplSerializable otherFields;
 
-    public JSONRecord(Context context, String description, String date, String username, Double latitude, Double longitude) throws JSONException {
+    public JSONRecord(Context context, String description, String date, int userId, String userName, int projectId, String projectName, Double latitude, Double longitude) throws JSONException {
         otherFields = new JSONObjectImplSerializable();
         this.context = context;
         this.description = description;
         this.date = date;
-        this.username = username;
+        this.userId = userId;
+
+        this.userName = userName;
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+        putValues();
+    }//Constructor with generic fields
+
+    //  Provisional to compatibility with previous version
+    public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude) throws JSONException {
+        otherFields = new JSONObjectImplSerializable();
+        this.context = context;
+        this.description = description;
+        this.date = date;
+        this.userId = 0;
+        this.userName = userName;
+        this.projectId = 0;
+        this.projectName = "";
         this.latitude = latitude;
         this.longitude = longitude;
 
@@ -45,7 +68,10 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = jsonObject.getString("description");
         this.date = jsonObject.getString("date");
-        this.username = jsonObject.getString("username");
+        this.userId = jsonObject.has("userId") ? jsonObject.getInt("userId") : 0;
+        this.userName = jsonObject.has("userName") ? jsonObject.getString("userName") : "";
+        this.projectId = jsonObject.has("projectId") ? jsonObject.getInt("projectId") : 0;
+        this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
         this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));
@@ -56,7 +82,10 @@ public class JSONRecord extends JSONGlobal {
     public void putValues() throws JSONException {
         put("description", description);
         put("date", date);
-        put("username", username);
+        put("userId", userId);
+        put("username", userName);
+        put("projectId", projectId);
+        put("projectName", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
 
@@ -76,7 +105,7 @@ public class JSONRecord extends JSONGlobal {
     }//getFileRoute
 
     String getFileName() {
-        return this.username + "_" + this.date.replace(" ", "_").replace("/", "-") + ".json";
+        return this.userName + "_" + this.date.replace(" ", "_").replace("/", "-") + ".json";
     }//getFileName
 
     //GETERS
@@ -86,8 +115,17 @@ public class JSONRecord extends JSONGlobal {
     public String getDate() {
         return date;
     }
-    public String getUsername() {
-        return username;
+    public int getUserId() {
+        return userId;
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public int getProjectId() {
+        return projectId;
+    }
+    public String getProjectName() {
+        return projectName;
     }
     public Double getLatitude() {
         return latitude;
@@ -97,4 +135,17 @@ public class JSONRecord extends JSONGlobal {
     }
     public JSONObject getField(String name) throws JSONException { return (JSONObject) otherFields.get(name); }
     public JSONObject getOtherFields() { return otherFields; }
+
+    //SETTERS
+    public void setContext(Context context){
+        this.context = context;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setField(String name, JSONObject values) throws JSONException {
+        if(otherFields.has(name)) otherFields.remove(name);
+        otherFields.put(name, values);
+    }
+
 }

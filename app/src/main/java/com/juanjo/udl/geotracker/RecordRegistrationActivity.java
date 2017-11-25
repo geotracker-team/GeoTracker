@@ -24,12 +24,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import org.json.JSONException;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class RecordRegistrationActivity extends Activity implements SensorEventListener {
 
@@ -44,6 +46,12 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
+
+        try {
+            retrieveJson();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         findViewById(R.id.desid).requestFocus();
         mapView = findViewById(R.id.mapView);
@@ -92,11 +100,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
             public void onClick(View v) {
                 saveJsonFile(v);
 
-                /*try {
-                    retrieveJson();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
+
 
                 finish();
             }
@@ -204,13 +208,13 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     private void setSensorFieldValues(SensorEvent event){
         switch (event.sensor.getType()){
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                additionalFieldHash.get(String.valueOf(R.string.temperature)).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.temperature)).getContent().setText(String.valueOf(event.values[0]));
                 break;
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                additionalFieldHash.get(String.valueOf(R.string.humidity)).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.humidity)).getContent().setText(String.valueOf(event.values[0]));
                 break;
             case Sensor.TYPE_PRESSURE:
-                additionalFieldHash.get(String.valueOf(R.string.pressure)).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.pressure)).getContent().setText(String.valueOf(event.values[0]));
                 break;
         }
     }  // setSensorFieldValues
@@ -236,10 +240,10 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
         }
     }  // saveJsonFile
 
-    /*private void retrieveJson() throws Exception {
+    private void retrieveJson() throws Exception {
         List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
         for(JSONRecord j : records){
             Log.d("Json: ", j.toString());
         }
-    }*/
+    }
 }
