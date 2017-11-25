@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -96,6 +97,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 if(!marker.equals(mCurrLocationMarker)){
                     JSONRecord record = (JSONRecord) marker.getTag();
                     Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
+                    Log.d("General map json: ", record.toString());
                     it.putExtra("record", record);
                     startActivity(it);
                 }

@@ -139,7 +139,7 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
     }  // onActivityResult
 
     private void createNewSensor(FieldTypes type){
-        boolean initialized = false;
+        boolean initialized;
 
         switch (type){
             case TEMPERATURE:
