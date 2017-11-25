@@ -66,10 +66,10 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = jsonObject.getString("description");
         this.date = jsonObject.getString("date");
-        this.userId = jsonObject.getInt("userid");
-        this.userName = jsonObject.getString("username");
-        this.projectId = jsonObject.getInt("projectid");
-        this.projectName = jsonObject.getString("projectname");
+        this.userId = jsonObject.has("userId") ? jsonObject.getInt("userId") : 0;
+        this.userName = jsonObject.has("userName") ? jsonObject.getString("userName") : "";
+        this.projectId = jsonObject.has("projectId") ? jsonObject.getInt("projectId") : 0;
+        this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
         this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));
@@ -80,10 +80,10 @@ public class JSONRecord extends JSONGlobal {
     private void putValues() throws JSONException {
         put("description", description);
         put("date", date);
-        put("userid", userId);
+        put("userId", userId);
         put("username", userName);
-        put("projectid", projectId);
-        put("projectname", projectName);
+        put("projectId", projectId);
+        put("projectName", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
 
