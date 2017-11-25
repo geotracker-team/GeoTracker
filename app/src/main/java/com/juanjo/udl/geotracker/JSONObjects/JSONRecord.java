@@ -13,16 +13,37 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONRecord extends JSONGlobal {
-    private final String description, date, username;
+    private final String description, date;
+    private final String userName, projectName;
     private final Double latitude, longitude;
+    private final int userId, projectId;
     private JSONObjectImplSerializable otherFields;
 
-    public JSONRecord(Context context, String description, String date, String username, Double latitude, Double longitude) throws JSONException {
+    public JSONRecord(Context context, String description, String date, int userId, String userName, int projectId, String projectName, Double latitude, Double longitude) throws JSONException {
         otherFields = new JSONObjectImplSerializable();
         this.context = context;
         this.description = description;
         this.date = date;
-        this.username = username;
+        this.userId = userId;
+        this.userName = userName;
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+        putValues();
+    }//Constructor with generic fields
+
+    //  Provisional to compatibility with previous version
+    public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude) throws JSONException {
+        otherFields = new JSONObjectImplSerializable();
+        this.context = context;
+        this.description = description;
+        this.date = date;
+        this.userId = 0;
+        this.userName = userName;
+        this.projectId = 0;
+        this.projectName = "";
         this.latitude = latitude;
         this.longitude = longitude;
 
@@ -45,7 +66,10 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = jsonObject.getString("description");
         this.date = jsonObject.getString("date");
-        this.username = jsonObject.getString("username");
+        this.userId = jsonObject.getInt("userid");
+        this.userName = jsonObject.getString("username");
+        this.projectId = jsonObject.getInt("projectid");
+        this.projectName = jsonObject.getString("projectname");
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
         this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));
@@ -56,7 +80,10 @@ public class JSONRecord extends JSONGlobal {
     private void putValues() throws JSONException {
         put("description", description);
         put("date", date);
-        put("username", username);
+        put("userid", userId);
+        put("username", userName);
+        put("projectid", projectId);
+        put("projectname", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
 
@@ -76,7 +103,7 @@ public class JSONRecord extends JSONGlobal {
     }//getFileRoute
 
     String getFileName() {
-        return this.username + "_" + this.date.replace(" ", "_").replace("/", "-") + ".json";
+        return this.userName + "_" + this.date.replace(" ", "_").replace("/", "-") + ".json";
     }//getFileName
 
     //GETERS
@@ -86,8 +113,17 @@ public class JSONRecord extends JSONGlobal {
     public String getDate() {
         return date;
     }
-    public String getUsername() {
-        return username;
+    public int getUserId() {
+        return userId;
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public int getProjectId() {
+        return projectId;
+    }
+    public String getProjectName() {
+        return projectName;
     }
     public Double getLatitude() {
         return latitude;
