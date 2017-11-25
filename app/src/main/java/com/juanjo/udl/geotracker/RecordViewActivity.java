@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class RecordViewActivity extends Activity{
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
+
+public class RecordViewActivity extends GlobalActivity{
 
     EditText desid, temid, humid;
     Button btnSaveChanges;

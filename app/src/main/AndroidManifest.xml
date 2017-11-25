@@ -26,12 +26,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GeneralMapActivity"/>
-        <activity android:name=".RecordRegistrationActivity"/>
-        <activity android:name=".RecordViewActivity"/>
-        <activity android:name=".OptionsActivity"/>
-        <activity android:name=".AddFieldActivity"/>
-        <activity android:name=".HistoricActivity"/>
+        <activity android:name=".GeneralMapActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity android:name=".RecordRegistrationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity android:name=".RecordViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity android:name=".OptionsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity android:name=".AddFieldActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity android:name=".HistoricActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
     </application>
 
 </manifest>
