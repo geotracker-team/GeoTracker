@@ -28,7 +28,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     private TextView txtLat, txtLon;
     private List<JSONRecord> records;
-    private boolean followGPS = true;
+    private boolean followGPS = true, first = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,18 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         txtLon = findViewById(R.id.txtLon);
 
     }//onCreate
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(!first) {
+            try {
+                fillMap();
+            } catch (Exception ex){
+                processException(ex);
+            }
+        }//If it's not the first time, the map is loaded so we can refresh
+    }//onResume
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -86,6 +98,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
         try {
             fillMap();
+            first = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
