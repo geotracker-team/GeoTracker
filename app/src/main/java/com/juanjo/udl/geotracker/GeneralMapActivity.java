@@ -88,6 +88,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
             Marker m = addMarkerToMap(new LatLng(r.getLatitude(), r.getLongitude()), r.getDescription(), icon);
             m.setTag(r);
+            m.setZIndex(1);//Set a weight of 1 to set priority over current location marker
         }
     }//addRecordsToMap
 
