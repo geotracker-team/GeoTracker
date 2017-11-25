@@ -77,7 +77,7 @@ public class JSONRecord extends JSONGlobal {
         putValues();//Save the values in the inner JSON form
     }//Constructor with file
 
-    private void putValues() throws JSONException {
+    public void putValues() throws JSONException {
         put("description", description);
         put("date", date);
         put("userid", userId);
