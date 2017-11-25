@@ -15,6 +15,7 @@
     <string name="txtLat">Latitud: </string>
     <string name="txtLong">Longitud: </string>
     <string name="txtProject">Elegeix un projecte</string>
+    <string name="txtCurrLocation">Posició actual</string>
 
     <string-array name="spinnerProj">
         <item>Pojecte 1</item>
@@ -72,4 +73,7 @@
     <string name="txtAddRecord">Afegir registre</string>
     <string name="txtHistoricRecord">Històric registres</string>
     <string name="txtOptions">Opcions</string>
+    <string name="txtFollowGPS">Seguiment GPS</string>
+    <string name="txtFollowGPSOn">Seguiment GPS On</string>
+    <string name="txtFollowGPSOff">Seguiment GPS Off</string>
 </resources>

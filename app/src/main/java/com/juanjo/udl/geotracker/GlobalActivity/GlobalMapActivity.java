@@ -2,6 +2,7 @@ package com.juanjo.udl.geotracker.GlobalActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +19,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.juanjo.udl.geotracker.R;
 
 public class GlobalMapActivity extends GlobalActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -169,6 +169,15 @@ public class GlobalMapActivity extends GlobalActivity implements OnMapReadyCallb
         markerOptions.title(title);
 
         return mMap.addMarker(markerOptions); //Add marker to map
+    }//addMarkerToMap
+
+    protected Marker addMarkerToMap(LatLng position, String title , Bitmap icon){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(position);
+        markerOptions.title(title);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
+
+        return mMap.addMarker(markerOptions);  //Add marker to map
     }//addMarkerToMap
 
     protected void moveCamera(LatLng position){

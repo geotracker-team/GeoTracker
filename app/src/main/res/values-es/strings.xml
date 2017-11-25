@@ -16,4 +16,7 @@
     <string name="txtAddRecord">Añadir registro</string>
     <string name="txtHistoricRecord">Historico registros</string>
     <string name="txtOptions">Opciones</string>
+    <string name="txtFollowGPS">Seguimiento GPS</string>
+    <string name="txtFollowGPSOn">Seguimiento GPS On</string>
+    <string name="txtFollowGPSOff">Seguimiento GPS Off</string>
 </resources>
