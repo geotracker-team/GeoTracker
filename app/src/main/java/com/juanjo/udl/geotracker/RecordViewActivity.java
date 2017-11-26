@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.juanjo.udl.geotracker.JSONObjects.JSONObjectImplSerializable;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants;
@@ -21,7 +20,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class
 RecordViewActivity extends Activity{
@@ -31,7 +29,7 @@ RecordViewActivity extends Activity{
     private TextView latitude, longitude, date, user;
     private Button btnSaveChanges;
     private JSONRecord jsonRecord;
-    private JSONObjectImplSerializable otherFields;
+    private HashMap<String, Object> otherFields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +100,7 @@ RecordViewActivity extends Activity{
             date.setText(jsonRecord.getDate());
             longitude.setText(String.valueOf(jsonRecord.getLongitude()));
             latitude.setText(String.valueOf(jsonRecord.getLatitude()));
+            jsonRecord.getOtherFields();
             description.setText(jsonRecord.getDescription());
 //            description.setFocusableInTouchMode(false);
             description.setFocusable(false);
@@ -111,7 +110,7 @@ RecordViewActivity extends Activity{
     }
 
     private void prepareExtraFields() throws JSONException {
-        otherFields = (JSONObjectImplSerializable) jsonRecord.getOtherFields();  // get the extra fields, the json obtained is {}
+        otherFields = (HashMap<String, Object>) jsonRecord.getOtherFields();  // get the extra fields, the json obtained is {}
 
         File file = new File((String) jsonRecord.get("fileRoute"));
 

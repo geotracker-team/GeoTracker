@@ -5,11 +5,15 @@ import android.content.Context;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Constants {
     public static class StaticFields{
@@ -48,5 +52,29 @@ public class Constants {
             }
             return records;
         } // getLocalSavedJsonRecords
+
+        public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
+            Map<String, Object> retMap = new HashMap<>();
+
+            if(json != null) {
+                retMap = toMap(json);
+            }
+            return retMap;
+        }
+
+        public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+            Map<String, Object> map = new HashMap<>();
+
+            Iterator<String> keysItr = object.keys();
+            while(keysItr.hasNext()) {
+                String key = keysItr.next();
+                Object value = object.get(key);
+
+                if(value instanceof JSONObject) value = toMap((JSONObject) value);
+
+                map.put(key, value);
+            }
+            return map;
+        }
     }
 }//Constants

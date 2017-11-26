@@ -1,7 +1,6 @@
 package com.juanjo.udl.geotracker.JSONObjects;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
@@ -12,16 +11,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JSONRecord extends JSONGlobal {
     private String description, date;
     private final String userName, projectName;
     private final Double latitude, longitude;
     private final int userId, projectId;
-    private JSONObjectImplSerializable otherFields;
+    private HashMap<String, Object> otherFields;
 
     public JSONRecord(Context context, String description, String date, int userId, String userName, int projectId, String projectName, Double latitude, Double longitude) throws JSONException {
-        otherFields = new JSONObjectImplSerializable();
+        otherFields = new HashMap();
         this.context = context;
         this.description = description;
         this.date = date;
@@ -38,7 +39,7 @@ public class JSONRecord extends JSONGlobal {
 
     //  Provisional to compatibility with previous version
     public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude) throws JSONException, IOException {
-        otherFields = new JSONObjectImplSerializable();
+        otherFields = new HashMap<>();
         this.context = context;
         this.description = description;
         this.date = date;
@@ -53,7 +54,7 @@ public class JSONRecord extends JSONGlobal {
     }//Constructor with generic fields
 
     public JSONRecord(Context context, File file) throws IOException, JSONException {
-        otherFields = new JSONObjectImplSerializable();
+        otherFields = new HashMap<>();
         BufferedReader br = new BufferedReader(new FileReader(file)); //Open JSON file
         String line;
         StringBuilder text = new StringBuilder();
@@ -74,7 +75,7 @@ public class JSONRecord extends JSONGlobal {
         this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
-        this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));
+        this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.jsonToMap(jsonObject.getJSONObject("otherFields"));
         this.fileRoute = jsonObject.has("fileRoute") ? getFileRoute()+getFileName() : getFileRoute() + getFileName();
 
         putValues();//Save the values in the inner JSON form
@@ -92,13 +93,13 @@ public class JSONRecord extends JSONGlobal {
         put("fileRoute", fileRoute);
 
         if(this.has("otherFields")) this.remove("otherFields"); //if exists the map remove it
-        put("otherFields", otherFields);
+        put("otherFields", new JSONObject(otherFields));
     }//putValues
 
     public void addNewField(String name, Constants.FieldTypes type, String content) throws JSONException {
-        JSONObject obj = new JSONObject();
+        HashMap<String, String> obj = new HashMap();
         obj.put(type.toString(), content);
-        otherFields.put(name, obj);//Save into the JSONObject the new field with it's content
+        otherFields.put(name, obj);//Save into the Map the new field with it's content
         putValues();
     }//addNewField
 
@@ -135,8 +136,8 @@ public class JSONRecord extends JSONGlobal {
     public Double getLongitude() {
         return longitude;
     }
-    public JSONObject getField(String name) throws JSONException { return (JSONObject) otherFields.get(name); }
-    public JSONObject getOtherFields() { return otherFields; }
+    public Object getField(String name) throws JSONException { return (otherFields.get(name)); }
+    public Map<String, Object> getOtherFields() { return otherFields; }
 
     //SETTERS
     public void setContext(Context context){
@@ -146,8 +147,9 @@ public class JSONRecord extends JSONGlobal {
         this.description = description;
     }
     public void setField(String name, JSONObject values) throws JSONException {
-        if(otherFields.has(name)) otherFields.remove(name);
+        if(otherFields.containsKey(name)) otherFields.remove(name);
         otherFields.put(name, values);
+        putValues();
     }
 
 }
