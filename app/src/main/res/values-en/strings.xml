@@ -40,4 +40,26 @@
     <string name="txtAddRecord">Add record</string>
     <string name="txtHistoricRecord">Historic records</string>
     <string name="txtOptions">Options</string>
+    <string name="createdBy">Created by:</string>
+    <string name="txtCurrLocation">Current location</string>
+    <string name="date">Date</string>
+    <string name="txtDate">Date of the record:</string>
+    <string name="txtDescription">Description</string>
+    <string name="txtFollowGPS">Follow GPS</string>
+    <string name="txtFollowGPSOff">Follow GPS Off</string>
+    <string name="txtFollowGPSOn">Follow GPS On</string>
+    <string name="numeric">Numeric</string>
+    <string name="txtPosition">Position:</string>
+    <string name="project">Project</string>
+    <string name="txtProj">Project:</string>
+    <string name="txtHum">Relative Humidity (%)</string>
+    <string name="btnSaveChanges">Save Changes</string>
+    <string name="search">Search</string>
+    <string name="btnSend">Send Record</string>
+    <string name="plain_text">Text</string>
+    <string name="user">User</string>
+    <string name="btnAddField">+</string>
+    <string name="txtTemp">Temperature (ºC)</string>
+    <string name="txtTo">to</string>
+    <string name="txtAll">All</string>
 </resources>

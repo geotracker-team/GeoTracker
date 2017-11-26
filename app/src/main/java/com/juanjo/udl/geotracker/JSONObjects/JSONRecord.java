@@ -66,10 +66,10 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = jsonObject.getString("description");
         this.date = jsonObject.getString("date");
-        this.userId = jsonObject.has("userId") ? jsonObject.getInt("userId") : 0;
-        this.userName = jsonObject.has("userName") ? jsonObject.getString("userName") : "";
-        this.projectId = jsonObject.has("projectId") ? jsonObject.getInt("projectId") : 0;
-        this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
+        this.userId = jsonObject.has("userid") ? jsonObject.getInt("userid") : 0;
+        this.userName = jsonObject.has("username") ? jsonObject.getString("username") : "";
+        this.projectId = jsonObject.has("projectid") ? jsonObject.getInt("projectid") : 0;
+        this.projectName = jsonObject.has("projectname") ? jsonObject.getString("projectname") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
         this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));

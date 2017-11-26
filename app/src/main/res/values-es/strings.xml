@@ -8,8 +8,8 @@
     <string name="txtLoginMail">"Introduzca un usuario"</string>
     <string name="txtLoginPassword">"Introduzca una contraseña"</string>
     <string name="btnLogin">"Entrar"</string>
-    <string name="txtLat">" Latitud:"</string>
-    <string name="txtLong">" Longitud:"</string>
+    <string name="txtLat">Latitud:</string>
+    <string name="txtLong">Longitud:</string>
     <string name="txtProject">" Escoja un proyecto"</string>
 
     <!-- Menu -->
@@ -19,4 +19,36 @@
     <string name="txtFollowGPS">Seguimiento GPS</string>
     <string name="txtFollowGPSOn">Seguimiento GPS On</string>
     <string name="txtFollowGPSOff">Seguimiento GPS Off</string>
+    <string name="btnAddField">+</string>
+    <string name="btnSaveChanges">Guardar cambios</string>
+    <string name="btnSend">Enviar registro</string>
+    <string name="create_field">Crear campo</string>
+    <string name="createdBy">Creado por:</string>
+    <string name="date">Fecha</string>
+    <string name="enable_data_use">Activa el uso de datos</string>
+    <string name="field_title">Título del campo</string>
+    <string name="humidity">Humedad (%)</string>
+    <string name="humidity_sensor">Sensor de humedad</string>
+    <string name="magnetic_field">Campo magentico</string>
+    <string name="magnetic_field_sensor">Sensor de campo magnético</string>
+    <string name="numeric">Numérico</string>
+    <string name="plain_text">Texto</string>
+    <string name="temperature">Temperature (ºC)</string>
+    <string name="temperature_sensor">Sensor de temperatura</string>
+    <string name="text">Texto plano</string>
+    <string name="txtCurrLocation">Posición actual</string>
+    <string name="txtDate">Fecha del registro:</string>
+    <string name="txtDescription">Descripción</string>
+    <string name="txtHum">Humedad relativa</string>
+    <string name="txtPosition">Posición:</string>
+    <string name="txtProj">Proyecto:</string>
+    <string name="txtTemp">Temperatura (ºC)</string>
+    <string name="Use_mobile_sensors">Usar los sensores del móvil</string>
+    <string name="user">Usuario</string>
+    <string name="txtTo">hasta</string>
+    <string name="project">Proyecto</string>
+    <string name="pressure_sensor">Sensor de presión</string>
+    <string name="pressure">Presión (Pa)</string>
+    <string name="search">Buscar</string>
+    <string name="txtAll">Todos</string>
 </resources>
