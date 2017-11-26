@@ -90,7 +90,6 @@ public class JSONRecord extends JSONGlobal {
         put("projectName", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
-        put("fileRoute", fileRoute);
 
         if(this.has("otherFields")) this.remove("otherFields"); //if exists the map remove it
         put("otherFields", new JSONObject(otherFields));
