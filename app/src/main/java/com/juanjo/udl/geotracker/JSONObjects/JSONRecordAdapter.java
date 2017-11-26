@@ -47,7 +47,7 @@ public class JSONRecordAdapter extends ArrayAdapter {
         projectTextView.setText(currentRec.getProjectName());
 */
         TextView userTextView = (TextView) listItemView.findViewById(R.id.user);
-        userTextView.setText(currentRec.getUsername());
+        userTextView.setText(currentRec.getUserName());
 
         TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
         dateTextView.setText(currentRec.getDate());

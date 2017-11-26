@@ -13,9 +13,9 @@ import java.util.List;
 
 public class Constants {
     public static class StaticFields{
-        private static final String folderOfRecords = "/records";
-        private static final String folderOfProjects = "/projects";
-        private static final String folderOfUsers = "/users";
+        private static final String folderOfRecords = "/records/";
+        private static final String folderOfProjects = "/projects/";
+        private static final String folderOfUsers = "/users/";
 
         public static String getFolderOfRecords() { return folderOfRecords; }//getFolderOfRecords
         public static String getFolderOfProjects() { return folderOfProjects; }//getFolderOfProjects

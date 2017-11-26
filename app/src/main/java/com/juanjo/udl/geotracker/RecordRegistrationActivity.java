@@ -29,6 +29,7 @@ import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -98,11 +99,13 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveJsonFile(v);
 
-
-
-                finish();
+                if(!description.getText().toString().equals("")){
+                    saveJsonFile(v);
+                    finish();
+                }
+                else
+                    description.setError("the field can't be null");
             }
         });
     }//onCreate
@@ -236,6 +239,8 @@ public class RecordRegistrationActivity extends Activity implements SensorEventL
             jsonRecord.save();
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }  // saveJsonFile

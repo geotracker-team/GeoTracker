@@ -19,7 +19,9 @@ import com.juanjo.udl.geotracker.Utilities.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class
 RecordViewActivity extends Activity{
@@ -55,12 +57,19 @@ RecordViewActivity extends Activity{
             @Override
             public void onClick(View view) {
                 try {
-                    saveChanges();
+                    if(!description.getText().toString().equals("")){
+                        saveChanges();
+//                        Intent in = new Intent(RecordViewActivity.this, GeneralMapActivity.class);
+//                        startActivity(in);
+                        finish();
+                    }
+                    else
+                        description.setError("the field can't be null");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Intent in = new Intent(RecordViewActivity.this, GeneralMapActivity.class);
-                startActivity(in);
             }
         });
     }
@@ -86,14 +95,13 @@ RecordViewActivity extends Activity{
 
     private void prepareDefaultFields(){
         Intent intent = getIntent();
-        if(intent != null){
+        if(intent != null && intent.hasExtra("record")){
             jsonRecord = (JSONRecord) intent.getSerializableExtra("record");
             Log.d("json: ", jsonRecord.toString());
             user.setText(jsonRecord.getUserName());
             date.setText(jsonRecord.getDate());
             longitude.setText(String.valueOf(jsonRecord.getLongitude()));
             latitude.setText(String.valueOf(jsonRecord.getLatitude()));
-
             description.setText(jsonRecord.getDescription());
 //            description.setFocusableInTouchMode(false);
             description.setFocusable(false);
@@ -103,7 +111,10 @@ RecordViewActivity extends Activity{
     }
 
     private void prepareExtraFields() throws JSONException {
-//        otherFields = (JSONObjectImplSerializable) jsonRecord.getOtherFields();  // get the extra fields, the json obtained is {}
+        otherFields = (JSONObjectImplSerializable) jsonRecord.getOtherFields();  // get the extra fields, the json obtained is {}
+
+        File file = new File((String) jsonRecord.get("fileRoute"));
+
 
         LinearLayout fieldSet = findViewById(R.id.view_record_layout_id);
 
@@ -147,6 +158,7 @@ RecordViewActivity extends Activity{
         }
 
         jsonRecord.setContext(this);  // Set the current context to avoid possible errors
+//        jsonRecord.delete();
         jsonRecord.putValues();
         jsonRecord.save();
     }

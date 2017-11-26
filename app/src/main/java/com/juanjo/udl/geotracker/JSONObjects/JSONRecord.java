@@ -37,7 +37,7 @@ public class JSONRecord extends JSONGlobal {
     }//Constructor with generic fields
 
     //  Provisional to compatibility with previous version
-    public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude) throws JSONException {
+    public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude) throws JSONException, IOException {
         otherFields = new JSONObjectImplSerializable();
         this.context = context;
         this.description = description;
@@ -75,6 +75,7 @@ public class JSONRecord extends JSONGlobal {
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
         this.otherFields = new JSONObjectImplSerializable(jsonObject.getJSONObject("otherFields"));
+        this.fileRoute = jsonObject.has("fileRoute") ? getFileRoute()+getFileName() : getFileRoute() + getFileName();
 
         putValues();//Save the values in the inner JSON form
     }//Constructor with file
@@ -83,11 +84,12 @@ public class JSONRecord extends JSONGlobal {
         put("description", description);
         put("date", date);
         put("userId", userId);
-        put("username", userName);
+        put("userName", userName);
         put("projectId", projectId);
         put("projectName", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
+        put("fileRoute", fileRoute);
 
         if(this.has("otherFields")) this.remove("otherFields"); //if exists the map remove it
         put("otherFields", otherFields);
