@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -20,8 +22,10 @@ import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {
@@ -110,6 +114,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 if(!marker.equals(mCurrLocationMarker)){
                     JSONRecord record = (JSONRecord) marker.getTag();
                     Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
+                    Log.d("General map json: ", record.toString());
                     it.putExtra("record", record);
                     startActivity(it);
                 }
