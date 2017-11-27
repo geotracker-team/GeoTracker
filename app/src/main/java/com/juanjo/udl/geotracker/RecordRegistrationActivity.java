@@ -25,17 +25,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class RecordRegistrationActivity extends GlobalActivity implements SensorEventListener {
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
-    private HashMap<FieldTypes, AdditionalField> additionalFieldHash = new HashMap<>();
+    private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private SensorManager sensorManager;
     private EditText description, creator, latitude, longitude;
     private Double lat, lon;
@@ -45,6 +48,12 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
+
+        try {
+            retrieveJson();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         findViewById(R.id.desid).requestFocus();
         mapView = findViewById(R.id.mapView);
@@ -91,15 +100,13 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveJsonFile(v);
 
-                /*try {
-                    retrieveJson();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
-
-                finish();
+                if(!description.getText().toString().equals("")){
+                    saveJsonFile(v);
+                    finish();
+                }
+                else
+                    description.setError("the field can't be null");
             }
         });
     }//onCreate
@@ -119,7 +126,7 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
                 EditText textInput = new EditText(RecordRegistrationActivity.this);
 
                 AdditionalField additionalField = new AdditionalField(title, type, textInput);
-                additionalFieldHash.put(type, additionalField);
+                additionalFieldHash.put(title, additionalField);
 
                 switch (type) {
                     case TEXT:
@@ -129,7 +136,7 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
                         textInput.setInputType(InputType.TYPE_CLASS_NUMBER);
                         break;
                     default:
-                        createNewSensor(type);
+                        createNewSensor(type, title);
                 }
 
                 LinearLayout fieldSet = findViewById(R.id.record_layout);
@@ -139,8 +146,8 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         }
     }  // onActivityResult
 
-    private void createNewSensor(FieldTypes type){
-        boolean initialized = false;
+    private void createNewSensor(FieldTypes type, String title){
+        boolean initialized;
 
         switch (type){
             case TEMPERATURE:
@@ -152,14 +159,16 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
             case PRESSURE:
                 initialized = initializeSensor(Sensor.TYPE_PRESSURE);
                 break;
+            default:
+                return;
         }
         if (!initialized){
-            additionalFieldHash.get(type).getContent().setText("n/a");
-            additionalFieldHash.get(type).getContent().setInputType(InputType.TYPE_CLASS_NUMBER);
+            additionalFieldHash.get(title).getContent().setText("n/a");
+            additionalFieldHash.get(title).getContent().setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         else{
-            additionalFieldHash.get(type).getContent().setEnabled(false);
-            additionalFieldHash.get(type).getContent().setBackgroundColor(Color.TRANSPARENT);
+            additionalFieldHash.get(title).getContent().setEnabled(false);
+            additionalFieldHash.get(title).getContent().setBackgroundColor(Color.TRANSPARENT);
         }
 
     }  // createNewSensor
@@ -186,7 +195,7 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     public void onResume(){
         super.onResume();
         for(AdditionalField a : additionalFieldHash.values()){
-            createNewSensor(a.getType());
+            createNewSensor(a.getType(), a.getName());
         }
         mapView.onResume();
     }
@@ -203,13 +212,13 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     private void setSensorFieldValues(SensorEvent event){
         switch (event.sensor.getType()){
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                additionalFieldHash.get(FieldTypes.TEMPERATURE).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.temperature)).getContent().setText(String.valueOf(event.values[0]));
                 break;
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                additionalFieldHash.get(FieldTypes.HUMIDITY).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.humidity)).getContent().setText(String.valueOf(event.values[0]));
                 break;
             case Sensor.TYPE_PRESSURE:
-                additionalFieldHash.get(FieldTypes.PRESSURE).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.pressure)).getContent().setText(String.valueOf(event.values[0]));
                 break;
         }
     }  // setSensorFieldValues
@@ -232,13 +241,15 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
 
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }  // saveJsonFile
 
-    /*private void retrieveJson() throws Exception {
+    private void retrieveJson() throws Exception {
         List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
         for(JSONRecord j : records){
             Log.d("Json: ", j.toString());
         }
-    }*/
+    }
 }
