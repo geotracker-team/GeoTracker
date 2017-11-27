@@ -33,12 +33,13 @@ public class JSONRecordAdapter extends ArrayAdapter {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item , parent, false);
         }
 
-        JSONRecord currentRec = (JSONRecord) getItem(position);
+        final JSONRecord currentRec = (JSONRecord) getItem(position);
 
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(getContext(), RecordViewActivity.class);
+                it.putExtra("record", currentRec);
                 getContext().startActivity(it);
             }
         });

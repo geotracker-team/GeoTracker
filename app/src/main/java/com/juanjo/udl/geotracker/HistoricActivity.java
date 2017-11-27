@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,10 @@ import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.SampleData;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HistoricActivity extends GlobalActivity {
@@ -30,6 +34,7 @@ public class HistoricActivity extends GlobalActivity {
     EditText fDateIni;
     EditText fDateFin;
     Button btSearch;
+    ListView listView;
 
     ArrayList<JSONRecord> records;
     ArrayList<String> projects;
@@ -44,7 +49,7 @@ public class HistoricActivity extends GlobalActivity {
 //        sample.deleteProjects(this);
 //        sample.deleteUsers(this);
 //        sample.deleteRecords(this);
-//        sample.createProjects(this);
+        sample.createProjects(this);
 //        sample.createUsers(this);
 //        sample.createRecords(this);
 
@@ -55,6 +60,7 @@ public class HistoricActivity extends GlobalActivity {
         fDateFin = (EditText) findViewById(R.id.fDateFin);
         btSearch = (Button) findViewById(R.id.btSearch);
 
+        defaultSearchValues();
 
         users = readUsers();
         ArrayAdapter<String> userAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
@@ -66,24 +72,29 @@ public class HistoricActivity extends GlobalActivity {
 
         records = readRecords();
         final JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(this, records);
-        ListView listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                JSONRecord recordClicked = (JSONRecord) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), RecordViewActivity.class);
+                intent.putExtra("JSONRecord", recordClicked);
+                startActivity(intent);
+            }
+        });
 
         btSearch.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "Search button",Toast.LENGTH_SHORT).show();
-
-/*
-                                             records = readRecords();
-                                             JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(this, records);
-                                             ListView listView = (ListView) findViewById(R.id.list);
-                                             listView.setAdapter(itemsAdapter);
-  */
+                                         records = readRecords();
+                                         JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(getBaseContext(), records);
+                                         ListView listView = (ListView) findViewById(R.id.list);
+                                         listView.setAdapter(itemsAdapter);
                                          }
                                      }
         );
-
 
     }
 
@@ -117,6 +128,8 @@ public class HistoricActivity extends GlobalActivity {
         JSONProject project = null;
         ArrayList<String> projects = new ArrayList<String>();
         try {
+            projects.add(getResources().getString(R.string.txtAll));
+
             File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
             File[] files = dir.listFiles();
             if (files != null) {
@@ -140,6 +153,8 @@ public class HistoricActivity extends GlobalActivity {
         JSONUser user = null;
         ArrayList<String> users = new ArrayList<String>();
         try {
+            users.add(getResources().getString(R.string.txtAll));
+
             File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers());
             File[] files = dir.listFiles();
             if (files != null) {
@@ -163,13 +178,48 @@ public class HistoricActivity extends GlobalActivity {
         boolean valid;
 
         valid = true;
-    //    Toast.makeText(getApplicationContext(), getResources().getString(),Toast.LENGTH_SHORT).show();
+        try {
+            if (!fUser.getSelectedItem().toString().equals(getResources().getString(R.string.txtAll))) {
+                if (!record.getUserName().equals(fUser.getSelectedItem().toString()))
+                    valid = false;
+            }
+            if (!fProject.getSelectedItem().toString().equals(getResources().getString(R.string.txtAll))) {
+                if (!record.getProjectName().equals(fProject.getSelectedItem().toString()))
+                    valid = false;
+            }
+/*
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataIni = dateFormat.parse(fDateIni.getText().toString());
+            Date dataFin = dateFormat.parse(fDateFin.getText().toString());
 
-        /*
-        if (record.getUsername().equals(fUser.toString()))
-            valid = true;
+            SimpleDateFormat dateFormatRecord = new SimpleDateFormat("dd/MM/yyyy hh:nn:ss");
+            Date dateRecord = dateFormatRecord.parse(record.getDate());
+
+            if (dateRecord.compareTo(dataIni) < 0) {
+                valid = false;
+            }
+            if (dateRecord.compareTo(dataIni) > 0) {
+                valid = false;
+            }
 */
-        return valid;
+            return valid;
+        } catch (ParseException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
+    private void defaultSearchValues() {
+        Date dateFin = null;
+
+        dateFin = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        fDateFin.setText(dateFormat.format(dateFin));
+
+        Calendar dateIni = Calendar.getInstance();
+        dateIni.setTime(dateFin);
+        dateIni.add(Calendar.MONTH, -3);
+        fDateIni.setText(dateFormat.format(dateIni.getTime()));
+
+    }
 }
