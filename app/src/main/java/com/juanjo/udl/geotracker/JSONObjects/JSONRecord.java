@@ -27,7 +27,6 @@ public class JSONRecord extends JSONGlobal {
         this.description = description;
         this.date = date;
         this.userId = userId;
-
         this.userName = userName;
         this.projectId = projectId;
         this.projectName = projectName;

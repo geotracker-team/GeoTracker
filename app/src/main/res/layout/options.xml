@@ -11,30 +11,35 @@
         android:layout_margin="10dp"/>
 
     <CheckBox
+        android:id="@+id/tempS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/temperature_sensor"/>
 
     <CheckBox
+        android:id="@+id/humS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/humidity_sensor"/>
 
     <CheckBox
+        android:id="@+id/pressS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/pressure_sensor"/>
 
     <CheckBox
+        android:id="@+id/magfS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/magnetic_field_sensor"/>
 
     <Switch
+        android:id="@+id/toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecordAdapter;
@@ -22,7 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class HistoricActivity extends AppCompatActivity {
+public class HistoricActivity extends GlobalActivity {
 
     Spinner fUser;
     Spinner fProject;
@@ -82,20 +83,6 @@ public class HistoricActivity extends AppCompatActivity {
                                          }
                                      }
         );
-
-/*
-        ArrayList<Register> registers = new ArrayList<Register>();
-
-        registers.add(new Register("01/10/2017","David","EPS project ",  new Double(41.6109), new Double(0.6419), "Track point 1"));
-        registers.add(new Register("02/10/2017","David","EPS project ",  new Double(41.6112), new Double(0.6421), "Track point 2"));
-        registers.add(new Register("02/10/2017","David","EPS project ",  new Double(41.6118), new Double(0.6432), "Track point 3"));
-        registers.add(new Register("05/10/2017","Xavier","EPS project ",  new Double(41.6100), new Double(0.6441), "Track point 4"));
-        registers.add(new Register("12/10/2017","David","ETSEA project ",  new Double(41.6058), new Double(0.6403), "Track point 5"));
-
-        RegisterAdapter itemsAdapter = new RegisterAdapter(this, registers);
-        ListView listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(itemsAdapter);
-*/
 
 
     }

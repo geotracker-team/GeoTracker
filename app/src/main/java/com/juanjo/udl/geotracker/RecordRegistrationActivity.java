@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -34,7 +35,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class RecordRegistrationActivity extends Activity implements SensorEventListener {
+public class RecordRegistrationActivity extends GlobalActivity implements SensorEventListener {
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();

@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants;
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
+
+public class RecordViewActivity extends GlobalActivity{
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 
-public class AddFieldActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class AddFieldActivity extends GlobalActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText editText;
     private FieldTypes type;
