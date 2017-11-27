@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecordAdapter;
@@ -20,12 +21,13 @@ import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.SampleData;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HistoricActivity extends AppCompatActivity {
+public class HistoricActivity extends GlobalActivity {
 
     Spinner fUser;
     Spinner fProject;
@@ -176,19 +178,35 @@ public class HistoricActivity extends AppCompatActivity {
         boolean valid;
 
         valid = true;
- //       Toast.makeText(getApplicationContext(), "Buscar: " + fUser.getSelectedItem(),Toast.LENGTH_SHORT).show();
- //
-        if (!fUser.getSelectedItem().toString().equals(getResources().getString(R.string.txtAll))) {
-            if (!record.getUserName().equals(fUser.getSelectedItem().toString()))
-                valid = false;
-        }
-        if (!fProject.getSelectedItem().toString().equals(getResources().getString(R.string.txtAll))) {
-            if (!record.getProjectName().equals(fProject.getSelectedItem().toString()))
-                valid = false;
-        }
+        try {
+            if (!fUser.getSelectedItem().toString().equals(getResources().getString(R.string.txtAll))) {
+                if (!record.getUserName().equals(fUser.getSelectedItem().toString()))
+                    valid = false;
+            }
+            if (!fProject.getSelectedItem().toString().equals(getResources().getString(R.string.txtAll))) {
+                if (!record.getProjectName().equals(fProject.getSelectedItem().toString()))
+                    valid = false;
+            }
+/*
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataIni = dateFormat.parse(fDateIni.getText().toString());
+            Date dataFin = dateFormat.parse(fDateFin.getText().toString());
 
+            SimpleDateFormat dateFormatRecord = new SimpleDateFormat("dd/MM/yyyy hh:nn:ss");
+            Date dateRecord = dateFormatRecord.parse(record.getDate());
 
-        return valid;
+            if (dateRecord.compareTo(dataIni) < 0) {
+                valid = false;
+            }
+            if (dateRecord.compareTo(dataIni) > 0) {
+                valid = false;
+            }
+*/
+            return valid;
+        } catch (ParseException e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     private void defaultSearchValues() {
