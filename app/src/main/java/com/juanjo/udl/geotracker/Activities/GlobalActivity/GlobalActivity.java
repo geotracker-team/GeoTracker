@@ -1,4 +1,4 @@
-package com.juanjo.udl.geotracker.GlobalActivity;
+package com.juanjo.udl.geotracker.Activities.GlobalActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;

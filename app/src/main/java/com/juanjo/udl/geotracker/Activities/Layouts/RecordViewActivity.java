@@ -1,6 +1,5 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Activities.Layouts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,20 +10,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants;
-import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
-
-public class RecordViewActivity extends GlobalActivity{
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class
-RecordViewActivity extends Activity{
+public class RecordViewActivity extends GlobalActivity{
 
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private EditText description;

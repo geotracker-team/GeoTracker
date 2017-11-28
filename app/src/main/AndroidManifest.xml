@@ -20,28 +20,28 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activities.Layouts.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GeneralMapActivity"
+        <activity android:name=".Activities.Layouts.GeneralMapActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".RecordRegistrationActivity"
+        <activity android:name=".Activities.Layouts.RecordRegistrationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".RecordViewActivity"
+        <activity android:name=".Activities.Layouts.RecordViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".OptionsActivity"
+        <activity android:name=".Activities.Layouts.OptionsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".AddFieldActivity"
+        <activity android:name=".Activities.Layouts.AddFieldActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".HistoricActivity"
+        <activity android:name=".Activities.Layouts.HistoricActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
     </application>

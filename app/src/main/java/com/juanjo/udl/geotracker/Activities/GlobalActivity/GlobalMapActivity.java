@@ -1,4 +1,4 @@
-package com.juanjo.udl.geotracker.GlobalActivity;
+package com.juanjo.udl.geotracker.Activities.GlobalActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;

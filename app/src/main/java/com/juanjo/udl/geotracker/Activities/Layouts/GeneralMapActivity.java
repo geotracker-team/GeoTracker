@@ -1,10 +1,9 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Activities.Layouts;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,15 +16,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.ui.IconGenerator;
-import com.juanjo.udl.geotracker.GlobalActivity.GlobalMapActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalMapActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyCallback {

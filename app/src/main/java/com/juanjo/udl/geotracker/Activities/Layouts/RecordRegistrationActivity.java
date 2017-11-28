@@ -1,6 +1,5 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Activities.Layouts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -16,7 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
