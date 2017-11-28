@@ -20,7 +20,10 @@ import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.SampleData;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,11 +56,11 @@ public class HistoricActivity extends GlobalActivity {
 //        sample.createRecords(this);
 
 
-        fUser = (Spinner) findViewById(R.id.fUser);
-        fProject = (Spinner) findViewById(R.id.fProject);
-        fDateIni = (EditText) findViewById(R.id.fDateIni);
-        fDateFin = (EditText) findViewById(R.id.fDateFin);
-        btSearch = (Button) findViewById(R.id.btSearch);
+        fUser = findViewById(R.id.fUser);
+        fProject = findViewById(R.id.fProject);
+        fDateIni = findViewById(R.id.fDateIni);
+        fDateFin = findViewById(R.id.fDateFin);
+        btSearch = findViewById(R.id.btSearch);
 
         defaultSearchValues();
 
@@ -69,9 +72,13 @@ public class HistoricActivity extends GlobalActivity {
         ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, projects);
         fProject.setAdapter(projectAdapter);
 
-        records = readRecords();
+        try {
+            records = readRecords();
+        } catch (Exception e){
+            processException(e);
+        }
         final JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(this, records);
-        listView = (ListView) findViewById(R.id.list);
+        listView = findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,8 +94,12 @@ public class HistoricActivity extends GlobalActivity {
         btSearch.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                         records = readRecords();
-                                         JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(getBaseContext(), records);
+                                             try {
+                                                 records = readRecords();
+                                             } catch (Exception e) {
+                                                 processException(e);
+                                             }
+                                             JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(getBaseContext(), records);
                                          ListView listView = (ListView) findViewById(R.id.list);
                                          listView.setAdapter(itemsAdapter);
                                          }
@@ -98,29 +109,8 @@ public class HistoricActivity extends GlobalActivity {
     }
 
 
-    private ArrayList<JSONRecord> readRecords()  {
-        JSONRecord record;
-        ArrayList<JSONRecord> records = new ArrayList<JSONRecord>();
-        try {
-
-        File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords());
-        File[] files = dir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    record = new JSONRecord(this, file);
-                    if (validate(record)) {
-                        records.add(record);
-                    }
-                }
-            }
-        }
-
-        return records;
-
-        } catch (Exception e) {
-            return null;
-        }
+    private ArrayList<JSONRecord> readRecords() throws IOException, JSONException {
+        return (ArrayList<JSONRecord>) Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
     }
 
     private ArrayList<String> readProjects()  {
@@ -168,7 +158,7 @@ public class HistoricActivity extends GlobalActivity {
             return users;
 
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+            processException(e);
             return null;
         }
     }

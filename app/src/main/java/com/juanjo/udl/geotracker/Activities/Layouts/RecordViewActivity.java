@@ -44,7 +44,7 @@ public class RecordViewActivity extends GlobalActivity{
         try {
             prepareExtraFields();
         } catch (JSONException e) {
-            e.printStackTrace();
+            processException(e);
         }
 
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
@@ -61,7 +61,7 @@ public class RecordViewActivity extends GlobalActivity{
 
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    processException(e);
                 }
             }
         });

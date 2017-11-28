@@ -103,7 +103,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
             fillMap();
             first = false;
         } catch (Exception e) {
-            e.printStackTrace();
+            processException(e);
         }
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {

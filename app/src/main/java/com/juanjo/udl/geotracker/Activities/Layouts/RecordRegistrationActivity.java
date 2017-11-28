@@ -15,22 +15,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +49,7 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         try {
             retrieveJson();
         } catch (Exception e) {
-            e.printStackTrace();
+            processException(e);
         }
 
         findViewById(R.id.desid).requestFocus();
@@ -239,10 +236,8 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
 
             jsonRecord.save();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            processException(e);
         }
     }  // saveJsonFile
 
