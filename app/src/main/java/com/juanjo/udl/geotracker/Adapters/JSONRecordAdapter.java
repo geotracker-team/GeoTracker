@@ -1,4 +1,4 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.R;
+import com.juanjo.udl.geotracker.Activities.Layouts.RecordViewActivity;
+
 import java.util.ArrayList;
 
-/**
- * Created by David on 05/11/2017.
- */
+public class JSONRecordAdapter extends ArrayAdapter {
 
-public class RegisterAdapter extends ArrayAdapter {
-
-    public RegisterAdapter(Context context, ArrayList<Register> registers) {
+    public JSONRecordAdapter(Context context, ArrayList<JSONRecord> registers) {
         super(context, 0, registers);
     }
 
@@ -29,33 +29,34 @@ public class RegisterAdapter extends ArrayAdapter {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item , parent, false);
         }
 
-        Register currentReg = (Register) getItem(position);
+        final JSONRecord currentRec = (JSONRecord) getItem(position);
 
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(getContext(), RecordViewActivity.class);
+                it.putExtra("record", currentRec);
                 getContext().startActivity(it);
             }
         });
 
         TextView projectTextView = (TextView) listItemView.findViewById(R.id.project);
-        projectTextView.setText(currentReg.getProjectName());
+        projectTextView.setText(currentRec.getProjectName());
 
         TextView userTextView = (TextView) listItemView.findViewById(R.id.user);
-        userTextView.setText(currentReg.getUser());
+        userTextView.setText(currentRec.getUserName());
 
         TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
-        dateTextView.setText(currentReg.getDate());
+        dateTextView.setText(currentRec.getDate());
 
         TextView latitudeTextView = (TextView) listItemView.findViewById(R.id.latitude);
-        latitudeTextView.setText(currentReg.getLatitude().toString());
+        latitudeTextView.setText(currentRec.getLatitude().toString());
 
         TextView longitudeTextView = (TextView) listItemView.findViewById(R.id.longitude);
-        longitudeTextView.setText(currentReg.getLongitude().toString());
+        longitudeTextView.setText(currentRec.getLongitude().toString());
 
         TextView descripTextView = (TextView) listItemView.findViewById(R.id.description);
-        descripTextView.setText(currentReg.getDescription());
+        descripTextView.setText(currentRec.getDescription());
 
         return listItemView;
     }

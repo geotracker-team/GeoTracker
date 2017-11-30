@@ -4,9 +4,7 @@ import android.content.Context;
 
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
-import com.juanjo.udl.geotracker.JSONObjects.JSONRecordAdapter;
 import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
-import com.juanjo.udl.geotracker.Utilities.Constants;
 
 
 import java.io.File;

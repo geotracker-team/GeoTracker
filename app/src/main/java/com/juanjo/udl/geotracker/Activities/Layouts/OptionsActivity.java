@@ -1,9 +1,9 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Activities.Layouts;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.R;
 
 public class OptionsActivity extends GlobalActivity {
 
