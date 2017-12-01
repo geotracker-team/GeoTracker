@@ -48,6 +48,7 @@
     <string name="magnetic_field_sensor">Sensor de camp magnètic</string>
     <string name="pressure_sensor">Sensor de pressió</string>
     <string name="enable_data_use">Activa l\'ús de dades</string>
+    <string name="txtNetwork">Internet</string>
 
     <!--Add field-->
     <string name="field_title">Titol del camp</string>
