@@ -64,6 +64,7 @@ public class HistoricActivity extends GlobalActivity {
         defaultSearchValues();
 
         try {
+            showDialog();
             records = readRecords();
             if(records.size() == 0) {
                 showToast(getString(R.string.txtNoRecords), Toast.LENGTH_SHORT);
@@ -76,6 +77,7 @@ public class HistoricActivity extends GlobalActivity {
             projects = readProjects();
             ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, projects);
             fProject.setAdapter(projectAdapter);
+            dismissDialog();
         } catch (Exception e){
             processException(e);
         }
