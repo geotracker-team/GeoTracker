@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">GeoTracker</string>
+    <string name="txtError">Error</string>
 
     <!-- Login Activity -->
     <string name="txtLoginMail">Introduce an user</string>
     <string name="txtLoginPassword">Introduce a password</string>
     <string name="btnLogin">Login</string>
+    <string name="txtNoFields">Field cannot be empty</string>
   
     <!-- Menu Activity -->
     <string name="recordhistory">Record history</string>
@@ -16,6 +18,7 @@
     <string name="txtLong">Longitude: </string>
     <string name="txtProject">Choose a project</string>
     <string name="txtCurrLocation">Current location</string>
+    <string name="txtNoRecord">Error, no record found</string>
 
     <string-array name="spinnerUsers">
         <item>Joan Josep</item>
@@ -37,6 +40,7 @@
     <string name="project">Project</string>
     <string name="date">Date</string>
     <string name="search">Search</string>
+    <string name="txtNoRecords">No records found</string>
 
     <!-- Record Registration -->
     <string name="createdBy">Created by:</string>
@@ -77,6 +81,7 @@
 
     <!-- View Record -->
     <string name="btnSaveChanges">Save Changes</string>
+    <string name="txtRecordSaved">Record saved</string>
 
     <!-- Menu -->
     <string name="txtAddRecord">Add record</string>

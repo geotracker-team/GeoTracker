@@ -55,7 +55,6 @@ public class HistoricActivity extends GlobalActivity {
 //        sample.createUsers(this);
 //        sample.createRecords(this);
 
-
         fUser = findViewById(R.id.fUser);
         fProject = findViewById(R.id.fProject);
         fDateIni = findViewById(R.id.fDateIni);
@@ -64,19 +63,23 @@ public class HistoricActivity extends GlobalActivity {
 
         defaultSearchValues();
 
-        users = readUsers();
-        ArrayAdapter<String> userAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
-        fUser.setAdapter(userAdapter);
-
-        projects = readProjects();
-        ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, projects);
-        fProject.setAdapter(projectAdapter);
-
         try {
             records = readRecords();
+            if(records.size() == 0) {
+                showToast(getString(R.string.txtNoRecords), Toast.LENGTH_SHORT);
+                finish();
+            }//Must have some records
+            users = readUsers();
+            ArrayAdapter<String> userAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
+            fUser.setAdapter(userAdapter);
+
+            projects = readProjects();
+            ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, projects);
+            fProject.setAdapter(projectAdapter);
         } catch (Exception e){
             processException(e);
         }
+
         final JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(this, records);
         listView = findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
@@ -91,19 +94,20 @@ public class HistoricActivity extends GlobalActivity {
             }
         });
 
-        btSearch.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             try {
-                                                 records = readRecords();
-                                             } catch (Exception e) {
-                                                 processException(e);
-                                             }
-                                             JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(getBaseContext(), records);
-                                         ListView listView = (ListView) findViewById(R.id.list);
-                                         listView.setAdapter(itemsAdapter);
-                                         }
-                                     }
+        btSearch.setOnClickListener(new View.OnClickListener()
+            {
+                 @Override
+                 public void onClick(View v) {
+                     try {
+                         records = readRecords();
+                     } catch (Exception e) {
+                         processException(e);
+                     }
+                     JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(getBaseContext(), records);
+                 ListView listView = findViewById(R.id.list);
+                 listView.setAdapter(itemsAdapter);
+                 }
+            }
         );
 
     }
@@ -113,54 +117,43 @@ public class HistoricActivity extends GlobalActivity {
         return (ArrayList<JSONRecord>) Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
     }
 
-    private ArrayList<String> readProjects()  {
+    private ArrayList<String> readProjects() throws IOException, JSONException {
         JSONProject project = null;
         ArrayList<String> projects = new ArrayList<String>();
-        try {
-            projects.add(getResources().getString(R.string.txtAll));
 
-            File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile()) {
-                        project = new JSONProject(this, file);
-                        projects.add(project.getDescription());
-                    }
+        projects.add(getResources().getString(R.string.txtAll));
+
+        File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    project = new JSONProject(this, file);
+                    projects.add(project.getDescription());
                 }
             }
-
-            return projects;
-
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
-            return null;
         }
+
+        return projects;
     }
 
-    private ArrayList<String> readUsers()  {
+    private ArrayList<String> readUsers() throws IOException, JSONException {
         JSONUser user = null;
         ArrayList<String> users = new ArrayList<String>();
-        try {
-            users.add(getResources().getString(R.string.txtAll));
+        users.add(getResources().getString(R.string.txtAll));
 
-            File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers());
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile()) {
-                        user = new JSONUser(this, file);
-                        users.add(user.getDescription());
-                    }
+        File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers());
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    user = new JSONUser(this, file);
+                    users.add(user.getDescription());
                 }
             }
-
-            return users;
-
-        } catch (Exception e) {
-            processException(e);
-            return null;
         }
+
+        return users;
     }
 
     private boolean validate(JSONRecord record) {

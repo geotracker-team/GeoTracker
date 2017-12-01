@@ -3,12 +3,12 @@ package com.juanjo.udl.geotracker.Activities.Layouts;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
@@ -40,8 +40,16 @@ public class RecordViewActivity extends GlobalActivity{
         longitude = findViewById(R.id.lenid);
         description = findViewById(R.id.desid);
 
-        prepareDefaultFields();
+        Intent intent = getIntent();
+        if(intent != null && intent.hasExtra("record")) {
+            jsonRecord = (JSONRecord) intent.getSerializableExtra("record");
+        } else {
+            showToast(getString(R.string.txtError), Toast.LENGTH_SHORT);
+            finish();
+        }//If theres an error kill the view
+
         try {
+            prepareDefaultFields();
             prepareExtraFields();
         } catch (JSONException e) {
             processException(e);
@@ -52,14 +60,11 @@ public class RecordViewActivity extends GlobalActivity{
             @Override
             public void onClick(View view) {
                 try {
-                    if(!description.getText().toString().equals("")){
+                    if(!description.getText().toString().isEmpty()){
                         saveChanges();
                         finish();
                     }
-                    else
-                        description.setError("the field can't be null");
-
-
+                    else description.setError(getString(R.string.txtNoFields));
                 } catch (JSONException e) {
                     processException(e);
                 }
@@ -86,10 +91,6 @@ public class RecordViewActivity extends GlobalActivity{
     }//editTextOnLongClickListener
 
     private void prepareDefaultFields(){
-        Intent intent = getIntent();
-        if(intent != null && intent.hasExtra("record")){
-            jsonRecord = (JSONRecord) intent.getSerializableExtra("record");
-            Log.d("json: ", jsonRecord.toString());
             user.setText(jsonRecord.getUserName());
             date.setText(jsonRecord.getDate());
             longitude.setText(String.valueOf(jsonRecord.getLongitude()));
@@ -99,7 +100,6 @@ public class RecordViewActivity extends GlobalActivity{
             description.setFocusable(false);
             description.setClickable(false);
             description.setOnLongClickListener(editTextOnLongClickListener());
-        }
     }
 
     private void prepareExtraFields() throws JSONException {
@@ -140,5 +140,6 @@ public class RecordViewActivity extends GlobalActivity{
         jsonRecord.setContext(this);  // Set the current context to avoid possible errors
         jsonRecord.putValues();
         jsonRecord.save();
+        showToast(getString(R.string.txtRecordSaved), Toast.LENGTH_SHORT);
     }
 }

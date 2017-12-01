@@ -4,6 +4,7 @@
     <string name="txtLoginMail">Introdueix un usuari</string>
     <string name="txtLoginPassword">Introdueix una contrassenya</string>
     <string name="btnLogin">Entrar</string>
+    <string name="txtNoFields">Aquest camp no pot estar buit</string>
   
    <!-- Menu Activity -->
     <string name="app_name">GeoTracker</string>
@@ -28,6 +29,7 @@
     <string name="project">Projecte</string>
     <string name="date">Data</string>
     <string name="search">Cerca</string>
+    <string name="txtNoRecords">No hi han registres</string>
 
 
     <!-- Record Registration -->
@@ -69,6 +71,7 @@
 
     <!-- View Record -->
     <string name="btnSaveChanges">Guardar Canvis</string>
+    <string name="txtRecordSaved">Registre guardat</string>
 
     <!-- Menu -->
     <string name="txtAddRecord">Afegir registre</string>
