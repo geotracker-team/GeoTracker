@@ -4,7 +4,7 @@
     <string name="txtLoginMail">Introdueix un usuari</string>
     <string name="txtLoginPassword">Introdueix una contrassenya</string>
     <string name="btnLogin">Entrar</string>
-    <string name="txtNoFields">Aquest camp no pot rstar buit</string>
+    <string name="txtNoFields">Aquest camp no pot estar buit</string>
   
    <!-- Menu Activity -->
     <string name="app_name">GeoTracker</string>
