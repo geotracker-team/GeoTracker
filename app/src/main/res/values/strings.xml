@@ -56,6 +56,7 @@
     <string name="magnetic_field_sensor">Magnetic field sensor</string>
     <string name="pressure_sensor">Pressure sensor</string>
     <string name="enable_data_use">Enable data use</string>
+    <string name="txtNetwork">Internet</string>
 
     <!--Add field-->
     <string name="field_title">Field title</string>

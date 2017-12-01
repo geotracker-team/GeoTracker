@@ -19,6 +19,7 @@
     <string name="txtFollowGPS">Seguimiento GPS</string>
     <string name="txtFollowGPSOn">Seguimiento GPS On</string>
     <string name="txtFollowGPSOff">Seguimiento GPS Off</string>
+
     <string name="btnAddField">+</string>
     <string name="btnSaveChanges">Guardar cambios</string>
     <string name="btnSend">Enviar registro</string>
@@ -43,7 +44,10 @@
     <string name="txtPosition">Posición:</string>
     <string name="txtProj">Proyecto:</string>
     <string name="txtTemp">Temperatura (ºC)</string>
+
     <string name="Use_mobile_sensors">Usar los sensores del móvil</string>
+    <string name="txtNetwork">Internet</string>
+
     <string name="user">Usuario</string>
     <string name="txtTo">hasta</string>
     <string name="project">Proyecto</string>

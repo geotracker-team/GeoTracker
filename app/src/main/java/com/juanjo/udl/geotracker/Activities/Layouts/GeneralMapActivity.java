@@ -47,7 +47,6 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
         txtLat = findViewById(R.id.txtLat);
         txtLon = findViewById(R.id.txtLon);
-
     }//onCreate
 
     @Override
