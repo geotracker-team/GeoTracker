@@ -29,6 +29,7 @@
     <string name="project">Projecte</string>
     <string name="date">Data</string>
     <string name="search">Cerca</string>
+    <string name="txtNoRecords">No hi han registres</string>
 
 
     <!-- Record Registration -->

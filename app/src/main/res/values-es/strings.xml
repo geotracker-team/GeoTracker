@@ -60,4 +60,5 @@
     <string name="pressure">Presión (Pa)</string>
     <string name="search">Buscar</string>
     <string name="txtAll">Todos</string>
+    <string name="txtNoRecords">No hay registros</string>
 </resources>
