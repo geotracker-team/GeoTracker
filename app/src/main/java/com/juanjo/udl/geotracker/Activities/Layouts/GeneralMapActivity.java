@@ -69,8 +69,10 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     }//onSaveInstanceState
 
     private void fillMap() throws IOException, JSONException {
+        showDialog();
         loadData();
         addRecordsToMap();
+        dismissDialog();
     }//fillMap
 
     private void loadData() throws IOException, JSONException {

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GeoTracker</string>
     <string name="txtError">Error</string>
+    <string name="txtLoading">Loading...</string>
 
     <!-- Login Activity -->
     <string name="txtLoginMail">Introduce an user</string>
