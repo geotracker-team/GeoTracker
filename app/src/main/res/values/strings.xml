@@ -80,6 +80,7 @@
 
     <!-- View Record -->
     <string name="btnSaveChanges">Save Changes</string>
+    <string name="txtRecordSaved">Record saved</string>
 
     <!-- Menu -->
     <string name="txtAddRecord">Add record</string>

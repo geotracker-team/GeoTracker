@@ -25,6 +25,8 @@
 
     <string name="btnAddField">+</string>
     <string name="btnSaveChanges">Guardar cambios</string>
+    <string name="txtRecordSaved">Registro guardado</string>
+
     <string name="btnSend">Enviar registro</string>
     <string name="create_field">Crear campo</string>
     <string name="createdBy">Creado por:</string>

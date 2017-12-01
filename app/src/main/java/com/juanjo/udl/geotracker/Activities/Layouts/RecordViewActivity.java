@@ -140,5 +140,6 @@ public class RecordViewActivity extends GlobalActivity{
         jsonRecord.setContext(this);  // Set the current context to avoid possible errors
         jsonRecord.putValues();
         jsonRecord.save();
+        showToast(getString(R.string.txtRecordSaved), Toast.LENGTH_SHORT);
     }
 }
