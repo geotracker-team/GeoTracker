@@ -5,6 +5,7 @@
     <string name="txtLoginMail">Introduce an user</string>
     <string name="txtLoginPassword">Introduce a password</string>
     <string name="btnLogin">Login</string>
+    <string name="txtNoFields">Field cannot be empty</string>
   
     <!-- Menu Activity -->
     <string name="recordhistory">Record history</string>
