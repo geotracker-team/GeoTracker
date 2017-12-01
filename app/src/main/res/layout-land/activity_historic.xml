@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.juanjo.udl.geotracker.HistoricActivity">
+    tools:context="com.juanjo.udl.geotracker.Activities.Layouts.HistoricActivity">
 
     <LinearLayout
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ddffdd"
+        android:background="#e0ebfd"
         android:orientation="horizontal">
 
         <LinearLayout

@@ -1,166 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/view_record_layout_id"
-    android:orientation="vertical">
-
-
-
-    <LinearLayout
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/view_record_layout_id"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="@string/txtProj" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/projId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Project1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/txtProj" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="@string/createdBy" />
-
-        <TextView
-            android:id="@+id/userId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="@string/txtDate" />
-
-        <TextView
-            android:id="@+id/dateId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="17:14 21/11/2017" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="@string/txtPosition" />
-
-        <TextView
-            android:id="@+id/latid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:inputType="number"
-            android:text="41.6082347 " />
-
-        <TextView
-            android:id="@+id/lenid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="0.6234154" />
+            <TextView
+                android:id="@+id/projId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Project1" />
 
         </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="horizontal">
-
-
-        <ImageView
-            android:id="@+id/imgid"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/epsmaps" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:paddingTop="10dp"-->
-                <!--android:text="@string/txtTemp" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/createdBy" />
 
-            <!--<EditText-->
-                <!--android:id="@+id/temid"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:paddingTop="0dp"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:text="20"-->
-                <!--android:textColor="@android:color/darker_gray"/>-->
+            <TextView
+                android:id="@+id/userId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User1" />
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:paddingTop="10dp"-->
-                <!--android:text="@string/txtHum" />-->
+        </LinearLayout>
 
-            <!--<EditText-->
-                <!--android:id="@+id/humid"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:paddingTop="0dp"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:text="55"-->
-                <!--android:textColor="@android:color/darker_gray"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/txtDate" />
+
+            <TextView
+                android:id="@+id/dateId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="17:14 21/11/2017" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/txtPosition" />
+
+            <TextView
+                android:id="@+id/latid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:inputType="number"
+                android:text="41.6082347 " />
+
+            <TextView
+                android:id="@+id/lenid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="0.6234154" />
+
+            </LinearLayout>
 
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/txtDescription" />
 
-    <EditText
-        android:id="@+id/desid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:paddingStart="10dp"
-        android:text="EPS building"
-        android:textColor="@android:color/darker_gray"/>
+            <ImageView
+                android:id="@+id/imgid"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/epsmaps" />
 
-    <Button
-        android:id="@+id/btnSaveChanges"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btnSaveChanges"
-        android:visibility="gone" />
-</android.widget.LinearLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--android:text="@string/txtTemp" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/temid"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:paddingTop="0dp"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:text="20"-->
+                    <!--android:textColor="@android:color/darker_gray"/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--android:text="@string/txtHum" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/humid"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:paddingTop="0dp"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:text="55"-->
+                    <!--android:textColor="@android:color/darker_gray"/>-->
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txtDescription" />
+
+        <EditText
+            android:id="@+id/desid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_marginBottom="10dp"
+            android:text="EPS building"
+            android:textColor="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/btnSaveChanges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSaveChanges"
+            android:visibility="gone" />
+    </android.widget.LinearLayout>
+</ScrollView>

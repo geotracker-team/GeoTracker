@@ -1,6 +1,5 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Activities.Layouts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -16,21 +15,22 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.juanjo.udl.geotracker.GlobalActivity.GlobalActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
-
-import org.json.JSONException;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class RecordRegistrationActivity extends GlobalActivity implements SensorEventListener {
 
@@ -45,6 +45,12 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
+
+        try {
+            retrieveJson();
+        } catch (Exception e) {
+            processException(e);
+        }
 
         findViewById(R.id.desid).requestFocus();
         mapView = findViewById(R.id.mapView);
@@ -91,15 +97,13 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveJsonFile(v);
 
-                /*try {
-                    retrieveJson();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
-
-                finish();
+                if(!description.getText().toString().equals("")){
+                    saveJsonFile(v);
+                    finish();
+                }
+                else
+                    description.setError("the field can't be null");
             }
         });
     }//onCreate
@@ -205,13 +209,13 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     private void setSensorFieldValues(SensorEvent event){
         switch (event.sensor.getType()){
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                additionalFieldHash.get(String.valueOf(R.string.temperature)).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.temperature)).getContent().setText(String.valueOf(event.values[0]));
                 break;
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                additionalFieldHash.get(String.valueOf(R.string.humidity)).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.humidity)).getContent().setText(String.valueOf(event.values[0]));
                 break;
             case Sensor.TYPE_PRESSURE:
-                additionalFieldHash.get(String.valueOf(R.string.pressure)).getContent().setText(String.valueOf(event.values[0]));
+                additionalFieldHash.get(getResources().getString(R.string.pressure)).getContent().setText(String.valueOf(event.values[0]));
                 break;
         }
     }  // setSensorFieldValues
@@ -232,15 +236,15 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
 
             jsonRecord.save();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            processException(e);
         }
     }  // saveJsonFile
 
-    /*private void retrieveJson() throws Exception {
+    private void retrieveJson() throws Exception {
         List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
         for(JSONRecord j : records){
             Log.d("Json: ", j.toString());
         }
-    }*/
+    }
 }

@@ -1,4 +1,4 @@
-package com.juanjo.udl.geotracker.JSONObjects;
+package com.juanjo.udl.geotracker.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.R;
-import com.juanjo.udl.geotracker.RecordViewActivity;
-import com.juanjo.udl.geotracker.Register;
+import com.juanjo.udl.geotracker.Activities.Layouts.RecordViewActivity;
 
 import java.util.ArrayList;
-
-/**
- * Created by David on 05/11/2017.
- */
 
 public class JSONRecordAdapter extends ArrayAdapter {
 
@@ -33,12 +29,13 @@ public class JSONRecordAdapter extends ArrayAdapter {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item , parent, false);
         }
 
-        JSONRecord currentRec = (JSONRecord) getItem(position);
+        final JSONRecord currentRec = (JSONRecord) getItem(position);
 
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(getContext(), RecordViewActivity.class);
+                it.putExtra("record", currentRec);
                 getContext().startActivity(it);
             }
         });

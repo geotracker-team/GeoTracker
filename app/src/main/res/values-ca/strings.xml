@@ -48,6 +48,7 @@
     <string name="magnetic_field_sensor">Sensor de camp magnètic</string>
     <string name="pressure_sensor">Sensor de pressió</string>
     <string name="enable_data_use">Activa l\'ús de dades</string>
+    <string name="txtNetwork">Internet</string>
 
     <!--Add field-->
     <string name="field_title">Titol del camp</string>
@@ -76,4 +77,8 @@
     <string name="txtFollowGPS">Seguiment GPS</string>
     <string name="txtFollowGPSOn">Seguiment GPS On</string>
     <string name="txtFollowGPSOff">Seguiment GPS Off</string>
+    <string name="plain_text">Text</string>
+    <string name="sendrecords">Enviar registres</string>
+    <string name="txtTo">fins</string>
+    <string name="txtAll">Tots</string>
 </resources>

@@ -56,6 +56,7 @@
     <string name="magnetic_field_sensor">Magnetic field sensor</string>
     <string name="pressure_sensor">Pressure sensor</string>
     <string name="enable_data_use">Enable data use</string>
+    <string name="txtNetwork">Internet</string>
 
     <!--Add field-->
     <string name="field_title">Field title</string>
@@ -84,4 +85,8 @@
     <string name="txtFollowGPS">Follow GPS</string>
     <string name="txtFollowGPSOn">Follow GPS On</string>
     <string name="txtFollowGPSOff">Follow GPS Off</string>
+    <string name="sendrecords">Send records</string>
+    <string name="plain_text">Text</string>
+    <string name="txtTo">to</string>
+    <string name="txtAll">All</string>
 </resources>

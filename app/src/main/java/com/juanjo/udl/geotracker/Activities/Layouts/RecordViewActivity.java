@@ -1,6 +1,5 @@
-package com.juanjo.udl.geotracker;
+package com.juanjo.udl.geotracker.Activities.Layouts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,27 +10,30 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.R;
+import com.juanjo.udl.geotracker.Utilities.AdditionalField;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class
-RecordViewActivity extends Activity{
+import java.util.HashMap;
 
-    // private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
+public class RecordViewActivity extends GlobalActivity{
+
+    private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private EditText description;
     private TextView latitude, longitude, date, user;
     private Button btnSaveChanges;
     private JSONRecord jsonRecord;
-    private JSONObject otherFields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_view);
 
-//        project = findViewById(R.id.projId);
         user = findViewById(R.id.userId);
         date = findViewById(R.id.dateId);
         latitude = findViewById(R.id.latid);
@@ -39,23 +41,31 @@ RecordViewActivity extends Activity{
         description = findViewById(R.id.desid);
 
         prepareDefaultFields();
-       // prepareExtraFields();
+        try {
+            prepareExtraFields();
+        } catch (JSONException e) {
+            processException(e);
+        }
 
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    saveChanges();
+                    if(!description.getText().toString().equals("")){
+                        saveChanges();
+                        finish();
+                    }
+                    else
+                        description.setError("the field can't be null");
+
+
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    processException(e);
                 }
-                Intent in = new Intent(RecordViewActivity.this, GeneralMapActivity.class);
-                startActivity(in);
             }
         });
     }
-
 
     private View.OnLongClickListener editTextOnLongClickListener(){
         return new View.OnLongClickListener() {
@@ -77,56 +87,57 @@ RecordViewActivity extends Activity{
 
     private void prepareDefaultFields(){
         Intent intent = getIntent();
-        if(intent != null){
+        if(intent != null && intent.hasExtra("record")){
             jsonRecord = (JSONRecord) intent.getSerializableExtra("record");
             Log.d("json: ", jsonRecord.toString());
-            user.setText(jsonRecord.getUsername());
+            user.setText(jsonRecord.getUserName());
             date.setText(jsonRecord.getDate());
             longitude.setText(String.valueOf(jsonRecord.getLongitude()));
             latitude.setText(String.valueOf(jsonRecord.getLatitude()));
-
+            jsonRecord.getOtherFields();
             description.setText(jsonRecord.getDescription());
-//            description.setFocusableInTouchMode(false);
             description.setFocusable(false);
             description.setClickable(false);
             description.setOnLongClickListener(editTextOnLongClickListener());
         }
     }
 
-    private void prepareExtraFields(){
-        otherFields = jsonRecord.getOtherFields();
-        Log.d("Other field", otherFields.toString());
-
+    private void prepareExtraFields() throws JSONException {
+        HashMap<String, Object> otherFields = (HashMap<String, Object>) jsonRecord.getOtherFields();
         LinearLayout fieldSet = findViewById(R.id.view_record_layout_id);
-
-//        while (otherFields.keys().hasNext()){
-//            Log.d("Extra field", otherFields.keys().next());
-
+        for(String key : otherFields.keySet()){
+            // set up of the visual components for each field, for the moment only display a test field
             TextView fieldName = new TextView(RecordViewActivity.this);
             EditText fieldValue = new EditText(RecordViewActivity.this);
 
-            fieldName.setText("Tile test");
-            fieldValue.setText("Value test");
+            fieldName.setText(key);
+            fieldValue.setText(((HashMap<String, String>) otherFields.get(key)).values().iterator().next());
             fieldValue.setBackgroundColor(Color.TRANSPARENT);
             fieldValue.setTextColor(Color.GRAY);
-//            fieldValue.setFocusableInTouchMode(false);
             fieldValue.setFocusable(false);
             fieldValue.setClickable(false);
-            fieldValue.setTag(fieldName.getText());
             fieldValue.setOnLongClickListener(editTextOnLongClickListener());
+
+            AdditionalField extraField = new AdditionalField(key,
+                    Constants.FieldTypes.valueOf(((HashMap<String, String>) otherFields.get(key)).keySet().iterator().next()), fieldValue);
+            additionalFieldHash.put(key, extraField);  //add the info to the map, in order to retrieve it later
 
             fieldSet.addView(fieldName, fieldSet.getChildCount()-1);
             fieldSet.addView(fieldValue, fieldSet.getChildCount()-1);
-//        }
+        }
 
     }
 
     private void saveChanges() throws JSONException {
-//        while (otherFields.keys().hasNext()){
+        jsonRecord.setDescription(description.getText().toString());
 
-//            otherFields.put(otherFields.keys().next(), )
+        for(AdditionalField extra : additionalFieldHash.values()){
+            JSONObject values = new JSONObject();
+            values.put(String.valueOf(extra.getType()), extra.getContent().getText());
+            jsonRecord.setField(extra.getName(), values);
+        }
 
-
+        jsonRecord.setContext(this);  // Set the current context to avoid possible errors
         jsonRecord.putValues();
         jsonRecord.save();
     }
