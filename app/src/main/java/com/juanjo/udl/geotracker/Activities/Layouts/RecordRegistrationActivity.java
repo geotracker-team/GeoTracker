@@ -43,6 +43,7 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.hideActionBar();
         setContentView(R.layout.activity_record_registration);
 
         findViewById(R.id.desid).requestFocus();

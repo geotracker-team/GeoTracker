@@ -45,6 +45,8 @@ public class HistoricActivity extends GlobalAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.hideActionBar();
+
         setContentView(R.layout.activity_historic);
 
         SampleData sample = new SampleData();

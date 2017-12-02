@@ -41,6 +41,7 @@
             />
         <activity android:name=".Activities.Layouts.AddFieldActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             />
         <activity android:name=".Activities.Layouts.HistoricActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

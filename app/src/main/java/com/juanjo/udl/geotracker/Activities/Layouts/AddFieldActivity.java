@@ -1,5 +1,6 @@
 package com.juanjo.udl.geotracker.Activities.Layouts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 
-public class AddFieldActivity extends GlobalAppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddFieldActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     private EditText editText;
     private FieldTypes type;

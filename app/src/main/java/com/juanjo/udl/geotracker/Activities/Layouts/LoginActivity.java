@@ -17,6 +17,8 @@ public class LoginActivity extends GlobalAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.hideActionBar();
+
         setContentView(R.layout.activity_login);
 
         btnLogin = findViewById(R.id.btnLogin);
