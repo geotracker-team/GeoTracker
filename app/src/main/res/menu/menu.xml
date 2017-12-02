@@ -3,13 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_add_record"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@android:drawable/ic_input_add"
         android:title="@string/txtAddRecord"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/menu_history"
-        android:icon="@drawable/places_ic_search"
-        android:title="@string/txtHistoricRecord"
         app:showAsAction="always" />
     <item
         android:id="@+id/menuFollowGPS"
@@ -17,8 +12,13 @@
         android:title="@string/txtFollowGPS"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_history"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/txtHistoricRecord"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_options"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/txtOptions"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

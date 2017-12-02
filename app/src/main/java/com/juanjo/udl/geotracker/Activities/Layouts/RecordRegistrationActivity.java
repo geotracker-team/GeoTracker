@@ -22,7 +22,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
@@ -31,7 +31,7 @@ import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class RecordRegistrationActivity extends GlobalActivity implements SensorEventListener {
+public class RecordRegistrationActivity extends GlobalAppCompatActivity implements SensorEventListener {
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
@@ -43,6 +43,7 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.hideActionBar();
         setContentView(R.layout.activity_record_registration);
 
         findViewById(R.id.desid).requestFocus();

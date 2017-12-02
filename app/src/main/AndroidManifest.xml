@@ -26,9 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Layouts.GeneralMapActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
+        <activity android:name=".Activities.Layouts.GeneralMapActivity"            />
         <activity android:name=".Activities.Layouts.RecordRegistrationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
@@ -37,9 +35,11 @@
             />
         <activity android:name=".Activities.Layouts.OptionsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             />
         <activity android:name=".Activities.Layouts.AddFieldActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             />
         <activity android:name=".Activities.Layouts.HistoricActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

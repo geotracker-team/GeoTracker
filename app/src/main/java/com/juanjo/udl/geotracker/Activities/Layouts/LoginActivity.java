@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.R;
 
-public class LoginActivity extends GlobalActivity {
+public class LoginActivity extends GlobalAppCompatActivity {
 
     EditText mail, pass;
     Button btnLogin;
@@ -17,6 +17,8 @@ public class LoginActivity extends GlobalActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.hideActionBar();
+
         setContentView(R.layout.activity_login);
 
         btnLogin = findViewById(R.id.btnLogin);
