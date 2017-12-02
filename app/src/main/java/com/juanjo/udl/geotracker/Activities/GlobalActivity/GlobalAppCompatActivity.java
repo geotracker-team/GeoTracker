@@ -15,19 +15,28 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        bar = getSupportActionBar();
+        showActionBar();
     }//onCreate
+
+    protected void showActionBar(){
+        bar = getSupportActionBar();
+
+        if(bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
+    }//showActionBar
 
     protected void hideActionBar(){
         if(bar != null) bar.hide();
     }//hideActionBar
 
     protected void setActionBartTitle(String title){
-        if(bar != null) bar.setTitle(title);
+        if(bar != null) {
+            bar.setTitle(title);
+        }
     }//setActionBartTitle
 
-    protected void processException (final Exception e)
-    {
+    protected void processException (final Exception e) {
         showToast(e.getMessage(), Toast.LENGTH_LONG);
         dismissDialog();
     }//processException

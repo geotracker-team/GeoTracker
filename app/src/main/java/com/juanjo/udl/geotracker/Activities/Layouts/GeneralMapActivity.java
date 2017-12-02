@@ -161,6 +161,9 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     public boolean onOptionsItemSelected(MenuItem item){
         Intent intent;
         switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.menu_add_record:
                 intent = new Intent(this, RecordRegistrationActivity.class);
                 intent.putExtra("latitude", mLastLocation.getLatitude());
