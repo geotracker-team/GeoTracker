@@ -45,7 +45,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.hideActionBar();
+
 
         setContentView(R.layout.activity_historic);
 
@@ -115,7 +115,6 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         );
 
     }
-
 
     private ArrayList<JSONRecord> readRecords() throws IOException, JSONException {
         return (ArrayList<JSONRecord>) Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
