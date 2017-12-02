@@ -34,6 +34,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setActionBartTitle("Project Name");//Set the project name at bar
+
         setContentView(R.layout.activity_general_map);
 
         if (savedInstanceState != null) {
