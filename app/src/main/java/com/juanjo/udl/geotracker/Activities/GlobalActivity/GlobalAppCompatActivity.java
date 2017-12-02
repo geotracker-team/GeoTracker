@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.R;
@@ -12,17 +13,30 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private ActionBar bar;
 
+    //ActionBar
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         showActionBar();
     }//onCreate
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }//onOptionsItemSelected
+
     protected void showActionBar(){
         bar = getSupportActionBar();
 
         if(bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
+            bar.setTitle("");
         }
     }//showActionBar
 
@@ -36,6 +50,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         }
     }//setActionBartTitle
 
+    //General
     protected void processException (final Exception e) {
         showToast(e.getMessage(), Toast.LENGTH_LONG);
         dismissDialog();
@@ -50,6 +65,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         });
     }//showToast
 
+    //Dialog
     protected void showDialog(){
         runOnUiThread(new Runnable() {
             @Override
