@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.Adapters.JSONRecordAdapter;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HistoricActivity extends GlobalActivity {
+public class HistoricActivity extends GlobalAppCompatActivity {
 
     Spinner fUser;
     Spinner fProject;

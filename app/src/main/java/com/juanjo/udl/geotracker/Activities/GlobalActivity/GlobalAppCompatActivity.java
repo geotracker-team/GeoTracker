@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.R;
 
-public class GlobalActivity extends AppCompatActivity {
+public class GlobalAppCompatActivity extends AppCompatActivity {
     private ProgressDialog dialog;
 
     protected void processException (final Exception e)
@@ -29,7 +29,7 @@ public class GlobalActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(dialog == null) {
-                    dialog = new ProgressDialog(GlobalActivity.this);
+                    dialog = new ProgressDialog(GlobalAppCompatActivity.this);
                     dialog.setIndeterminate(true);
                     dialog.setMessage(getString(R.string.txtLoading));
                     dialog.setCancelable(false);
