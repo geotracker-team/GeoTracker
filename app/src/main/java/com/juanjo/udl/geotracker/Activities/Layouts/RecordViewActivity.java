@@ -71,6 +71,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         try {
             prepareDefaultFields();
             prepareExtraFields();
+            setEditableFields();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,7 +140,8 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_lock:
                 locked = !locked;
-                prepareFields();
+                setEditableFields();
+                btnSaveChanges.setVisibility(View.VISIBLE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -179,7 +181,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         }
     }//prepareExtraFields
 
-    private void prepareFields() {
+    private void setEditableFields() {
        for (EditText et : editTextsList){
            et.setBackgroundColor(Color.TRANSPARENT);
            et.setFocusableInTouchMode(!locked);
