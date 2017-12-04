@@ -1,12 +1,14 @@
 package com.juanjo.udl.geotracker.Activities.Layouts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -138,16 +140,19 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
 
     private void createNewSensor(FieldTypes type, String title){
         boolean initialized;
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         switch (type){
             case TEMPERATURE:
-                initialized = initializeSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+                initialized = (sharedPreferences.getBoolean("tempS", false)
+                        && initializeSensor(Sensor.TYPE_AMBIENT_TEMPERATURE));
                 break;
             case HUMIDITY:
-                initialized = initializeSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
+                initialized = (sharedPreferences.getBoolean("humS", false)
+                        && initializeSensor(Sensor.TYPE_RELATIVE_HUMIDITY));
                 break;
             case PRESSURE:
-                initialized = initializeSensor(Sensor.TYPE_PRESSURE);
+                initialized = (sharedPreferences.getBoolean("pressS", false)
+                        && initializeSensor(Sensor.TYPE_PRESSURE));
                 break;
             default:
                 return;

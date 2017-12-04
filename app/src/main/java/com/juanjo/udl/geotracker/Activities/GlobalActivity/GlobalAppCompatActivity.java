@@ -1,12 +1,15 @@
 package com.juanjo.udl.geotracker.Activities.GlobalActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.juanjo.udl.geotracker.Activities.Layouts.OptionsActivity;
 import com.juanjo.udl.geotracker.R;
 
 public class GlobalAppCompatActivity extends AppCompatActivity {
@@ -20,11 +23,22 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         showActionBar();
     }//onCreate
 
+    //MENU
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.general_menu, menu);
+        return true;
+    }//onCreateOptionsMenu
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.menu_options:
+                Intent intent = new Intent(this, OptionsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
