@@ -1,9 +1,11 @@
 package com.juanjo.udl.geotracker.Activities.Layouts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -121,9 +123,20 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                         startActivity(it);
                     }//If exist the intent
                     else showToast(getString(R.string.txtError), Toast.LENGTH_SHORT);
-
                 }
                 return true;
+            }
+        });
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(20);//Add 20ms of vibration to improve app feedback
+                Intent it = new Intent(GeneralMapActivity.this, RecordRegistrationActivity.class);
+                it.putExtra("latitude", latLng.latitude);
+                it.putExtra("longitude", latLng.longitude);
+                startActivity(it);
             }
         });
     }//onMapReady
