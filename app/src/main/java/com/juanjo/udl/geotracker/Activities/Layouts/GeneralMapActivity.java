@@ -158,7 +158,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     //MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.map_menu, menu);
         MenuItem item = menu.findItem(R.id.menuFollowGPS);
         if(item != null){
             if(followGPS) {
@@ -195,10 +195,6 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                             Toast.LENGTH_SHORT).show();
                     item.setIcon(R.drawable.ic_media_play_dark);
                 }
-                return true;
-            case R.id.menu_options:
-                intent = new Intent(this, OptionsActivity.class);
-                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
