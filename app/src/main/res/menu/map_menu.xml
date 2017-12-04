@@ -16,9 +16,4 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/txtHistoricRecord"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menu_options"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/txtOptions"
-        app:showAsAction="ifRoom" />
 </menu>

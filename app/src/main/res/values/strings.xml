@@ -93,6 +93,9 @@
     <string name="txtFollowGPSOn">Follow GPS On</string>
     <string name="txtFollowGPSOff">Follow GPS Off</string>
     <string name="sendrecords">Send records</string>
+    <string name="txtMenuLock">Edit fields</string>
+    <string name="txtMenuLockOn">Locked fields</string>
+    <string name="txtMenuLockOff">Unlocked fields</string>
     <string name="plain_text">Text</string>
     <string name="txtTo">to</string>
     <string name="txtAll">All</string>
