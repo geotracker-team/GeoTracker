@@ -71,6 +71,7 @@
     <string name="humidity">Humidity (%)</string>
     <string name="pressure">Pressure (Pa)</string>
     <string name="magnetic_field">Magnetic field</string>
+
     <string-array name="field_types">
         <item>@string/text</item>
         <item>@string/numeric</item>
