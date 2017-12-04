@@ -158,6 +158,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     //MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.map_menu, menu);
         MenuItem item = menu.findItem(R.id.menuFollowGPS);
         if(item != null){
