@@ -27,7 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Layouts.GeneralMapActivity"            />
+        <activity android:name=".Activities.Layouts.ProjectSelectActivity"/>
+        <activity android:name=".Activities.Layouts.GeneralMapActivity"/>
         <activity android:name=".Activities.Layouts.RecordRegistrationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
