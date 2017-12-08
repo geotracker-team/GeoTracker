@@ -55,6 +55,9 @@
     <string name="Use_mobile_sensors">Usar los sensores del móvil</string>
     <string name="txtNetwork">Internet</string>
 
+    <!-- Project Selector-->
+    <string name="txtNoProjects">Error, nohay proyectos cargados</string>
+
     <string name="user">Usuario</string>
     <string name="txtTo">hasta</string>
     <string name="project">Proyecto</string>

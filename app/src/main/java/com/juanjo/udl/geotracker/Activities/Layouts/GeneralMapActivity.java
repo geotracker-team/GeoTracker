@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.ui.IconGenerator;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalMapActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
@@ -31,6 +32,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     private TextView txtLat, txtLon;
     private List<JSONRecord> records;
+    private JSONProject project;
     private boolean followGPS = true, first = true;
 
     @Override
@@ -39,6 +41,12 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         super.setActionBartTitle("Project Name");//Set the project name at bar
 
         setContentView(R.layout.activity_general_map);
+
+        Intent it = getIntent();
+        if(it != null){
+            project = (JSONProject) it.getSerializableExtra("project");
+            setActionBartTitle(project.getDescription());
+        }
 
         if (savedInstanceState != null) {
             followGPS = savedInstanceState.getBoolean("followGPS");
