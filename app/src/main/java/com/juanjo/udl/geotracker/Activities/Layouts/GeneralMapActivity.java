@@ -89,7 +89,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     private void loadData() throws IOException, JSONException {
         if(records!= null) records.clear();
-        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
+        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
     }//loadData
 
     private void addRecordsToMap() {
@@ -187,6 +187,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 intent = new Intent(this, RecordRegistrationActivity.class);
                 intent.putExtra("latitude", mLastLocation.getLatitude());
                 intent.putExtra("longitude", mLastLocation.getLongitude());
+                intent.putExtra("project", project);
                 startActivity(intent);
                 return true;
             case R.id.menu_history:

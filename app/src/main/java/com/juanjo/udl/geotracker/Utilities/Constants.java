@@ -38,10 +38,10 @@ public class Constants {
 
     public static class AuxiliarFunctions{
 
-        public static List<JSONRecord> getLocalSavedJsonRecords(Context context) throws IOException, JSONException {
+        public static List<JSONRecord> getLocalSavedJsonRecords(Context context, int idProject) throws IOException, JSONException {
             ArrayList<JSONRecord> records = new ArrayList<>();
 
-            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords());
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + idProject + "/");
             File[] files = dir.listFiles();
             if(files != null){
                 for(File f : files){
