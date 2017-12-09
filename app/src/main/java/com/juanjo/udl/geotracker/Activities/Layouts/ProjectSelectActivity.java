@@ -40,6 +40,8 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new JSONProjectCardAdapter(mDataset);
+        mRecyclerView.setAdapter(mAdapter);
 
         loadProjectsHandler = new Handler(){
             @Override
@@ -51,8 +53,8 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         try {
             showDialog();
             generateFakeProjects();
-            loadData();
-            if(first) loadProjectsHandler.sendEmptyMessageDelayed(0, 2000); //Handle the loaded projects 3sg after
+            mDataset.addAll(loadData());
+            if(first) loadProjectsHandler.sendEmptyMessage(0); //Handle the loaded projects 3sg after
             else processData();
         } catch (Exception e) {
             processException(e);
@@ -65,16 +67,15 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         super.onSaveInstanceState(saveInstanceState);
     }
 
-    private void loadData() throws IOException, JSONException {
-        mDataset = (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
+    private ArrayList<JSONProject> loadData() throws IOException, JSONException {
+        return (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
     }//loadData
 
     private void processData(){
         if(mDataset.size() == 0) {
             showToast(getText(R.string.txtNoProjects).toString(), Toast.LENGTH_SHORT);
         }
-        mAdapter = new JSONProjectCardAdapter(mDataset);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
         first = false;
 
         dismissDialog();
