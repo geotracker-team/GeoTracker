@@ -25,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
@@ -38,8 +39,9 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private SensorManager sensorManager;
-    private EditText description, creator, latitude, longitude;
+    private EditText projId, description, creator, latitude, longitude;
     private Double lat, lon;
+    private JSONProject project;
     private MapView mapView;
 
     @Override
@@ -49,6 +51,7 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
 
         findViewById(R.id.desid).requestFocus();
         mapView = findViewById(R.id.mapView);
+        projId = findViewById(R.id.projId);
         description = findViewById(R.id.desid);
         creator = findViewById(R.id.creatorId);
         latitude = findViewById(R.id.latid);
@@ -58,8 +61,9 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
         if(it != null){
             lat = it.getDoubleExtra("latitude",0);
             lon = it.getDoubleExtra("longitude",0);
+            project = (JSONProject) it.getSerializableExtra("project");
             latitude.setText(String.valueOf(lat));
-            longitude.setText(String.valueOf(lon));
+            longitude.setText(String.valueOf(lon));projId.setText(project.getDescription());
         }//If the intent exists
 
         mapView.onCreate(savedInstanceState);
@@ -226,7 +230,9 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
                     Calendar.getInstance().getTime().toString(),
                     creator.getText().toString(),
                     Double.valueOf(latitude.getText().toString()),
-                    Double.valueOf(longitude.getText().toString()));
+                    Double.valueOf(longitude.getText().toString()),
+                    project
+            );
 
             for(AdditionalField a : additionalFieldHash.values()){
                 jsonRecord.addNewField(a.getName(), a.getType(), a.getContent().getText().toString());

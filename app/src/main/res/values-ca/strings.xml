@@ -76,6 +76,9 @@
     <string name="btnSaveChanges">Guardar Canvis</string>
     <string name="txtRecordSaved">Registre guardat</string>
 
+    <!-- Project Selector-->
+    <string name="txtNoProjects">Error, no hi han projects carregats</string>
+
     <!-- Menu -->
     <string name="txtAddRecord">Afegir registre</string>
     <string name="txtHistoricRecord">Històric registres</string>

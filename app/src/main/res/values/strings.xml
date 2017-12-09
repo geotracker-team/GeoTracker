@@ -85,6 +85,9 @@
     <string name="btnSaveChanges">Save Changes</string>
     <string name="txtRecordSaved">Record saved</string>
 
+    <!-- Project Selector-->
+    <string name="txtNoProjects">Error, no projects loaded</string>
+
     <!-- Menu -->
     <string name="txtAddRecord">Add record</string>
     <string name="txtHistoricRecord">Historic records</string>

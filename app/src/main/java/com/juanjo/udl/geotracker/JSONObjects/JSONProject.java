@@ -12,10 +12,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * Created by David on 13/11/2017.
- */
-
 public class JSONProject extends JSONGlobal {
     private final int id;
     private final String description;

@@ -37,15 +37,15 @@ public class JSONRecord extends JSONGlobal {
     }//Constructor with generic fields
 
     //  Provisional to compatibility with previous version
-    public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude) throws JSONException, IOException {
+    public JSONRecord(Context context, String description, String date, String userName,Double latitude, Double longitude, JSONProject project) throws JSONException, IOException {
         otherFields = new HashMap<>();
         this.context = context;
         this.description = description;
         this.date = date;
         this.userId = 0;
         this.userName = userName;
-        this.projectId = 0;
-        this.projectName = "";
+        this.projectId = project.getId();
+        this.projectName = project.getDescription();
         this.latitude = latitude;
         this.longitude = longitude;
 
@@ -102,7 +102,7 @@ public class JSONRecord extends JSONGlobal {
     }//addNewField
 
     String getFileRoute() throws IOException {
-        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords();
+        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + projectId + "/";
     }//getFileRoute
 
     String getFileName() {

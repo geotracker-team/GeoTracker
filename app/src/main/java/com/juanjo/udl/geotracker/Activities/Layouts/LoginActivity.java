@@ -28,7 +28,7 @@ public class LoginActivity extends GlobalAppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(LoginActivity.this, GeneralMapActivity.class);
+                Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
                 if(checkFields()) startActivity(in);
             }
         });

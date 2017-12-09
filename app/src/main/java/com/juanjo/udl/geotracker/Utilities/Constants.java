@@ -2,6 +2,7 @@ package com.juanjo.udl.geotracker.Utilities;
 
 import android.content.Context;
 
+import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 
 import org.json.JSONException;
@@ -37,10 +38,10 @@ public class Constants {
 
     public static class AuxiliarFunctions{
 
-        public static List<JSONRecord> getLocalSavedJsonRecords(Context context) throws IOException, JSONException {
+        public static List<JSONRecord> getLocalSavedJsonRecords(Context context, int idProject) throws IOException, JSONException {
             ArrayList<JSONRecord> records = new ArrayList<>();
 
-            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords());
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + idProject + "/");
             File[] files = dir.listFiles();
             if(files != null){
                 for(File f : files){
@@ -51,7 +52,23 @@ public class Constants {
                 }
             }
             return records;
-        } // getLocalSavedJsonRecords
+        } // getLocalSavedJsonRecordsç
+
+        public static List<JSONProject> getLocalSavedJsonProjects(Context context) throws IOException, JSONException {
+            ArrayList<JSONProject> records = new ArrayList<>();
+
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+            File[] files = dir.listFiles();
+            if(files != null){
+                for(File f : files){
+                    if(f.isFile()){
+                        JSONProject j = new JSONProject(context, f);
+                        records.add(j);
+                    }
+                }
+            }
+            return records;
+        } // getLocalSavedJsonProjects
 
         public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
             Map<String, Object> retMap = new HashMap<>();
