@@ -1,14 +1,21 @@
 package com.juanjo.udl.geotracker.Management;
 
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 
 import java.util.ArrayList;
 
 public class DataManagement {
+    private GlobalAppCompatActivity context;
+
+    public DataManagement(GlobalAppCompatActivity context){
+        this.context = context;
+    }//constructor
 
     public boolean login (String user, String pass){
-        return true;
+        boolean ret = true;
+        return context.isConnectionAllowed() && ret;
     }//login
 
     public ArrayList<JSONProject> getProjectsOfUser(String user, String pass) {
@@ -22,11 +29,13 @@ public class DataManagement {
     }//getRecordsOfProject
 
     public boolean addRecord(String user, String pass, JSONRecord record){
-        return true;
+        boolean ret = true;
+        return context.isConnectionAllowed() && ret;
     }//addRecord
 
     public boolean editRecord(String user, String pass, int idRecrod, JSONRecord record){
-        return true;
+        boolean ret = true;
+        return context.isConnectionAllowed() && ret;
     }//addRecord
 
 }

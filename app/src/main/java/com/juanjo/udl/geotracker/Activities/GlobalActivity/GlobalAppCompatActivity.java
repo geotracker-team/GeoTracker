@@ -68,7 +68,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     }//setActionBartTitle
 
     //Internet
-    protected boolean isConnectionAllowed(){
+    public boolean isConnectionAllowed(){
         return nm.isConectionAllowed();
     }//isConnectionAllowed
 
