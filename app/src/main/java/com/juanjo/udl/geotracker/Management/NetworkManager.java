@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 public class NetworkManager extends BroadcastReceiver {
     private boolean isWifi = false;
     private boolean isMobile = false;
-    private boolean isConnected = false;
+    public boolean isConnected = false;
     private boolean switchMobileDataOn = false;
 
     public NetworkManager(Context context){

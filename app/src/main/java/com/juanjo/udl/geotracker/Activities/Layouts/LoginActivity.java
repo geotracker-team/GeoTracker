@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
+import com.juanjo.udl.geotracker.Management.DataManagement;
 import com.juanjo.udl.geotracker.R;
 
 public class LoginActivity extends GlobalAppCompatActivity {
@@ -20,6 +21,7 @@ public class LoginActivity extends GlobalAppCompatActivity {
         super.hideActionBar();
 
         setContentView(R.layout.activity_login);
+        dataManagement = new DataManagement(this);
 
         btnLogin = findViewById(R.id.btnLogin);
         mail = findViewById(R.id.mail);
@@ -28,8 +30,14 @@ public class LoginActivity extends GlobalAppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
-                if(checkFields()) startActivity(in);
+                if(isConnected()){
+                    Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
+                    if(checkFields()
+                            && dataManagement.login(mail.getText().toString(), pass.getText().toString())) startActivity(in);
+                }//If there are connection
+                else {
+                    noConectionError();
+                }
             }
         });
     }//onCreate

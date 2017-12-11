@@ -90,4 +90,7 @@
     <string name="sendrecords">Enviar registres</string>
     <string name="txtTo">fins</string>
     <string name="txtAll">Tots</string>
+
+    <!-- General -->
+    <string name="txtNoInternet">Error, no hi ha conexió a internet</string>
 </resources>

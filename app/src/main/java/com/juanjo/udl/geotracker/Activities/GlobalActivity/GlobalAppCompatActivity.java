@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.Activities.Layouts.OptionsActivity;
+import com.juanjo.udl.geotracker.Management.DataManagement;
 import com.juanjo.udl.geotracker.Management.NetworkManager;
 import com.juanjo.udl.geotracker.R;
 
@@ -18,12 +19,14 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private ActionBar bar;
     private NetworkManager nm;
+    protected DataManagement dataManagement;
 
     //ActionBar
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         showActionBar();
+        dataManagement = new DataManagement(this);
     }//onCreate
 
     //MENU
@@ -72,6 +75,8 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         return nm.isConectionAllowed();
     }//isConnectionAllowed
 
+    public boolean isConnected() { return nm.isConnected; }//isConnection
+
     @Override
     public void onResume(){
         super.onResume();
@@ -103,6 +108,10 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             }
         });
     }//showToast
+
+    protected void noConectionError(){
+        showToast(getString(R.string.txtNoInternet), Toast.LENGTH_SHORT);
+    }//noConection
 
     //Dialog
     protected void showDialog(){

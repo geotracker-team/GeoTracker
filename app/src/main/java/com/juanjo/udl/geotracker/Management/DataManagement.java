@@ -15,7 +15,7 @@ public class DataManagement {
 
     public boolean login (String user, String pass){
         boolean ret = true;
-        return context.isConnectionAllowed() && ret;
+        return ret;
     }//login
 
     public ArrayList<JSONProject> getProjectsOfUser(String user, String pass) {
