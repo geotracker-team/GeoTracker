@@ -2,6 +2,7 @@ package com.juanjo.udl.geotracker.Activities.GlobalActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.Activities.Layouts.OptionsActivity;
+import com.juanjo.udl.geotracker.Management.NetworkManager;
 import com.juanjo.udl.geotracker.R;
 
 public class GlobalAppCompatActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private ActionBar bar;
+    private NetworkManager nm;
 
     //ActionBar
     @Override
@@ -63,6 +66,28 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             bar.setTitle(title);
         }
     }//setActionBartTitle
+
+    //Internet
+    protected boolean isConnectionAllowed(){
+        return nm.isConectionAllowed();
+    }//isConnectionAllowed
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (nm == null) nm = new NetworkManager(this);
+        registerReceiver(nm, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+    }
+
+    @Override
+    public void onPause(){
+        try{
+            if(nm != null) unregisterReceiver(nm);
+        } catch (IllegalArgumentException e) {
+            nm = null;
+        }
+        super.onPause();
+    }//onPause
 
     //General
     protected void processException (final Exception e) {

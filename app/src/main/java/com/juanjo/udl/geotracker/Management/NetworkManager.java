@@ -14,6 +14,11 @@ public class NetworkManager extends BroadcastReceiver {
     private boolean isConnected = false;
     private boolean switchMobileDataOn = false;
 
+    public NetworkManager(Context context){
+        super();
+        processEvent(context);
+    }//Constructor
+
     @Override
     public void onReceive(Context context, Intent intent) {
         processEvent(context);
