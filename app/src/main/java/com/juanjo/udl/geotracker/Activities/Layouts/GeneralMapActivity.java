@@ -144,6 +144,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 Intent it = new Intent(GeneralMapActivity.this, RecordRegistrationActivity.class);
                 it.putExtra("latitude", latLng.latitude);
                 it.putExtra("longitude", latLng.longitude);
+                it.putExtra("project", project);
                 startActivity(it);
             }
         });

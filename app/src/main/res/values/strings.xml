@@ -102,4 +102,7 @@
     <string name="plain_text">Text</string>
     <string name="txtTo">to</string>
     <string name="txtAll">All</string>
+
+    <!-- General -->
+    <string name="txtNoInternet">Error, no internet connection</string>
 </resources>

@@ -66,4 +66,7 @@
     <string name="search">Buscar</string>
     <string name="txtAll">Todos</string>
     <string name="txtNoRecords">No hay registros</string>
+
+    <!-- General -->
+    <string name="txtNoInternet">Error, no hay conexión a internet</string>
 </resources>

@@ -2,6 +2,7 @@ package com.juanjo.udl.geotracker.Activities.GlobalActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,17 +11,22 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.Activities.Layouts.OptionsActivity;
+import com.juanjo.udl.geotracker.Management.DataManagement;
+import com.juanjo.udl.geotracker.Management.NetworkManager;
 import com.juanjo.udl.geotracker.R;
 
 public class GlobalAppCompatActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private ActionBar bar;
+    private NetworkManager nm;
+    protected DataManagement dataManagement;
 
     //ActionBar
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         showActionBar();
+        dataManagement = new DataManagement(this);
     }//onCreate
 
     //MENU
@@ -64,6 +70,30 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         }
     }//setActionBartTitle
 
+    //Internet
+    public boolean isConnectionAllowed(){
+        return nm.isConectionAllowed();
+    }//isConnectionAllowed
+
+    public boolean isConnected() { return nm.isConnected; }//isConnection
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (nm == null) nm = new NetworkManager(this);
+        registerReceiver(nm, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+    }
+
+    @Override
+    public void onPause(){
+        try{
+            if(nm != null) unregisterReceiver(nm);
+        } catch (IllegalArgumentException e) {
+            nm = null;
+        }
+        super.onPause();
+    }//onPause
+
     //General
     protected void processException (final Exception e) {
         showToast(e.getMessage(), Toast.LENGTH_LONG);
@@ -78,6 +108,10 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             }
         });
     }//showToast
+
+    protected void noConectionError(){
+        showToast(getString(R.string.txtNoInternet), Toast.LENGTH_SHORT);
+    }//noConection
 
     //Dialog
     protected void showDialog(){
