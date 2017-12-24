@@ -11,7 +11,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
-import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 
 import org.json.JSONException;
@@ -40,9 +39,8 @@ public class DataManagement {
         loginApi(user, pass, h);
     }//login
 
-    public ArrayList<JSONProject> getProjectsOfUser(String user, String pass) {
-        ArrayList<JSONProject> ret = new ArrayList<>();
-        return ret;
+    public void getProjectsOfUser(String user, String pass, Handler h) {
+        getProjectsOfUserApi(user, pass, h);
     }//getProjects
 
     public ArrayList<JSONRecord> getRecordsOfProject(String user, String pass, int idProject){
@@ -60,10 +58,7 @@ public class DataManagement {
         return context.isConnectionAllowed() && ret;
     }//addRecord
 
-
-
-
-
+//region API connection
     public final class ConstantesRestApi {
         public static final String ROOT_URL = "http://89.128.4.157:8081/GeoTrackerWeb/";
         public static final String REST_API = "rest/";
@@ -83,15 +78,15 @@ public class DataManagement {
 
     public interface EndpointsApi {
         @GET(ConstantesRestApi.URL_LOGIN)
-        Call<ApiResponse> login(@Path("user") String user, @Path("pass") String pass);
+        Call<ApiResponse> login(@Path("name") String user, @Path("pass") String pass);
         @GET(ConstantesRestApi.URL_GET_PROJECTS)
-        Call<ApiResponse> getProjects(@Path("user") String user, @Path("pass") String pass, @Path("idProject") int idProject);
+        Call<ApiResponse> getProjects(@Path("name") String user, @Path("pass") String pass);
         @GET(ConstantesRestApi.URL_GET_RECORDS)
-        Call<ApiResponse> getRecords(@Path("user") String user, @Path("pass") String pass);
+        Call<ApiResponse> getRecords(@Path("name") String user, @Path("pass") String pass, @Path("idProject") int idProject);
         @GET(ConstantesRestApi.URL_ADD_RECORD)
-        Call<ApiResponse> addRecord(@Path("user") String user, @Path("pass") String pass);
+        Call<ApiResponse> addRecord(@Path("name") String user, @Path("pass") String pass);
         @GET(ConstantesRestApi.URL_EDIT_RECORD)
-        Call<ApiResponse> editRecord(@Path("user") String user, @Path("pass") String pass, @Path("idRecord") int idRecord);
+        Call<ApiResponse> editRecord(@Path("name") String user, @Path("pass") String pass, @Path("idRecord") int idRecord);
     }//EndpointsApi
 
     public class ApiResponse {
@@ -179,4 +174,15 @@ public class DataManagement {
 
         genericApiCall(responseCall, h);
     }//loginApi
+
+    public void getProjectsOfUserApi(String user, String pass, final Handler h){
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
+        EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
+
+        Call<ApiResponse> responseCall = endpointsApi.getProjects(user, pass);
+
+        genericApiCall(responseCall, h);
+    }//getProjectsOfUser
+// endregion
 }
