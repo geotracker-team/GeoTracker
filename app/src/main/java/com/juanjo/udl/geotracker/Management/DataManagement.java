@@ -17,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
@@ -43,9 +42,8 @@ public class DataManagement {
         getProjectsOfUserApi(user, pass, h);
     }//getProjects
 
-    public ArrayList<JSONRecord> getRecordsOfProject(String user, String pass, int idProject){
-        ArrayList<JSONRecord> ret = new ArrayList<>();
-        return ret;
+    public void getRecordsOfProject(String user, String pass, int idProject, Handler h){
+        getRecordsOfProjectApi(user,pass,idProject,h);
     }//getRecordsOfProject
 
     public boolean addRecord(String user, String pass, JSONRecord record){
@@ -181,6 +179,16 @@ public class DataManagement {
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
 
         Call<ApiResponse> responseCall = endpointsApi.getProjects(user, pass);
+
+        genericApiCall(responseCall, h);
+    }//getProjectsOfUser
+
+    public void getRecordsOfProjectApi(String user, String pass, int idProject, final Handler h){
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
+        EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
+
+        Call<ApiResponse> responseCall = endpointsApi.getRecords(user, pass, idProject);
 
         genericApiCall(responseCall, h);
     }//getProjectsOfUser
