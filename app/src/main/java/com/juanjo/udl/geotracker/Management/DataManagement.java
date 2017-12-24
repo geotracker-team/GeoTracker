@@ -147,13 +147,7 @@ public class DataManagement {
         }
     }//ApiDesearilizador
 
-    public void loginApi(String user, String pass, final Handler h) {
-        RestApiAdapter restApiAdapter = new RestApiAdapter();
-        Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
-        EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
-
-        Call<ApiResponse> responseCall = endpointsApi.login(user, pass);
-
+    public void genericApiCall(Call<ApiResponse> responseCall, final Handler h){
         responseCall.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -174,5 +168,15 @@ public class DataManagement {
                 h.sendMessage(msg);
             }
         });
-    }
+    }//genericApiCall
+
+    public void loginApi(String user, String pass, final Handler h) {
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
+        EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
+
+        Call<ApiResponse> responseCall = endpointsApi.login(user, pass);
+
+        genericApiCall(responseCall, h);
+    }//loginApi
 }
