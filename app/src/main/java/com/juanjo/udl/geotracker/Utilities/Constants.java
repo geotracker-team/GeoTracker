@@ -2,9 +2,12 @@ package com.juanjo.udl.geotracker.Utilities;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,6 +95,36 @@ public class Constants {
                 map.put(key, value);
             }
             return map;
+        }
+
+        public static Map<String, Object> APIExtraToAPPExtra(JsonArray otherFields) throws JSONException {
+            HashMap<String, Object> obj = new HashMap<>();
+            for (JsonElement e: otherFields ) {
+                HashMap<String, String> tmp = new HashMap<>();
+                JSONObject jObj = new JSONObject(e.toString());
+                String value = jObj.getString("value");
+                String title = jObj.getString("title");
+                String type = jObj.getString("type");
+
+                tmp.put(type, value);
+                obj.put(title, tmp);
+            }
+            return obj;
+        }//APIExtraToAPPExtra
+
+        public static JSONArray APPExtraToAPIExtra(Map<String, Object> otherFields) throws JSONException {
+            JSONArray obj = new JSONArray();
+            for (String title : otherFields.keySet()){
+                HashMap<String, String> tmp = (HashMap<String, String>) otherFields.get(title);
+                String type = (String) tmp.keySet().toArray()[0];
+                String value = tmp.get(type);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("value", value);
+                jsonObject.put("type", type);
+                jsonObject.put("title", title);
+                obj.put(jsonObject);
+            }
+            return obj;
         }
     }
 }//Constants

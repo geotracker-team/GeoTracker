@@ -2,6 +2,8 @@ package com.juanjo.udl.geotracker.Activities.Layouts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,13 +32,34 @@ public class LoginActivity extends GlobalAppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showDialog();
+                Handler h = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg){
+                        if(msg.what == 0){
+                            Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
+                            startActivity(in);
+                        } else {
+                            processException(new Exception((String)msg.obj));
+                        }//check login
+                        dismissDialog();
+                    }
+                };
                 if(isConnected()){
-                    Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
-                    if(checkFields()
-                            && dataManagement.login(mail.getText().toString(), pass.getText().toString())) startActivity(in);
+                    if(checkFields()){
+                        try {
+                            dataManagement.login(mail.getText().toString(), pass.getText().toString(), h);
+                        } catch (Exception e) {
+                            processException(e);
+                        }
+                    }//If the fields are ok
+                    else {
+                        dismissDialog();
+                    }
                 }//If there are connection
                 else {
                     noConectionError();
+                    dismissDialog();
                 }
             }
         });

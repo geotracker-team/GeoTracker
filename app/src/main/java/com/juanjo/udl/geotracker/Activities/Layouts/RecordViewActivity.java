@@ -51,7 +51,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_view);
 
-        user = findViewById(R.id.userId);
+        user = findViewById(R.id.idUser);
         date = findViewById(R.id.dateId);
         latitude = findViewById(R.id.latid);
         longitude = findViewById(R.id.lenid);
@@ -66,7 +66,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         } else {
             showToast(getString(R.string.txtError), Toast.LENGTH_SHORT);
             finish();
-        }//If theres an error kill the view
+        }//If there is an error kill the view
 
         try {
             prepareDefaultFields();

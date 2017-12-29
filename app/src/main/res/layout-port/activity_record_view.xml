@@ -44,7 +44,7 @@
                 android:text="@string/createdBy" />
 
             <TextView
-                android:id="@+id/userId"
+                android:id="@+id/idUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User1" />
