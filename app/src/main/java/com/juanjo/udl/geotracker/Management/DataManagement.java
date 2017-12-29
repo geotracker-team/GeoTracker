@@ -12,10 +12,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.concurrent.ExecutionException;
 
@@ -24,7 +26,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public class DataManagement {
@@ -46,9 +50,8 @@ public class DataManagement {
         getRecordsOfProjectApi(user,pass,idProject,h);
     }//getRecordsOfProject
 
-    public boolean addRecord(String user, String pass, JSONRecord record){
-        boolean ret = true;
-        return context.isConnectionAllowed() && ret;
+    public void addRecord(String user, String pass, JSONRecord record, Handler h) throws IOException, JSONException {
+        addRecordApi(user, pass, record, h);
     }//addRecord
 
     public boolean editRecord(String user, String pass, int idRecrod, JSONRecord record){
@@ -76,13 +79,13 @@ public class DataManagement {
 
     public interface EndpointsApi {
         @GET(ConstantesRestApi.URL_LOGIN)
-        Call<ApiResponse> login(@Path("name") String user, @Path("pass") String pass);
+        Call<ApiResponse> login(@Path("user") String user, @Path("pass") String pass);
         @GET(ConstantesRestApi.URL_GET_PROJECTS)
         Call<ApiResponse> getProjects(@Path("name") String user, @Path("pass") String pass);
         @GET(ConstantesRestApi.URL_GET_RECORDS)
         Call<ApiResponse> getRecords(@Path("name") String user, @Path("pass") String pass, @Path("idProject") int idProject);
-        @GET(ConstantesRestApi.URL_ADD_RECORD)
-        Call<ApiResponse> addRecord(@Path("name") String user, @Path("pass") String pass);
+        @POST(ConstantesRestApi.URL_ADD_RECORD)
+        Call<ApiResponse> addRecord(@Path("name") String user, @Path("pass") String pass, @Body JsonObject record);
         @GET(ConstantesRestApi.URL_EDIT_RECORD)
         Call<ApiResponse> editRecord(@Path("name") String user, @Path("pass") String pass, @Path("idRecord") int idRecord);
     }//EndpointsApi
@@ -151,6 +154,9 @@ public class DataManagement {
                     msg.obj = notificationResponse.getExtra();
                     h.sendMessage(msg);
                 }
+                else {
+                    h.sendEmptyMessage(-1);
+                }
             }
 
             @Override
@@ -189,6 +195,17 @@ public class DataManagement {
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
 
         Call<ApiResponse> responseCall = endpointsApi.getRecords(user, pass, idProject);
+
+        genericApiCall(responseCall, h);
+    }//getProjectsOfUser
+
+    public void addRecordApi(String user, String pass, JSONRecord record, final Handler h) throws JSONException, IOException {
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
+        EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
+
+        record.put("otherFields", Constants.AuxiliarFunctions.APPExtraToAPIExtra(record.getOtherFields())); //Adapt the otherFields to make server accept it
+        Call<ApiResponse> responseCall = endpointsApi.addRecord(user, pass, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);
     }//getProjectsOfUser

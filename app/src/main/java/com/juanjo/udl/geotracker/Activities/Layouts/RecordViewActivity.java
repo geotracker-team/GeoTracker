@@ -51,7 +51,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_view);
 
-        user = findViewById(R.id.userId);
+        user = findViewById(R.id.idUser);
         date = findViewById(R.id.dateId);
         latitude = findViewById(R.id.latid);
         longitude = findViewById(R.id.lenid);

@@ -18,17 +18,17 @@ public class JSONRecord extends JSONGlobal {
     private String description, date;
     private final String userName, projectName;
     private final Double latitude, longitude;
-    private final int userId, projectId;
+    private final int idUser, idProject;
     private HashMap<String, Object> otherFields;
 
-    public JSONRecord(Context context, String description, String date, int userId, String userName, int projectId, String projectName, Double latitude, Double longitude) throws JSONException {
+    public JSONRecord(Context context, String description, String date, int idUser, String userName, int idProject, String projectName, Double latitude, Double longitude) throws JSONException {
         otherFields = new HashMap();
         this.context = context;
         this.description = description;
         this.date = date;
-        this.userId = userId;
+        this.idUser = idUser;
         this.userName = userName;
-        this.projectId = projectId;
+        this.idProject = idProject;
         this.projectName = projectName;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -42,9 +42,9 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = description;
         this.date = date;
-        this.userId = 0;
+        this.idUser = 0;
         this.userName = userName;
-        this.projectId = project.getId();
+        this.idProject = project.getId();
         this.projectName = project.getDescription();
         this.latitude = latitude;
         this.longitude = longitude;
@@ -68,9 +68,9 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = jsonObject.getString("description");
         this.date = jsonObject.getString("date");
-        this.userId = jsonObject.has("userId") ? jsonObject.getInt("userId") : 0;
+        this.idUser = jsonObject.has("idUser") ? jsonObject.getInt("idUser") : 0;
         this.userName = jsonObject.has("userName") ? jsonObject.getString("userName") : "";
-        this.projectId = jsonObject.has("projectId") ? jsonObject.getInt("projectId") : 0;
+        this.idProject = jsonObject.has("idProject") ? jsonObject.getInt("idProject") : 0;
         this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
@@ -83,9 +83,9 @@ public class JSONRecord extends JSONGlobal {
     public void putValues() throws JSONException {
         put("description", description);
         put("date", date);
-        put("userId", userId);
+        put("idUser", idUser);
         put("userName", userName);
-        put("projectId", projectId);
+        put("idProject", idProject);
         put("projectName", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
@@ -102,7 +102,7 @@ public class JSONRecord extends JSONGlobal {
     }//addNewField
 
     String getFileRoute() throws IOException {
-        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + projectId + "/";
+        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + idProject + "/";
     }//getFileRoute
 
     String getFileName() {
@@ -116,14 +116,14 @@ public class JSONRecord extends JSONGlobal {
     public String getDate() {
         return date;
     }
-    public int getUserId() {
-        return userId;
+    public int getIdUser() {
+        return idUser;
     }
     public String getUserName() {
         return userName;
     }
-    public int getProjectId() {
-        return projectId;
+    public int getIdProject() {
+        return idProject;
     }
     public String getProjectName() {
         return projectName;
