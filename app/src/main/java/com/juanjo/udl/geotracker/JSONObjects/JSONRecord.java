@@ -2,6 +2,7 @@ package com.juanjo.udl.geotracker.JSONObjects;
 
 import android.content.Context;
 
+import com.google.gson.JsonObject;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
 import org.json.JSONException;
@@ -18,15 +19,14 @@ public class JSONRecord extends JSONGlobal {
     private String description, date;
     private final String userName, projectName;
     private final Double latitude, longitude;
-    private final int idUser, idProject;
+    private final int idProject;
     private HashMap<String, Object> otherFields;
 
-    public JSONRecord(Context context, String description, String date, int idUser, String userName, int idProject, String projectName, Double latitude, Double longitude) throws JSONException {
+    public JSONRecord(Context context, String description, String date, String userName, int idProject, String projectName, Double latitude, Double longitude) throws JSONException {
         otherFields = new HashMap();
         this.context = context;
         this.description = description;
         this.date = date;
-        this.idUser = idUser;
         this.userName = userName;
         this.idProject = idProject;
         this.projectName = projectName;
@@ -42,7 +42,6 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = description;
         this.date = date;
-        this.idUser = 0;
         this.userName = userName;
         this.idProject = project.getId();
         this.projectName = project.getDescription();
@@ -68,7 +67,6 @@ public class JSONRecord extends JSONGlobal {
         this.context = context;
         this.description = jsonObject.getString("description");
         this.date = jsonObject.getString("date");
-        this.idUser = jsonObject.has("idUser") ? jsonObject.getInt("idUser") : 0;
         this.userName = jsonObject.has("userName") ? jsonObject.getString("userName") : "";
         this.idProject = jsonObject.has("idProject") ? jsonObject.getInt("idProject") : 0;
         this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
@@ -80,10 +78,23 @@ public class JSONRecord extends JSONGlobal {
         putValues();//Save the values in the inner JSON form
     }//Constructor with file
 
+    public JSONRecord(Context context, JsonObject gson) throws JSONException, IOException {
+        this.context = context;
+        JSONObject jsonObject = new JSONObject(gson.toString());
+        this.description = jsonObject.getString("description");
+        this.date = jsonObject.getString("date");
+        this.userName = jsonObject.has("userName") ? jsonObject.getString("userName") : "";
+        this.idProject = jsonObject.has("idProject") ? jsonObject.getInt("idProject") : 0;
+        this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
+        this.latitude = jsonObject.getDouble("latitude");
+        this.longitude = jsonObject.getDouble("longitude");
+        this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.APIExtraToAPPExtra(gson.getAsJsonArray("otherFields"));
+        this.fileRoute = getFileRoute() + getFileName();
+    }//Constructor for the records of the api
+
     public void putValues() throws JSONException {
         put("description", description);
         put("date", date);
-        put("idUser", idUser);
         put("userName", userName);
         put("idProject", idProject);
         put("projectName", projectName);
@@ -116,9 +127,7 @@ public class JSONRecord extends JSONGlobal {
     public String getDate() {
         return date;
     }
-    public int getIdUser() {
-        return idUser;
-    }
+
     public String getUserName() {
         return userName;
     }

@@ -66,7 +66,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         } else {
             showToast(getString(R.string.txtError), Toast.LENGTH_SHORT);
             finish();
-        }//If theres an error kill the view
+        }//If there is an error kill the view
 
         try {
             prepareDefaultFields();

@@ -205,6 +205,8 @@ public class DataManagement {
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
 
         record.put("otherFields", Constants.AuxiliarFunctions.APPExtraToAPIExtra(record.getOtherFields())); //Adapt the otherFields to make server accept it
+        record.remove("userName");
+        record.remove("projectName");
         Call<ApiResponse> responseCall = endpointsApi.addRecord(user, pass, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);

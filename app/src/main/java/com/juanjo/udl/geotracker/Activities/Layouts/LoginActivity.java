@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Management.DataManagement;
 import com.juanjo.udl.geotracker.R;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 
 public class LoginActivity extends GlobalAppCompatActivity {
 
@@ -48,7 +50,12 @@ public class LoginActivity extends GlobalAppCompatActivity {
                 if(isConnected()){
                     if(checkFields()){
                         try {
-                            dataManagement.login(mail.getText().toString(), pass.getText().toString(), h);
+                            JSONRecord r = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(LoginActivity.this, 0).get(0);
+                            //dataManagement.login(mail.getText().toString(), pass.getText().toString(), h);
+                            dataManagement.addRecordApi(mail.getText().toString(), pass.getText().toString(), r, h);
+                            //h.sendEmptyMessage(0);
+                            //JsonArray a = Constants.AuxiliarFunctions.APPExtraToAPIExtra(r.getOtherFields());
+                            //Object o = Constants.AuxiliarFunctions.APIExtraToAPPExtra(a);
                         } catch (Exception e) {
                             processException(e);
                         }
