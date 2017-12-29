@@ -86,8 +86,8 @@ public class DataManagement {
         Call<ApiResponse> getRecords(@Path("name") String user, @Path("pass") String pass, @Path("idProject") int idProject);
         @POST(ConstantesRestApi.URL_ADD_RECORD)
         Call<ApiResponse> addRecord(@Path("name") String user, @Path("pass") String pass, @Body JsonObject record);
-        @GET(ConstantesRestApi.URL_EDIT_RECORD)
-        Call<ApiResponse> editRecord(@Path("name") String user, @Path("pass") String pass, @Path("idRecord") int idRecord);
+        @POST(ConstantesRestApi.URL_EDIT_RECORD)
+        Call<ApiResponse> editRecord(@Path("name") String user, @Path("pass") String pass, @Path("idRecord") int idRecord, @Body JsonObject record);
     }//EndpointsApi
 
     public class ApiResponse {
@@ -207,9 +207,24 @@ public class DataManagement {
         record.put("otherFields", Constants.AuxiliarFunctions.APPExtraToAPIExtra(record.getOtherFields())); //Adapt the otherFields to make server accept it
         record.remove("userName");
         record.remove("projectName");
+        record.remove("idRecord");
         Call<ApiResponse> responseCall = endpointsApi.addRecord(user, pass, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);
-    }//getProjectsOfUser
+    }//addRecordApi
+
+    public void editRecordApi(String user, String pass, JSONRecord record, final Handler h) throws JSONException, IOException {
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
+        EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
+
+        record.put("otherFields", Constants.AuxiliarFunctions.APPExtraToAPIExtra(record.getOtherFields())); //Adapt the otherFields to make server accept it
+        record.remove("userName");
+        record.remove("projectName");
+        record.remove("idRecord");
+        Call<ApiResponse> responseCall = endpointsApi.editRecord(user, pass, record.getIdRecord(), gson.fromJson(record.toString(), JsonObject.class));
+
+        genericApiCall(responseCall, h);
+    }//editRecordApi
 // endregion
 }

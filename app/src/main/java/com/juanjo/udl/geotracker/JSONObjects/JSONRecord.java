@@ -21,6 +21,7 @@ public class JSONRecord extends JSONGlobal {
     private final Double latitude, longitude;
     private final int idProject;
     private HashMap<String, Object> otherFields;
+    private int idRecord;
 
     public JSONRecord(Context context, String description, String date, String userName, int idProject, String projectName, Double latitude, Double longitude) throws JSONException {
         otherFields = new HashMap();
@@ -37,7 +38,7 @@ public class JSONRecord extends JSONGlobal {
     }//Constructor with generic fields
 
     //  Provisional to compatibility with previous version
-    public JSONRecord(Context context, String description, String date, String userName,Double latitude, Double longitude, JSONProject project) throws JSONException, IOException {
+    public JSONRecord(Context context, String description, String date, String userName, Double latitude, Double longitude, JSONProject project) throws JSONException, IOException {
         otherFields = new HashMap<>();
         this.context = context;
         this.description = description;
@@ -72,6 +73,7 @@ public class JSONRecord extends JSONGlobal {
         this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
+        this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.jsonToMap(jsonObject.getJSONObject("otherFields"));
         this.fileRoute = jsonObject.has("fileRoute") ? getFileRoute()+getFileName() : getFileRoute() + getFileName();
 
@@ -88,6 +90,7 @@ public class JSONRecord extends JSONGlobal {
         this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
+        this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.APIExtraToAPPExtra(gson.getAsJsonArray("otherFields"));
         this.fileRoute = getFileRoute() + getFileName();
     }//Constructor for the records of the api
@@ -100,6 +103,7 @@ public class JSONRecord extends JSONGlobal {
         put("projectName", projectName);
         put("latitude", latitude);
         put("longitude", longitude);
+        put("idRecord", idRecord);
 
         if(this.has("otherFields")) this.remove("otherFields"); //if exists the map remove it
         put("otherFields", new JSONObject(otherFields));
@@ -127,7 +131,6 @@ public class JSONRecord extends JSONGlobal {
     public String getDate() {
         return date;
     }
-
     public String getUserName() {
         return userName;
     }
@@ -143,6 +146,7 @@ public class JSONRecord extends JSONGlobal {
     public Double getLongitude() {
         return longitude;
     }
+    public int getIdRecord() { return idRecord; }
     public Object getField(String name) throws JSONException { return (otherFields.get(name)); }
     public Map<String, Object> getOtherFields() { return otherFields; }
 
@@ -150,8 +154,12 @@ public class JSONRecord extends JSONGlobal {
     public void setContext(Context context){
         this.context = context;
     }
-    public void setDescription(String description) {
+    public void setDescription(String description) throws JSONException {
         this.description = description;
+        putValues();
+    }
+    public void setIdRecord(int idRecord) throws JSONException {
+        this.idRecord = idRecord; putValues();
     }
     public void setField(String name, JSONObject values) throws JSONException {
         if(otherFields.containsKey(name)) otherFields.remove(name);
