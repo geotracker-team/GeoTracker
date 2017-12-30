@@ -93,6 +93,8 @@ public class JSONRecord extends JSONGlobal {
         this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.APIExtraToAPPExtra(gson.getAsJsonArray("otherFields"));
         this.fileRoute = getFileRoute() + getFileName();
+
+        putValues();
     }//Constructor for the records of the api
 
     public void putValues() throws JSONException {
@@ -117,7 +119,7 @@ public class JSONRecord extends JSONGlobal {
     }//addNewField
 
     String getFileRoute() throws IOException {
-        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + idProject + "/";
+        return context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + idProject + "/";
     }//getFileRoute
 
     String getFileName() {

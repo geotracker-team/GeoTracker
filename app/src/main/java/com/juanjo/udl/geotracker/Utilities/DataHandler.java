@@ -24,7 +24,7 @@ public abstract class DataHandler extends Handler {
         }
         else {
             context.processException(new Exception((String)msg.obj));
-        }//check login
+        }//check
         context.dismissDialog();
     }
 

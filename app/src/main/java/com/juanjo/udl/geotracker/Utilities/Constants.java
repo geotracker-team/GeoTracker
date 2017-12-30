@@ -55,7 +55,7 @@ public class Constants {
                 }
             }
             return records;
-        } // getLocalSavedJsonRecordsç
+        } // getLocalSavedJsonRecords
 
         public static List<JSONProject> getLocalSavedJsonProjects(Context context) throws IOException, JSONException {
             ArrayList<JSONProject> records = new ArrayList<>();

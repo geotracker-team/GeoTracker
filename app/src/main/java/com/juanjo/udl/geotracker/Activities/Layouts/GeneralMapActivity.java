@@ -16,13 +16,18 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.maps.android.ui.IconGenerator;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalMapActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
+import com.juanjo.udl.geotracker.Utilities.DataHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -33,6 +38,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     private TextView txtLat, txtLon;
     private List<JSONRecord> records;
     private JSONProject project;
+    private JSONUser user;
     private boolean followGPS = true, first = true;
 
     @Override
@@ -45,6 +51,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         Intent it = getIntent();
         if(it != null){
             project = (JSONProject) it.getSerializableExtra("project");
+            user = (JSONUser) it.getSerializableExtra("user");
             setActionBartTitle(project.getName());
         }
 
@@ -82,18 +89,50 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
     private void fillMap() throws IOException, JSONException {
         showDialog();
-        loadData();
-        addRecordsToMap();
-        dismissDialog();
+        loadServerData();
     }//fillMap
 
-    private void loadData() throws IOException, JSONException {
+    private void loadServerData() throws IOException, JSONException {
+        DataHandler h = new DataHandler(this){
+            @Override
+            protected void isOk(Object obj) throws Exception {
+                readServerData(obj);
+                processData();
+            }
+        };
+        if(isConnected()){
+            try {
+                dataManagement.getRecordsOfProject(user.getName(), user.getPass(), project.getId(), h);
+            } catch (Exception e) {
+                processException(e);
+            }
+        }//If there are connection, load from the server
+        else processData(); //read offline
+    }//loadData
+
+    public void processData() throws IOException, JSONException {
         if(records!= null) records.clear();
         records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
-    }//loadData
+        addRecordsToMap();
+        dismissDialog();
+    }//processData
+
+    private void readServerData(Object obj) throws JSONException, IOException {
+        if(obj instanceof JSONArray){
+            JSONArray records = (JSONArray) obj;
+            for(int i = 0; i < records.length(); i++){
+                JsonObject tmp = new Gson().fromJson(records.get(i).toString(), JsonObject.class);
+                JSONRecord record = new JSONRecord(this, tmp);
+                record.save();
+            }//Save the records
+        } else {
+            processException(new Exception((String)obj));
+        }//If there is not a JSONArray process it as an error
+    }//readServerData
 
     private void addRecordsToMap() {
         mMap.clear();
+        if(records.size() == 0) return;
         for (JSONRecord r : records) {
             Bitmap icon;
             String title = r.getDescription();

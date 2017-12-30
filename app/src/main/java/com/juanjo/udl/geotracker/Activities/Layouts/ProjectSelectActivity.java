@@ -50,7 +50,7 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new JSONProjectCardAdapter(mDataset);
+        mAdapter = new JSONProjectCardAdapter(mDataset, user);
         mRecyclerView.setAdapter(mAdapter);
 
         loadProjectsHandler = new DataHandler(this){
@@ -92,15 +92,21 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
     }//loadData
 
     private void readServerData(Object obj) throws JSONException {
-        JSONArray projects = (JSONArray) obj;
-        for(int i = 0; i < projects.length(); i++){
-            JSONObject tmp = (JSONObject) projects.get(i);
-            JSONProject proj = new JSONProject(this, tmp);
-            proj.save();
-        }//Save the projects
+        if(obj instanceof JSONArray){
+            JSONArray projects = (JSONArray) obj;
+            for(int i = 0; i < projects.length(); i++){
+                JSONObject tmp = (JSONObject) projects.get(i);
+                JSONProject proj = new JSONProject(this, tmp);
+                proj.save();
+            }//Save the projects
+        }
+        else {
+            processException(new Exception((String)obj));
+        }//If there is not a JSONArray process it as an error
     }//readServerData
 
     private void processData() throws IOException, JSONException {
+        mDataset.clear();
         mDataset.addAll(Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this));
         if(mDataset.size() == 0) {
             showToast(getText(R.string.txtNoProjects).toString(), Toast.LENGTH_SHORT);
