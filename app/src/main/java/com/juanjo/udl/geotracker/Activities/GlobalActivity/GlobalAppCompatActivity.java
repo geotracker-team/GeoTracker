@@ -29,7 +29,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         dataManagement = new DataManagement(this);
     }//onCreate
 
-    //MENU
+    //region MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.general_menu, menu);
@@ -69,8 +69,9 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             bar.setTitle(title);
         }
     }//setActionBartTitle
+    //endregion
 
-    //Internet
+    //region Internet
     public boolean isConnectionAllowed(){
         return nm.isConectionAllowed();
     }//isConnectionAllowed
@@ -86,15 +87,16 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
 
     @Override
     public void onPause(){
+        super.onPause();
         try{
             if(nm != null) unregisterReceiver(nm);
         } catch (IllegalArgumentException e) {
             nm = null;
         }
-        super.onPause();
     }//onPause
+    //endregion
 
-    //General
+    //region General
     public void processException(final Exception e) {
         showToast(e.getMessage(), Toast.LENGTH_LONG);
         dismissDialog();
@@ -112,8 +114,9 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     protected void noConectionError(){
         showToast(getString(R.string.txtNoInternet), Toast.LENGTH_SHORT);
     }//noConection
+    //endregion
 
-    //Dialog
+    //region Dialog
     protected void showDialog(){
         runOnUiThread(new Runnable() {
             @Override
@@ -138,4 +141,5 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             }
         });
     }//dismissDialog
+    //endregion
 }

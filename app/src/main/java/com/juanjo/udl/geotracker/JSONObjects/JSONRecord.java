@@ -45,7 +45,7 @@ public class JSONRecord extends JSONGlobal {
         this.date = date;
         this.userName = userName;
         this.idProject = project.getId();
-        this.projectName = project.getDescription();
+        this.projectName = project.getName();
         this.latitude = latitude;
         this.longitude = longitude;
 

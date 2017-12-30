@@ -52,7 +52,7 @@ public class JSONProjectCardAdapter extends RecyclerView.Adapter<JSONProjectCard
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.txtProject.setText(mDataset.get(position).getDescription());
+        holder.txtProject.setText(mDataset.get(position).getName());
         holder.project = mDataset.get(position);
 
     }

@@ -17,7 +17,7 @@ public abstract class DataHandler extends Handler {
     public void handleMessage(Message msg){
         if(msg.what == 0) {
             try {
-                isOk();
+                isOk(msg.obj);
             } catch (Exception e) {
                 context.processException(e);
             }
@@ -28,5 +28,5 @@ public abstract class DataHandler extends Handler {
         context.dismissDialog();
     }
 
-    protected abstract void isOk() throws Exception;
+    protected abstract void isOk(Object obj) throws Exception;
 }

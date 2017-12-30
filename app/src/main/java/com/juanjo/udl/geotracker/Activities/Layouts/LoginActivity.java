@@ -35,7 +35,7 @@ public class LoginActivity extends GlobalAppCompatActivity {
                 showDialog();
                 DataHandler h = new DataHandler(LoginActivity.this) {
                     @Override
-                    protected void isOk() throws Exception {
+                    protected void isOk(Object obj) throws Exception {
                         JSONUser user = new JSONUser(LoginActivity.this, mail.getText().toString(), pass.getText().toString());
                         //User this non-used class to pass the user login information between activities
                         //It works as a temporal use, before establish a more secure system

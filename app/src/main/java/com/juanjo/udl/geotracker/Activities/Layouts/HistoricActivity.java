@@ -85,7 +85,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
             //Projects
             projects = (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
             for (JSONProject prj : projects){
-                strProjects.add(prj.getDescription());
+                strProjects.add(prj.getName());
             }*/
             ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strProjects);
             fProject.setAdapter(projectAdapter);
@@ -139,7 +139,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         ArrayList<JSONProject> prjs = (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
 
         for(JSONProject prj : prjs) {
-            projects.add(prj.getDescription());
+            projects.add(prj.getName());
         }
 
         return projects;

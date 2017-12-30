@@ -64,7 +64,7 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
             project = (JSONProject) it.getSerializableExtra("project");
             latitude.setText(String.valueOf(lat));
             longitude.setText(String.valueOf(lon));
-            projId.setText(project.getDescription());
+            projId.setText(project.getName());
         }//If the intent exists
 
         mapView.onCreate(savedInstanceState);

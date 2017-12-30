@@ -45,7 +45,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         Intent it = getIntent();
         if(it != null){
             project = (JSONProject) it.getSerializableExtra("project");
-            setActionBartTitle(project.getDescription());
+            setActionBartTitle(project.getName());
         }
 
         if (savedInstanceState != null) {
