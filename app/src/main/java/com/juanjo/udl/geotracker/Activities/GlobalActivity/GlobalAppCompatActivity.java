@@ -95,7 +95,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     }//onPause
 
     //General
-    protected void processException (final Exception e) {
+    public void processException(final Exception e) {
         showToast(e.getMessage(), Toast.LENGTH_LONG);
         dismissDialog();
     }//processException
@@ -130,7 +130,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
 
     }//showDialog
 
-    protected void dismissDialog(){
+    public void dismissDialog(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

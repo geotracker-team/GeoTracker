@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 public class HistoricActivity extends GlobalAppCompatActivity {
@@ -157,7 +156,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
             for (File file : files) {
                 if (file.isFile()) {
                     user = new JSONUser(this, file);
-                    users.add(user.getDescription());
+                    users.add(user.getName());
                 }
             }
         }
