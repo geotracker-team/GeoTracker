@@ -54,9 +54,8 @@ public class DataManagement {
         addRecordApi(user, pass, record, h);
     }//addRecord
 
-    public boolean editRecord(String user, String pass, int idRecrod, JSONRecord record){
-        boolean ret = true;
-        return context.isConnectionAllowed() && ret;
+    public void editRecord(String user, String pass, JSONRecord record, Handler h) throws IOException, JSONException {
+        editRecordApi(user, pass, record, h);
     }//addRecord
 
 //region API connection
