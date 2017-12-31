@@ -40,11 +40,11 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     private JSONProject project;
     private JSONUser user;
     private boolean followGPS = true, first = true;
+    private static final int EDIT = 01, NEW = 00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setActionBartTitle("Project Name");//Set the project name at bar
 
         setContentView(R.layout.activity_general_map);
 
@@ -87,6 +87,38 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         super.onSaveInstanceState(savedInstanceState);
     }//onSaveInstanceState
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK){
+//            if (requestCode == NEW){
+//                JSONRecord newRecord = (JSONRecord) data.getSerializableExtra("newRecord");
+//                sendNewRecordToServer(newRecord);
+//            } else if (requestCode == EDIT){
+//
+//            }
+//        }//if the result is ok
+//    }//onActivityResult
+
+    private void sendNewRecordToServer(final JSONRecord newRecord){
+        DataHandler h = new DataHandler(this){
+            @Override
+            protected void isOk(Object obj) throws Exception {
+                int newRecordId = (int) obj;
+                newRecord.setIdRecord(newRecordId);
+                newRecord.setSync(true);
+                newRecord.save();
+            }
+        };
+        if(isConnected()) {
+            try {
+                dataManagement.addRecord(user.getName(), user.getPass(), newRecord, h);
+            } catch (Exception e) {
+                processException(e);
+            }
+        }
+    }//sendNewRecordToServer
+
     private void fillMap() throws IOException, JSONException {
         showDialog();
         loadServerData();
@@ -110,12 +142,19 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         else processData(); //read offline
     }//loadData
 
-    public void processData() throws IOException, JSONException {
+    private void processData() throws IOException, JSONException {
         if(records!= null) records.clear();
         records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
+        sendPendingRecords();
         addRecordsToMap();
         dismissDialog();
     }//processData
+
+    private void sendPendingRecords(){
+        for(JSONRecord r : records){
+            if(!r.isSync()) sendNewRecordToServer(r);
+        }//send not synched records to the server
+    }//sendPendingRecords
 
     private void readServerData(Object obj) throws JSONException, IOException {
         if(obj instanceof JSONArray){
@@ -167,7 +206,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                     if(record != null){
                         Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
                         it.putExtra("record", record);
-                        startActivity(it);
+                        startActivityForResult(it, EDIT);
                     }//If exist the intent
                     else showToast(getString(R.string.txtError), Toast.LENGTH_SHORT);
                 }
@@ -184,7 +223,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 it.putExtra("latitude", latLng.latitude);
                 it.putExtra("longitude", latLng.longitude);
                 it.putExtra("project", project);
-                startActivity(it);
+                it.putExtra("user", user);
+                startActivityForResult(it, NEW);
             }
         });
     }//onMapReady
@@ -228,7 +268,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 intent.putExtra("latitude", mLastLocation.getLatitude());
                 intent.putExtra("longitude", mLastLocation.getLongitude());
                 intent.putExtra("project", project);
-                startActivity(intent);
+                intent.putExtra("user", user);
+                startActivityForResult(intent, NEW);
                 return true;
             case R.id.menu_history:
                 intent = new Intent(this, HistoricActivity.class);

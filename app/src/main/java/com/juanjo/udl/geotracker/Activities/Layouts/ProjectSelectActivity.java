@@ -91,8 +91,9 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         else processData(); //read offline
     }//loadData
 
-    private void readServerData(Object obj) throws JSONException {
+    private void readServerData(Object obj) throws JSONException, IOException {
         if(obj instanceof JSONArray){
+            Constants.AuxiliarFunctions.deleteLocalProjectFiles(this); //Delete old projects to prevent misreads
             JSONArray projects = (JSONArray) obj;
             for(int i = 0; i < projects.length(); i++){
                 JSONObject tmp = (JSONObject) projects.get(i);

@@ -207,6 +207,8 @@ public class DataManagement {
         record.remove("userName");
         record.remove("projectName");
         record.remove("idRecord");
+        record.remove("sync");
+        record.remove("edited");
         Call<ApiResponse> responseCall = endpointsApi.addRecord(user, pass, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);
@@ -221,6 +223,8 @@ public class DataManagement {
         record.remove("userName");
         record.remove("projectName");
         record.remove("idRecord");
+        record.remove("sync");
+        record.remove("edited");
         Call<ApiResponse> responseCall = endpointsApi.editRecord(user, pass, record.getIdRecord(), gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);

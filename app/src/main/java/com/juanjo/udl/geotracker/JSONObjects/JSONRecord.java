@@ -20,7 +20,7 @@ public class JSONRecord extends JSONGlobal {
     private final String userName, projectName;
     private final Double latitude, longitude;
     private final int idProject;
-    private boolean sync = false, edited = false;
+    private boolean sync = true, edited = false;
     private HashMap<String, Object> otherFields;
     private int idRecord;
 
@@ -96,8 +96,6 @@ public class JSONRecord extends JSONGlobal {
         this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.APIExtraToAPPExtra(gson.getAsJsonArray("otherFields"));
         this.fileRoute = getFileRoute() + getFileName();
-        this.sync = jsonObject.has("sync") && jsonObject.getBoolean("sync");
-        this.edited = jsonObject.has("edited") && jsonObject.getBoolean("edited");
 
         putValues();
     }//Constructor for the records of the api

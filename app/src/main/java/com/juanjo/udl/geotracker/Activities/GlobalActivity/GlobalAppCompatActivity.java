@@ -121,13 +121,15 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(dialog == null) {
-                    dialog = new ProgressDialog(GlobalAppCompatActivity.this);
-                    dialog.setIndeterminate(true);
-                    dialog.setMessage(getString(R.string.txtLoading));
-                    dialog.setCancelable(false);
-                }//Create the dialog if not exists
-                dialog.show();
+                if(!isFinishing()){
+                    if(dialog == null) {
+                        dialog = new ProgressDialog(GlobalAppCompatActivity.this);
+                        dialog.setIndeterminate(true);
+                        dialog.setMessage(getString(R.string.txtLoading));
+                        dialog.setCancelable(false);
+                    }//Create the dialog if not exists
+                    dialog.show();
+                }//Prevent show dialogs in finishing activities
             }
         });
 
