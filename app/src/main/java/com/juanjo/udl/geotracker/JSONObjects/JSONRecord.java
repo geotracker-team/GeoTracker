@@ -20,6 +20,7 @@ public class JSONRecord extends JSONGlobal {
     private final String userName, projectName;
     private final Double latitude, longitude;
     private final int idProject;
+    private boolean sync = false, edited = false;
     private HashMap<String, Object> otherFields;
     private int idRecord;
 
@@ -76,6 +77,8 @@ public class JSONRecord extends JSONGlobal {
         this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.jsonToMap(jsonObject.getJSONObject("otherFields"));
         this.fileRoute = jsonObject.has("fileRoute") ? getFileRoute()+getFileName() : getFileRoute() + getFileName();
+        this.sync = jsonObject.has("sync") && jsonObject.getBoolean("sync");
+        this.edited = jsonObject.has("edited") && jsonObject.getBoolean("edited");
 
         putValues();//Save the values in the inner JSON form
     }//Constructor with file
@@ -93,6 +96,8 @@ public class JSONRecord extends JSONGlobal {
         this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.APIExtraToAPPExtra(gson.getAsJsonArray("otherFields"));
         this.fileRoute = getFileRoute() + getFileName();
+        this.sync = jsonObject.has("sync") && jsonObject.getBoolean("sync");
+        this.edited = jsonObject.has("edited") && jsonObject.getBoolean("edited");
 
         putValues();
     }//Constructor for the records of the api
@@ -106,6 +111,8 @@ public class JSONRecord extends JSONGlobal {
         put("latitude", latitude);
         put("longitude", longitude);
         put("idRecord", idRecord);
+        put("sync", sync);
+        put("edited", edited);
 
         if(this.has("otherFields")) this.remove("otherFields"); //if exists the map remove it
         put("otherFields", new JSONObject(otherFields));
@@ -151,6 +158,8 @@ public class JSONRecord extends JSONGlobal {
     public int getIdRecord() { return idRecord; }
     public Object getField(String name) throws JSONException { return (otherFields.get(name)); }
     public Map<String, Object> getOtherFields() { return otherFields; }
+    public boolean isSync() { return sync; }
+    public boolean isEdited() { return edited; }
 
     //SETTERS
     public void setContext(Context context){
@@ -162,6 +171,14 @@ public class JSONRecord extends JSONGlobal {
     }
     public void setIdRecord(int idRecord) throws JSONException {
         this.idRecord = idRecord; putValues();
+    }
+    public void setSync(boolean sync) throws JSONException {
+        this.sync = sync;
+        putValues();
+    }
+    public void setEdited(boolean edited) throws JSONException {
+        this.edited = edited;
+        putValues();
     }
     public void setField(String name, JSONObject values) throws JSONException {
         if(otherFields.containsKey(name)) otherFields.remove(name);
