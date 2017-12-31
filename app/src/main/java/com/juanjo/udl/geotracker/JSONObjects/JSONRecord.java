@@ -93,7 +93,7 @@ public class JSONRecord extends JSONGlobal {
         this.projectName = jsonObject.has("projectName") ? jsonObject.getString("projectName") : "";
         this.latitude = jsonObject.getDouble("latitude");
         this.longitude = jsonObject.getDouble("longitude");
-        this.idRecord = jsonObject.has("idRecord") ? jsonObject.getInt("idRecord") : -1;
+        this.idRecord = jsonObject.has("id") ? jsonObject.getInt("id") : -1;
         this.otherFields = (HashMap<String, Object>) Constants.AuxiliarFunctions.APIExtraToAPPExtra(gson.getAsJsonArray("otherFields"));
         this.fileRoute = getFileRoute() + getFileName();
 

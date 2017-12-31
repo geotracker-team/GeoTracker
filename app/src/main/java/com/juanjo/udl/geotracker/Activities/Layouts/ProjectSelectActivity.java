@@ -80,13 +80,9 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         super.onSaveInstanceState(saveInstanceState);
     }
 
-    private void loadServerData() throws IOException, JSONException {
+    private void loadServerData() throws IOException, JSONException, InterruptedException {
         if(isConnected()){
-            try {
-                dataManagement.getProjectsOfUser(user.getName(), user.getPass(), loadProjectsHandler);
-            } catch (Exception e) {
-                processException(e);
-            }
+            dataManagement.getProjectsOfUser(user.getName(), user.getPass(), loadProjectsHandler);
         }//If there are connection, load from the server
         else processData(); //read offline
     }//loadData
@@ -106,8 +102,11 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         }//If there is not a JSONArray process it as an error
     }//readServerData
 
-    private void processData() throws IOException, JSONException {
+    private void processData() throws IOException, JSONException, InterruptedException {
         mDataset.clear();
+        synchronized (this){
+            wait(1000);
+        }
         mDataset.addAll(Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this));
         if(mDataset.size() == 0) {
             showToast(getText(R.string.txtNoProjects).toString(), Toast.LENGTH_SHORT);

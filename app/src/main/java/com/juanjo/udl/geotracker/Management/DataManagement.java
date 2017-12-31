@@ -215,10 +215,11 @@ public class DataManagement {
         record.put("otherFields", Constants.AuxiliarFunctions.APPExtraToAPIExtra(record.getOtherFields())); //Adapt the otherFields to make server accept it
         record.remove("userName");
         record.remove("projectName");
+        int idRecord = record.getIdRecord();
         record.remove("idRecord");
         record.remove("sync");
         record.remove("edited");
-        Call<ApiResponse> responseCall = endpointsApi.editRecord(user, pass, record.getIdRecord(), gson.fromJson(record.toString(), JsonObject.class));
+        Call<ApiResponse> responseCall = endpointsApi.editRecord(user, pass, idRecord, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);
     }//editRecordApi

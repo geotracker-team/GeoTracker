@@ -87,19 +87,6 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         super.onSaveInstanceState(savedInstanceState);
     }//onSaveInstanceState
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK){
-//            if (requestCode == NEW){
-//                JSONRecord newRecord = (JSONRecord) data.getSerializableExtra("newRecord");
-//                sendNewRecordToServer(newRecord);
-//            } else if (requestCode == EDIT){
-//
-//            }
-//        }//if the result is ok
-//    }//onActivityResult
-
     private void sendNewRecordToServer(final JSONRecord newRecord){
         DataHandler h = new DataHandler(this){
             @Override
@@ -126,6 +113,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 editedRecord.setSync(true);
                 editedRecord.setEdited(false);
                 editedRecord.save();
+                showToast((String) obj, Toast.LENGTH_SHORT);
             }
         };
         if(isConnected()) {
@@ -137,13 +125,16 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         }
     }//sendEditedRecordToServer
 
-    private void fillMap() throws IOException, JSONException {
+    private void fillMap() throws IOException, JSONException, InterruptedException {
         showDialog();
+        if(records!= null) records.clear();
+        mMap.clear();
+        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
         loadServerData();
     }//fillMap
 
-    private void loadServerData() throws IOException, JSONException {
-        DataHandler h = new DataHandler(this){
+    private void loadServerData() throws IOException, JSONException, InterruptedException {
+        DataHandler getServer = new DataHandler(this){
             @Override
             protected void isOk(Object obj) throws Exception {
                 readServerData(obj);
@@ -151,19 +142,18 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
             }
         };
         if(isConnected()){
-            try {
-                dataManagement.getRecordsOfProject(user.getName(), user.getPass(), project.getId(), h);
-            } catch (Exception e) {
-                processException(e);
-            }
+            sendPendingRecords();
+            dataManagement.getRecordsOfProject(user.getName(), user.getPass(), project.getId(), getServer);
         }//If there are connection, load from the server
         else processData(); //read offline
     }//loadData
 
-    private void processData() throws IOException, JSONException {
+    private void processData() throws IOException, JSONException, InterruptedException {
         if(records!= null) records.clear();
+        synchronized (this){
+            wait(1500);
+        }
         records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
-        sendPendingRecords();
         addRecordsToMap();
         dismissDialog();
     }//processData
@@ -189,7 +179,6 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     }//readServerData
 
     private void addRecordsToMap() {
-        mMap.clear();
         if(records.size() == 0) return;
         for (JSONRecord r : records) {
             Bitmap icon;
