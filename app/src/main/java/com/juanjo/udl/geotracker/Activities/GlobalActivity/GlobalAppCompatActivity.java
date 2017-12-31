@@ -26,7 +26,7 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         showActionBar();
-        dataManagement = new DataManagement(this);
+        dataManagement = new DataManagement();
     }//onCreate
 
     //region MENU

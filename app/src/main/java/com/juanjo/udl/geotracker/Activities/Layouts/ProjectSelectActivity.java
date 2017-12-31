@@ -83,7 +83,7 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
     private void loadServerData() throws IOException, JSONException {
         if(isConnected()){
             try {
-                dataManagement.getProjectsOfUserApi(user.getName(), user.getPass(), loadProjectsHandler);
+                dataManagement.getProjectsOfUser(user.getName(), user.getPass(), loadProjectsHandler);
             } catch (Exception e) {
                 processException(e);
             }

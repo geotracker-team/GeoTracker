@@ -23,7 +23,7 @@ public class LoginActivity extends GlobalAppCompatActivity {
         super.hideActionBar();
 
         setContentView(R.layout.activity_login);
-        dataManagement = new DataManagement(this);
+        dataManagement = new DataManagement();
 
         btnLogin = findViewById(R.id.btnLogin);
         mail = findViewById(R.id.mail);

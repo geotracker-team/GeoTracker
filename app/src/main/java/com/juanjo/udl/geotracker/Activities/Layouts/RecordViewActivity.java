@@ -37,7 +37,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
 
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private EditText description;
-    private TextView latitude, longitude, date, user;
+    private TextView latitude, longitude, date, user, projId;
     private Button btnSaveChanges;
     private JSONRecord jsonRecord;
     private boolean locked = true;
@@ -53,6 +53,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
 
         user = findViewById(R.id.idUser);
         date = findViewById(R.id.dateId);
+        projId = findViewById(R.id.projId);
         latitude = findViewById(R.id.latid);
         longitude = findViewById(R.id.lenid);
         description = findViewById(R.id.desid);
@@ -149,13 +150,14 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
     }//onOptionsItemSelected
 
     private void prepareDefaultFields(){
-            user.setText(jsonRecord.getUserName());
-            date.setText(jsonRecord.getDate());
-            longitude.setText(String.valueOf(jsonRecord.getLongitude()));
-            latitude.setText(String.valueOf(jsonRecord.getLatitude()));
-            jsonRecord.getOtherFields();
-            description.setText(jsonRecord.getDescription());
-            editTextsList.add(description);
+        user.setText(jsonRecord.getUserName());
+        date.setText(jsonRecord.getDate());
+        longitude.setText(String.valueOf(jsonRecord.getLongitude()));
+        latitude.setText(String.valueOf(jsonRecord.getLatitude()));
+        projId.setText(jsonRecord.getProjectName());
+        jsonRecord.getOtherFields();
+        description.setText(jsonRecord.getDescription());
+        editTextsList.add(description);
     }//prepareDefaultFields
 
     private void prepareExtraFields() throws JSONException {
@@ -202,6 +204,7 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
 
         jsonRecord.setContext(this);  // Set the current context to avoid possible errors
         jsonRecord.putValues();
+        jsonRecord.setEdited(true);
         jsonRecord.save();
         showToast(getString(R.string.txtRecordSaved), Toast.LENGTH_SHORT);
     }

@@ -119,6 +119,24 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         }
     }//sendNewRecordToServer
 
+    private void sendEditedRecordToServer(final JSONRecord editedRecord) {
+        DataHandler h = new DataHandler(this){
+            @Override
+            protected void isOk(Object obj) throws Exception {
+                editedRecord.setSync(true);
+                editedRecord.setEdited(false);
+                editedRecord.save();
+            }
+        };
+        if(isConnected()) {
+            try {
+                dataManagement.editRecord(user.getName(), user.getPass(), editedRecord, h);
+            } catch (Exception e) {
+                processException(e);
+            }
+        }
+    }//sendEditedRecordToServer
+
     private void fillMap() throws IOException, JSONException {
         showDialog();
         loadServerData();
@@ -153,6 +171,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     private void sendPendingRecords(){
         for(JSONRecord r : records){
             if(!r.isSync()) sendNewRecordToServer(r);
+            else if(r.isEdited()) sendEditedRecordToServer(r);
         }//send not synched records to the server
     }//sendPendingRecords
 
