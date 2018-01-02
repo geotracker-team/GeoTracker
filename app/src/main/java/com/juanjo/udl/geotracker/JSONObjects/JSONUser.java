@@ -12,18 +12,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * Created by David on 13/11/2017.
- */
-
 public class JSONUser extends JSONGlobal {
-    private final int id;
-    private final String description;
+    private final String name;
+    private final String pass;
 
-    public JSONUser(Context context, int id, String description) throws JSONException {
+    public JSONUser(Context context, String name, String pass) throws JSONException {
         this.context = context;
-        this.id = id;
-        this.description = description;
+        this.name = name;
+        this.pass = pass;
 
         putValues();
     }
@@ -42,15 +38,15 @@ public class JSONUser extends JSONGlobal {
 
         JSONObject jsonObject = new JSONObject(text.toString());
         this.context = context;
-        this.id = jsonObject.getInt("id");
-        this.description = jsonObject.getString("description");
+        this.name = jsonObject.getString("name");
+        this.pass = jsonObject.getString("pass");
 
         putValues();//Save the values in the inner JSON form
     }
 
     private void putValues() throws JSONException {
-        put("id", id);
-        put("description", description);
+        put("name", name);
+        put("pass", pass);
     }//putValues
 
     String getFileRoute() throws IOException {
@@ -58,17 +54,14 @@ public class JSONUser extends JSONGlobal {
     }//getFileRoute
 
     String getFileName() {
-        return "users_" + this.id + ".json";
+        return "users_" + this.name + ".json";
     }//getFileName
 
-    //GETERS
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
-
-    public String getDescription() {
-        return description;
+    public String getPass() {
+        return pass;
     }
-
 
 }

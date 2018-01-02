@@ -55,7 +55,7 @@ public class Constants {
                 }
             }
             return records;
-        } // getLocalSavedJsonRecordsç
+        } // getLocalSavedJsonRecords
 
         public static List<JSONProject> getLocalSavedJsonProjects(Context context) throws IOException, JSONException {
             ArrayList<JSONProject> records = new ArrayList<>();
@@ -72,6 +72,16 @@ public class Constants {
             }
             return records;
         } // getLocalSavedJsonProjects
+
+        public static void deleteLocalProjectFiles(Context context) throws IOException {
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+            File[] files = dir.listFiles();
+            if(files != null){
+                for(File f : files){
+                    f.delete();
+                }
+            }
+        }//deleteLocalProjectFiles
 
         public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
             Map<String, Object> retMap = new HashMap<>();

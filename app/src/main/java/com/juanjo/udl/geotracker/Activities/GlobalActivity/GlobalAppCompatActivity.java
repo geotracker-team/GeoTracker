@@ -26,10 +26,10 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         showActionBar();
-        dataManagement = new DataManagement(this);
+        dataManagement = new DataManagement();
     }//onCreate
 
-    //MENU
+    //region MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.general_menu, menu);
@@ -69,8 +69,9 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             bar.setTitle(title);
         }
     }//setActionBartTitle
+    //endregion
 
-    //Internet
+    //region Internet
     public boolean isConnectionAllowed(){
         return nm.isConectionAllowed();
     }//isConnectionAllowed
@@ -86,16 +87,17 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
 
     @Override
     public void onPause(){
+        super.onPause();
         try{
             if(nm != null) unregisterReceiver(nm);
         } catch (IllegalArgumentException e) {
             nm = null;
         }
-        super.onPause();
     }//onPause
+    //endregion
 
-    //General
-    protected void processException (final Exception e) {
+    //region General
+    public void processException(final Exception e) {
         showToast(e.getMessage(), Toast.LENGTH_LONG);
         dismissDialog();
     }//processException
@@ -112,25 +114,28 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
     protected void noConectionError(){
         showToast(getString(R.string.txtNoInternet), Toast.LENGTH_SHORT);
     }//noConection
+    //endregion
 
-    //Dialog
+    //region Dialog
     protected void showDialog(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(dialog == null) {
-                    dialog = new ProgressDialog(GlobalAppCompatActivity.this);
-                    dialog.setIndeterminate(true);
-                    dialog.setMessage(getString(R.string.txtLoading));
-                    dialog.setCancelable(false);
-                }//Create the dialog if not exists
-                dialog.show();
+                if(!isFinishing()){
+                    if(dialog == null) {
+                        dialog = new ProgressDialog(GlobalAppCompatActivity.this);
+                        dialog.setIndeterminate(true);
+                        dialog.setMessage(getString(R.string.txtLoading));
+                        dialog.setCancelable(false);
+                    }//Create the dialog if not exists
+                    dialog.show();
+                }//Prevent show dialogs in finishing activities
             }
         });
 
     }//showDialog
 
-    protected void dismissDialog(){
+    public void dismissDialog(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -138,4 +143,5 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
             }
         });
     }//dismissDialog
+    //endregion
 }

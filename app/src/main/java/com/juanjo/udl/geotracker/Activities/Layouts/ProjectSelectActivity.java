@@ -1,8 +1,8 @@
 package com.juanjo.udl.geotracker.Activities.Layouts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -10,10 +10,14 @@ import android.widget.Toast;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.Adapters.JSONProjectCardAdapter;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
+import com.juanjo.udl.geotracker.Utilities.DataHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
     private Handler loadProjectsHandler;
     private boolean first = true;
 
+    private JSONUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,30 +42,37 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
             first = savedInstanceState.getBoolean("first");
         }
 
+        Intent it = getIntent();
+        if(it != null)  user = (JSONUser) it.getSerializableExtra("user");
+        else finish();
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new JSONProjectCardAdapter(mDataset);
+        mAdapter = new JSONProjectCardAdapter(mDataset, user);
         mRecyclerView.setAdapter(mAdapter);
 
-        loadProjectsHandler = new Handler(){
+        loadProjectsHandler = new DataHandler(this){
             @Override
-            public void handleMessage(Message msg){
+            protected void isOk(Object obj) throws Exception {
+                readServerData(obj);
                 processData();
             }
         };
+    }//onCreate
 
+    @Override
+    public void onResume(){
+        super.onResume();
         try {
             showDialog();
-            generateFakeProjects();
-            mDataset.addAll(loadData());
-            if(first) loadProjectsHandler.sendEmptyMessage(0); //Handle the loaded projects 3sg after
+            if(first) loadServerData();
             else processData();
         } catch (Exception e) {
             processException(e);
         }
-    }//onCreate
+    }
 
     @Override
     public void onSaveInstanceState(Bundle saveInstanceState){
@@ -67,11 +80,34 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         super.onSaveInstanceState(saveInstanceState);
     }
 
-    private ArrayList<JSONProject> loadData() throws IOException, JSONException {
-        return (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
+    private void loadServerData() throws IOException, JSONException, InterruptedException {
+        if(isConnected()){
+            dataManagement.getProjectsOfUser(user.getName(), user.getPass(), loadProjectsHandler);
+        }//If there are connection, load from the server
+        else processData(); //read offline
     }//loadData
 
-    private void processData(){
+    private void readServerData(Object obj) throws JSONException, IOException {
+        if(obj instanceof JSONArray){
+            Constants.AuxiliarFunctions.deleteLocalProjectFiles(this); //Delete old projects to prevent misreads
+            JSONArray projects = (JSONArray) obj;
+            for(int i = 0; i < projects.length(); i++){
+                JSONObject tmp = (JSONObject) projects.get(i);
+                JSONProject proj = new JSONProject(this, tmp);
+                proj.save();
+            }//Save the projects
+        }
+        else {
+            processException(new Exception((String)obj));
+        }//If there is not a JSONArray process it as an error
+    }//readServerData
+
+    private void processData() throws IOException, JSONException, InterruptedException {
+        mDataset.clear();
+        synchronized (this){
+            wait(1000);
+        }
+        mDataset.addAll(Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this));
         if(mDataset.size() == 0) {
             showToast(getText(R.string.txtNoProjects).toString(), Toast.LENGTH_SHORT);
         }
@@ -80,9 +116,4 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
 
         dismissDialog();
     }//processData
-
-    private void generateFakeProjects() throws JSONException {
-        new JSONProject(this, 0, "Project 1").save();
-        new JSONProject(this, 1, "Project 2").save();
-    }//generateFakeProjects
 }

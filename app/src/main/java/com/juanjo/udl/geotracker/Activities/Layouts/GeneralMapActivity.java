@@ -16,13 +16,18 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.maps.android.ui.IconGenerator;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalMapActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
+import com.juanjo.udl.geotracker.Utilities.DataHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -33,19 +38,21 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     private TextView txtLat, txtLon;
     private List<JSONRecord> records;
     private JSONProject project;
+    private JSONUser user;
     private boolean followGPS = true, first = true;
+    private static final int EDIT = 01, NEW = 00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setActionBartTitle("Project Name");//Set the project name at bar
 
         setContentView(R.layout.activity_general_map);
 
         Intent it = getIntent();
         if(it != null){
             project = (JSONProject) it.getSerializableExtra("project");
-            setActionBartTitle(project.getDescription());
+            user = (JSONUser) it.getSerializableExtra("user");
+            setActionBartTitle(project.getName());
         }
 
         if (savedInstanceState != null) {
@@ -80,20 +87,99 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         super.onSaveInstanceState(savedInstanceState);
     }//onSaveInstanceState
 
-    private void fillMap() throws IOException, JSONException {
+    private void sendNewRecordToServer(final JSONRecord newRecord){
+        DataHandler h = new DataHandler(this){
+            @Override
+            protected void isOk(Object obj) throws Exception {
+                int newRecordId = (int) obj;
+                newRecord.setIdRecord(newRecordId);
+                newRecord.setSync(true);
+                newRecord.save();
+            }
+        };
+        if(isConnected()) {
+            try {
+                dataManagement.addRecord(user.getName(), user.getPass(), newRecord, h);
+            } catch (Exception e) {
+                processException(e);
+            }
+        }
+    }//sendNewRecordToServer
+
+    private void sendEditedRecordToServer(final JSONRecord editedRecord) {
+        DataHandler h = new DataHandler(this){
+            @Override
+            protected void isOk(Object obj) throws Exception {
+                editedRecord.setSync(true);
+                editedRecord.setEdited(false);
+                editedRecord.save();
+                showToast((String) obj, Toast.LENGTH_SHORT);
+            }
+        };
+        if(isConnected()) {
+            try {
+                dataManagement.editRecord(user.getName(), user.getPass(), editedRecord, h);
+            } catch (Exception e) {
+                processException(e);
+            }
+        }
+    }//sendEditedRecordToServer
+
+    private void fillMap() throws IOException, JSONException, InterruptedException {
         showDialog();
-        loadData();
-        addRecordsToMap();
-        dismissDialog();
+        if(records!= null) records.clear();
+        mMap.clear();
+        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
+        loadServerData();
     }//fillMap
 
-    private void loadData() throws IOException, JSONException {
-        if(records!= null) records.clear();
-        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
+    private void loadServerData() throws IOException, JSONException, InterruptedException {
+        DataHandler getServer = new DataHandler(this){
+            @Override
+            protected void isOk(Object obj) throws Exception {
+                readServerData(obj);
+                processData();
+            }
+        };
+        if(isConnected()){
+            sendPendingRecords();
+            dataManagement.getRecordsOfProject(user.getName(), user.getPass(), project.getId(), getServer);
+        }//If there are connection, load from the server
+        else processData(); //read offline
     }//loadData
 
+    private void processData() throws IOException, JSONException, InterruptedException {
+        if(records!= null) records.clear();
+        synchronized (this){
+            wait(1500);
+        }
+        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
+        addRecordsToMap();
+        dismissDialog();
+    }//processData
+
+    private void sendPendingRecords(){
+        for(JSONRecord r : records){
+            if(!r.isSync()) sendNewRecordToServer(r);
+            else if(r.isEdited()) sendEditedRecordToServer(r);
+        }//send not synched records to the server
+    }//sendPendingRecords
+
+    private void readServerData(Object obj) throws JSONException, IOException {
+        if(obj instanceof JSONArray){
+            JSONArray records = (JSONArray) obj;
+            for(int i = 0; i < records.length(); i++){
+                JsonObject tmp = new Gson().fromJson(records.get(i).toString(), JsonObject.class);
+                JSONRecord record = new JSONRecord(this, tmp);
+                record.save();
+            }//Save the records
+        } else {
+            processException(new Exception((String)obj));
+        }//If there is not a JSONArray process it as an error
+    }//readServerData
+
     private void addRecordsToMap() {
-        mMap.clear();
+        if(records.size() == 0) return;
         for (JSONRecord r : records) {
             Bitmap icon;
             String title = r.getDescription();
@@ -128,7 +214,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                     if(record != null){
                         Intent it = new Intent(GeneralMapActivity.this, RecordViewActivity.class);
                         it.putExtra("record", record);
-                        startActivity(it);
+                        startActivityForResult(it, EDIT);
                     }//If exist the intent
                     else showToast(getString(R.string.txtError), Toast.LENGTH_SHORT);
                 }
@@ -145,7 +231,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 it.putExtra("latitude", latLng.latitude);
                 it.putExtra("longitude", latLng.longitude);
                 it.putExtra("project", project);
-                startActivity(it);
+                it.putExtra("user", user);
+                startActivityForResult(it, NEW);
             }
         });
     }//onMapReady
@@ -189,7 +276,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 intent.putExtra("latitude", mLastLocation.getLatitude());
                 intent.putExtra("longitude", mLastLocation.getLongitude());
                 intent.putExtra("project", project);
-                startActivity(intent);
+                intent.putExtra("user", user);
+                startActivityForResult(intent, NEW);
                 return true;
             case R.id.menu_history:
                 intent = new Intent(this, HistoricActivity.class);

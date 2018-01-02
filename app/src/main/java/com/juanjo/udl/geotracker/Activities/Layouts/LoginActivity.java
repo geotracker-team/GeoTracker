@@ -2,15 +2,15 @@ package com.juanjo.udl.geotracker.Activities.Layouts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.Management.DataManagement;
 import com.juanjo.udl.geotracker.R;
+import com.juanjo.udl.geotracker.Utilities.DataHandler;
 
 public class LoginActivity extends GlobalAppCompatActivity {
 
@@ -23,7 +23,7 @@ public class LoginActivity extends GlobalAppCompatActivity {
         super.hideActionBar();
 
         setContentView(R.layout.activity_login);
-        dataManagement = new DataManagement(this);
+        dataManagement = new DataManagement();
 
         btnLogin = findViewById(R.id.btnLogin);
         mail = findViewById(R.id.mail);
@@ -33,16 +33,15 @@ public class LoginActivity extends GlobalAppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialog();
-                Handler h = new Handler(){
+                DataHandler h = new DataHandler(LoginActivity.this) {
                     @Override
-                    public void handleMessage(Message msg){
-                        if(msg.what == 0){
-                            Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
-                            startActivity(in);
-                        } else {
-                            processException(new Exception((String)msg.obj));
-                        }//check login
-                        dismissDialog();
+                    protected void isOk(Object obj) throws Exception {
+                        JSONUser user = new JSONUser(LoginActivity.this, mail.getText().toString(), pass.getText().toString());
+                        //User this non-used class to pass the user login information between activities
+                        //It works as a temporal use, before establish a more secure system
+                        Intent in = new Intent(LoginActivity.this, ProjectSelectActivity.class);
+                        in.putExtra("user", user);
+                        startActivity(in);
                     }
                 };
                 if(isConnected()){

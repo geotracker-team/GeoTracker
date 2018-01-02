@@ -10,7 +10,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 
@@ -32,12 +31,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public class DataManagement {
-    private GlobalAppCompatActivity context;
-
-    public DataManagement(GlobalAppCompatActivity context){
-        this.context = context;
-    }//constructor
-
     public void login (String user, String pass, Handler h) throws ExecutionException, InterruptedException {
         loginApi(user, pass, h);
     }//login
@@ -54,13 +47,12 @@ public class DataManagement {
         addRecordApi(user, pass, record, h);
     }//addRecord
 
-    public boolean editRecord(String user, String pass, int idRecrod, JSONRecord record){
-        boolean ret = true;
-        return context.isConnectionAllowed() && ret;
+    public void editRecord(String user, String pass, JSONRecord record, Handler h) throws IOException, JSONException {
+        editRecordApi(user, pass, record, h);
     }//addRecord
 
 //region API connection
-    public final class ConstantesRestApi {
+    protected final class ConstantesRestApi {
         public static final String ROOT_URL = "http://89.128.4.157:8081/GeoTrackerWeb/";
         public static final String REST_API = "rest/";
 
@@ -77,7 +69,7 @@ public class DataManagement {
         public static final String URL_EDIT_RECORD = ROOT_URL + REST_API + KEY_EDIT_RECORD;
     }//ConstantesRestApi
 
-    public interface EndpointsApi {
+    protected interface EndpointsApi {
         @GET(ConstantesRestApi.URL_LOGIN)
         Call<ApiResponse> login(@Path("user") String user, @Path("pass") String pass);
         @GET(ConstantesRestApi.URL_GET_PROJECTS)
@@ -90,7 +82,7 @@ public class DataManagement {
         Call<ApiResponse> editRecord(@Path("name") String user, @Path("pass") String pass, @Path("idRecord") int idRecord, @Body JsonObject record);
     }//EndpointsApi
 
-    public class ApiResponse {
+    protected class ApiResponse {
         private boolean isOk;
         private Object extra;
 
@@ -100,7 +92,7 @@ public class DataManagement {
         public void setExtra(Object extra) { this.extra = extra; }
     }//ApiResponse
 
-    public class RestApiAdapter {
+    protected class RestApiAdapter {
         public EndpointsApi establecerConexionRestApi(Gson gson) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(ConstantesRestApi.ROOT_URL)
@@ -118,7 +110,7 @@ public class DataManagement {
         }
     }//RestApiAdapter
 
-    public class ApiDesearilizador implements JsonDeserializer<ApiResponse> {
+    protected class ApiDesearilizador implements JsonDeserializer<ApiResponse> {
         @Override
         public ApiResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
@@ -143,7 +135,7 @@ public class DataManagement {
         }
     }//ApiDesearilizador
 
-    public void genericApiCall(Call<ApiResponse> responseCall, final Handler h){
+    protected void genericApiCall(Call<ApiResponse> responseCall, final Handler h){
         responseCall.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -169,7 +161,7 @@ public class DataManagement {
         });
     }//genericApiCall
 
-    public void loginApi(String user, String pass, final Handler h) {
+    protected void loginApi(String user, String pass, final Handler h) {
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
@@ -179,7 +171,7 @@ public class DataManagement {
         genericApiCall(responseCall, h);
     }//loginApi
 
-    public void getProjectsOfUserApi(String user, String pass, final Handler h){
+    protected void getProjectsOfUserApi(String user, String pass, final Handler h){
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
@@ -189,7 +181,7 @@ public class DataManagement {
         genericApiCall(responseCall, h);
     }//getProjectsOfUser
 
-    public void getRecordsOfProjectApi(String user, String pass, int idProject, final Handler h){
+    protected void getRecordsOfProjectApi(String user, String pass, int idProject, final Handler h){
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
@@ -199,7 +191,7 @@ public class DataManagement {
         genericApiCall(responseCall, h);
     }//getProjectsOfUser
 
-    public void addRecordApi(String user, String pass, JSONRecord record, final Handler h) throws JSONException, IOException {
+    protected void addRecordApi(String user, String pass, JSONRecord record, final Handler h) throws JSONException, IOException {
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
@@ -208,12 +200,14 @@ public class DataManagement {
         record.remove("userName");
         record.remove("projectName");
         record.remove("idRecord");
+        record.remove("sync");
+        record.remove("edited");
         Call<ApiResponse> responseCall = endpointsApi.addRecord(user, pass, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);
     }//addRecordApi
 
-    public void editRecordApi(String user, String pass, JSONRecord record, final Handler h) throws JSONException, IOException {
+    protected void editRecordApi(String user, String pass, JSONRecord record, final Handler h) throws JSONException, IOException {
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gson = restApiAdapter.convierteGsonDesearilizadorNotificaciones();
         EndpointsApi endpointsApi = restApiAdapter.establecerConexionRestApi(gson);
@@ -221,8 +215,11 @@ public class DataManagement {
         record.put("otherFields", Constants.AuxiliarFunctions.APPExtraToAPIExtra(record.getOtherFields())); //Adapt the otherFields to make server accept it
         record.remove("userName");
         record.remove("projectName");
+        int idRecord = record.getIdRecord();
         record.remove("idRecord");
-        Call<ApiResponse> responseCall = endpointsApi.editRecord(user, pass, record.getIdRecord(), gson.fromJson(record.toString(), JsonObject.class));
+        record.remove("sync");
+        record.remove("edited");
+        Call<ApiResponse> responseCall = endpointsApi.editRecord(user, pass, idRecord, gson.fromJson(record.toString(), JsonObject.class));
 
         genericApiCall(responseCall, h);
     }//editRecordApi

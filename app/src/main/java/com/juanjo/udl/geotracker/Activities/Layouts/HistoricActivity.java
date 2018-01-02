@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 public class HistoricActivity extends GlobalAppCompatActivity {
@@ -86,7 +85,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
             //Projects
             projects = (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
             for (JSONProject prj : projects){
-                strProjects.add(prj.getDescription());
+                strProjects.add(prj.getName());
             }*/
             ArrayAdapter<String> projectAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strProjects);
             fProject.setAdapter(projectAdapter);
@@ -140,7 +139,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         ArrayList<JSONProject> prjs = (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
 
         for(JSONProject prj : prjs) {
-            projects.add(prj.getDescription());
+            projects.add(prj.getName());
         }
 
         return projects;
@@ -157,7 +156,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
             for (File file : files) {
                 if (file.isFile()) {
                     user = new JSONUser(this, file);
-                    users.add(user.getDescription());
+                    users.add(user.getName());
                 }
             }
         }

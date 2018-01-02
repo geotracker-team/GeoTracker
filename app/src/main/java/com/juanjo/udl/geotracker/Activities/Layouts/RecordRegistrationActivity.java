@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
@@ -39,9 +40,11 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private SensorManager sensorManager;
-    private EditText projId, description, creator, latitude, longitude;
+    private EditText creatorId, projId, description, creator, latitude, longitude;
     private Double lat, lon;
     private JSONProject project;
+    private JSONUser user;
+    private JSONRecord record;
     private MapView mapView;
 
     @Override
@@ -52,6 +55,7 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
         findViewById(R.id.desid).requestFocus();
         mapView = findViewById(R.id.mapView);
         projId = findViewById(R.id.projId);
+        creatorId = findViewById(R.id.creatorId);
         description = findViewById(R.id.desid);
         creator = findViewById(R.id.creatorId);
         latitude = findViewById(R.id.latid);
@@ -62,9 +66,11 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
             lat = it.getDoubleExtra("latitude",0);
             lon = it.getDoubleExtra("longitude",0);
             project = (JSONProject) it.getSerializableExtra("project");
+            user = (JSONUser) it.getSerializableExtra("user");
             latitude.setText(String.valueOf(lat));
             longitude.setText(String.valueOf(lon));
-            projId.setText(project.getDescription());
+            projId.setText(project.getName());
+            creatorId.setText(user.getName());
         }//If the intent exists
 
         mapView.onCreate(savedInstanceState);
@@ -97,9 +103,11 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!description.getText().toString().isEmpty()){
                     saveJsonFile(v);
+//                    Intent intent = new Intent();
+//                    intent.putExtra("newRecord", record);
+//                    setResult(RESULT_OK, intent);
                     finish();
                 }
                 else
@@ -224,9 +232,8 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
     }  // setSensorFieldValues
 
     private void saveJsonFile(View v){
-        JSONRecord jsonRecord;
         try {
-            jsonRecord = new JSONRecord(v.getContext(),
+            record = new JSONRecord(v.getContext(),
                     description.getText().toString(),
                     Calendar.getInstance().getTime().toString(),
                     creator.getText().toString(),
@@ -236,10 +243,10 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
             );
 
             for(AdditionalField a : additionalFieldHash.values()){
-                jsonRecord.addNewField(a.getName(), a.getType(), a.getContent().getText().toString());
+                record.addNewField(a.getName(), a.getType(), a.getContent().getText().toString());
             }
-
-            jsonRecord.save();
+            record.setSync(false);
+            record.save();
             showToast(getString(R.string.txtRecordSaved), Toast.LENGTH_SHORT);
         } catch (Exception e) {
             processException(e);
