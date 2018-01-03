@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:text="@string/txtLat"
             android:textAlignment="viewStart"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            style="@style/Label"/>
 
         <Space
             android:layout_width="5dp"
@@ -26,7 +27,8 @@
             android:id="@+id/txtLat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="41.6082347" />
+            android:text="41.6082347"
+            style="@style/Label"/>
 
         <Space
             android:layout_width="25dp"
@@ -36,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txtLong"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            style="@style/Label"/>
 
         <Space
             android:layout_width="5dp"
@@ -46,7 +49,8 @@
             android:id="@+id/txtLon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.6234154" />
+            android:text="0.6234154"
+            style="@style/Label"/>
     </LinearLayout>
 
     <fragment

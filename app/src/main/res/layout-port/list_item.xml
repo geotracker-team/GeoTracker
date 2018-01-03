@@ -19,7 +19,8 @@
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
-                android:text="14/10/17 10:00:00" />
+                android:text="14/10/17 10:00:00"
+                style="@style/TextReadOnly"/>
 
             <TextView
                 android:id="@+id/latitude"
@@ -28,7 +29,8 @@
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
-                android:text="41.6109" />
+                android:text="41.6109"
+                style="@style/TextReadOnly"/>
 
             <TextView
                 android:id="@+id/longitude"
@@ -37,7 +39,8 @@
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
-                android:text="0.6419" />
+                android:text="0.6419"
+                style="@style/TextReadOnly"/>
 
             <TextView
                 android:id="@+id/user"
@@ -46,7 +49,8 @@
                 android:layout_margin="1dp"
                 android:paddingHorizontal="2dp"
                 android:background="#ffffff"
-                android:text="David" />
+                android:text="David"
+                style="@style/TextReadOnly"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,7 +64,8 @@
                 android:layout_margin="1dp"
                 android:background="#ffffff"
                 android:paddingHorizontal="2dp"
-                android:text="EPS Tracking project" />
+                android:text="EPS Tracking project"
+                style="@style/TextReadOnly"/>
 
         </LinearLayout>
 
@@ -76,7 +81,8 @@
                 android:layout_margin="1dp"
                 android:paddingHorizontal="2dp"
                 android:background="#ffffff"
-                android:text="Reference point 1" />
+                android:text="Reference point 1"
+                style="@style/TextReadOnly"/>
         </LinearLayout>
 
 </LinearLayout>

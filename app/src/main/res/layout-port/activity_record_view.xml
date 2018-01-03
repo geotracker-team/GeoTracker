@@ -19,10 +19,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/label_record_with"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@string/txtProj" />
+                android:text="@string/txtProj"
+                style="@style/Label"/>
 
             <TextView
                 android:id="@+id/projId"
@@ -38,10 +39,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/label_record_with"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@string/createdBy" />
+                android:text="@string/createdBy"
+                style="@style/Label"/>
 
             <TextView
                 android:id="@+id/idUser"
@@ -61,7 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@string/txtDate" />
+                android:text="@string/txtDate"
+                style="@style/Label"/>
 
             <TextView
                 android:id="@+id/dateId"
@@ -76,10 +79,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/label_record_with"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@string/txtPosition" />
+                android:text="@string/txtPosition"
+                style="@style/Label"/>
 
             <TextView
                 android:id="@+id/latid"
@@ -118,7 +122,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txtDescription" />
+            android:text="@string/txtDescription"
+            style="@style/Label"/>
 
         <EditText
             android:id="@+id/desid"
