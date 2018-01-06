@@ -11,9 +11,9 @@
     tools:context="com.juanjo.udl.geotracker.Activities.Layouts.LoginActivity">
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        app:srcCompat="@mipmap/ic_logo" />
 
     <TextView
         android:layout_width="match_parent"
@@ -21,43 +21,53 @@
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        style="@style/AppTittle" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="5dp" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txtLoginMail" />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/txtLoginMail"
+            style="@style/Label"/>
 
-    <EditText
-        android:id="@+id/mail"
+        <EditText
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:inputType="text" />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/txtLoginPassword"
+            style="@style/Label"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txtLoginPassword"
-
-        />
-
-    <EditText
-        android:id="@+id/pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:inputType="textPassword" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnLogin" />
+        android:text="@string/btnLogin"
+        style="@style/Button"/>
 
 </LinearLayout>

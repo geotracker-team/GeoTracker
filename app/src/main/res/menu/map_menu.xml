@@ -8,7 +8,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menuFollowGPS"
-        android:icon="@drawable/ic_media_play_dark"
+        android:icon="@android:drawable/ic_media_play"
         android:title="@string/txtFollowGPS"
         app:showAsAction="always" />
     <item
