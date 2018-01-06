@@ -12,18 +12,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * Created by David on 13/11/2017.
- */
-
 public class JSONProject extends JSONGlobal {
     private final int id;
-    private final String description;
+    private final String name;
 
-    public JSONProject(Context context, int id, String description) throws JSONException {
+    public JSONProject(Context context, int id, String name) throws JSONException {
         this.context = context;
         this.id = id;
-        this.description = description;
+        this.name = name;
 
         putValues();
     }
@@ -43,14 +39,21 @@ public class JSONProject extends JSONGlobal {
         JSONObject jsonObject = new JSONObject(text.toString());
         this.context = context;
         this.id = jsonObject.getInt("id");
-        this.description = jsonObject.getString("description");
+        this.name = jsonObject.getString("name");
 
         putValues();//Save the values in the inner JSON form
     }
 
+    public JSONProject(Context context, JSONObject jsonObject) throws JSONException {
+        this.context = context;
+        this.id = jsonObject.getInt("id");
+        this.name = jsonObject.getString("name");
+        putValues();
+    }
+
     private void putValues() throws JSONException {
         put("id", id);
-        put("description", description);
+        put("name", name);
     }//putValues
 
     String getFileRoute() throws IOException {
@@ -66,8 +69,8 @@ public class JSONProject extends JSONGlobal {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
 

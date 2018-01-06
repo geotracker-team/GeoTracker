@@ -2,8 +2,12 @@ package com.juanjo.udl.geotracker.Utilities;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,10 +41,10 @@ public class Constants {
 
     public static class AuxiliarFunctions{
 
-        public static List<JSONRecord> getLocalSavedJsonRecords(Context context) throws IOException, JSONException {
+        public static List<JSONRecord> getLocalSavedJsonRecords(Context context, int idProject) throws IOException, JSONException {
             ArrayList<JSONRecord> records = new ArrayList<>();
 
-            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords());
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfRecords() + "/" + idProject + "/");
             File[] files = dir.listFiles();
             if(files != null){
                 for(File f : files){
@@ -52,6 +56,32 @@ public class Constants {
             }
             return records;
         } // getLocalSavedJsonRecords
+
+        public static List<JSONProject> getLocalSavedJsonProjects(Context context) throws IOException, JSONException {
+            ArrayList<JSONProject> records = new ArrayList<>();
+
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+            File[] files = dir.listFiles();
+            if(files != null){
+                for(File f : files){
+                    if(f.isFile()){
+                        JSONProject j = new JSONProject(context, f);
+                        records.add(j);
+                    }
+                }
+            }
+            return records;
+        } // getLocalSavedJsonProjects
+
+        public static void deleteLocalProjectFiles(Context context) throws IOException {
+            File dir = new File(context.getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfProjects());
+            File[] files = dir.listFiles();
+            if(files != null){
+                for(File f : files){
+                    f.delete();
+                }
+            }
+        }//deleteLocalProjectFiles
 
         public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
             Map<String, Object> retMap = new HashMap<>();
@@ -75,6 +105,36 @@ public class Constants {
                 map.put(key, value);
             }
             return map;
+        }
+
+        public static Map<String, Object> APIExtraToAPPExtra(JsonArray otherFields) throws JSONException {
+            HashMap<String, Object> obj = new HashMap<>();
+            for (JsonElement e: otherFields ) {
+                HashMap<String, String> tmp = new HashMap<>();
+                JSONObject jObj = new JSONObject(e.toString());
+                String value = jObj.getString("value");
+                String title = jObj.getString("title");
+                String type = jObj.getString("type");
+
+                tmp.put(type, value);
+                obj.put(title, tmp);
+            }
+            return obj;
+        }//APIExtraToAPPExtra
+
+        public static JSONArray APPExtraToAPIExtra(Map<String, Object> otherFields) throws JSONException {
+            JSONArray obj = new JSONArray();
+            for (String title : otherFields.keySet()){
+                HashMap<String, String> tmp = (HashMap<String, String>) otherFields.get(title);
+                String type = (String) tmp.keySet().toArray()[0];
+                String value = tmp.get(type);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("value", value);
+                jsonObject.put("type", type);
+                jsonObject.put("title", title);
+                obj.put(jsonObject);
+            }
+            return obj;
         }
     }
 }//Constants

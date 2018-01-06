@@ -6,6 +6,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,15 +22,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <receiver android:name=".Management.NetworkManager"/>
+
         <activity android:name=".Activities.Layouts.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Layouts.GeneralMapActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
+        <activity android:name=".Activities.Layouts.ProjectSelectActivity"/>
+        <activity android:name=".Activities.Layouts.GeneralMapActivity"/>
         <activity android:name=".Activities.Layouts.RecordRegistrationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
@@ -37,9 +40,11 @@
             />
         <activity android:name=".Activities.Layouts.OptionsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             />
         <activity android:name=".Activities.Layouts.AddFieldActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             />
         <activity android:name=".Activities.Layouts.HistoricActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

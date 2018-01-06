@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GeoTracker</string>
+    <string name="txtLoading">Cargando...</string>
+
     <string name="sendrecords">Enviar registros</string>
     <string name="recordhistory">Histórico registros</string>
     <string name="recordsmap">Mapa registros</string>
     <string name="options">Opciones</string>
+
     <string name="txtLoginMail">"Introduzca un usuario"</string>
     <string name="txtLoginPassword">"Introduzca una contraseña"</string>
     <string name="btnLogin">"Entrar"</string>
+    <string name="txtNoFields">Este campo no puede estar vacío</string>
+
     <string name="txtLat">Latitud:</string>
     <string name="txtLong">Longitud:</string>
     <string name="txtProject">" Escoja un proyecto"</string>
@@ -22,6 +27,8 @@
 
     <string name="btnAddField">+</string>
     <string name="btnSaveChanges">Guardar cambios</string>
+    <string name="txtRecordSaved">Registro guardado</string>
+
     <string name="btnSend">Enviar registro</string>
     <string name="create_field">Crear campo</string>
     <string name="createdBy">Creado por:</string>
@@ -48,6 +55,9 @@
     <string name="Use_mobile_sensors">Usar los sensores del móvil</string>
     <string name="txtNetwork">Internet</string>
 
+    <!-- Project Selector-->
+    <string name="txtNoProjects">Error, nohay proyectos cargados</string>
+
     <string name="user">Usuario</string>
     <string name="txtTo">hasta</string>
     <string name="project">Proyecto</string>
@@ -55,4 +65,8 @@
     <string name="pressure">Presión (Pa)</string>
     <string name="search">Buscar</string>
     <string name="txtAll">Todos</string>
+    <string name="txtNoRecords">No hay registros</string>
+
+    <!-- General -->
+    <string name="txtNoInternet">Error, no hay conexión a internet</string>
 </resources>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="txtLoading">Carregant...</string>
+
     <!-- Login Activity -->
     <string name="txtLoginMail">Introdueix un usuari</string>
     <string name="txtLoginPassword">Introdueix una contrassenya</string>
     <string name="btnLogin">Entrar</string>
+    <string name="txtNoFields">Aquest camp no pot estar buit</string>
   
    <!-- Menu Activity -->
     <string name="app_name">GeoTracker</string>
@@ -28,6 +31,7 @@
     <string name="project">Projecte</string>
     <string name="date">Data</string>
     <string name="search">Cerca</string>
+    <string name="txtNoRecords">No hi han registres</string>
 
 
     <!-- Record Registration -->
@@ -52,12 +56,13 @@
 
     <!--Add field-->
     <string name="field_title">Titol del camp</string>
-    <string name="text">Text plat</string>
+    <string name="text">Text pla</string>
     <string name="numeric">Numèric</string>
     <string name="temperature">Temperatura (Cº)</string>
     <string name="humidity">Humitat (%)</string>
     <string name="pressure">Pressió (Pa)</string>
     <string name="magnetic_field">Camp magnètic</string>
+
     <string-array name="field_types">
         <item>@string/text</item>
         <item>@string/numeric</item>
@@ -69,6 +74,10 @@
 
     <!-- View Record -->
     <string name="btnSaveChanges">Guardar Canvis</string>
+    <string name="txtRecordSaved">Registre guardat</string>
+
+    <!-- Project Selector-->
+    <string name="txtNoProjects">Error, no hi han projects carregats</string>
 
     <!-- Menu -->
     <string name="txtAddRecord">Afegir registre</string>
@@ -81,4 +90,7 @@
     <string name="sendrecords">Enviar registres</string>
     <string name="txtTo">fins</string>
     <string name="txtAll">Tots</string>
+
+    <!-- General -->
+    <string name="txtNoInternet">Error, no hi ha conexió a internet</string>
 </resources>

@@ -1,12 +1,14 @@
 package com.juanjo.udl.geotracker.Activities.Layouts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,24 +24,27 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalActivity;
+import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
+import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
+import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
-import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
-public class RecordRegistrationActivity extends GlobalActivity implements SensorEventListener {
+public class RecordRegistrationActivity extends GlobalAppCompatActivity implements SensorEventListener {
 
     private static final int FIELD_ADDED_SUCCESSFULLY = 0;
     private HashMap<String, AdditionalField> additionalFieldHash = new HashMap<>();
     private SensorManager sensorManager;
-    private EditText description, creator, latitude, longitude;
+    private EditText creatorId, projId, description, creator, latitude, longitude;
     private Double lat, lon;
+    private JSONProject project;
+    private JSONUser user;
+    private JSONRecord record;
     private MapView mapView;
 
     @Override
@@ -46,14 +52,10 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_registration);
 
-        try {
-            retrieveJson();
-        } catch (Exception e) {
-            processException(e);
-        }
-
         findViewById(R.id.desid).requestFocus();
         mapView = findViewById(R.id.mapView);
+        projId = findViewById(R.id.projId);
+        creatorId = findViewById(R.id.creatorId);
         description = findViewById(R.id.desid);
         creator = findViewById(R.id.creatorId);
         latitude = findViewById(R.id.latid);
@@ -63,8 +65,12 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         if(it != null){
             lat = it.getDoubleExtra("latitude",0);
             lon = it.getDoubleExtra("longitude",0);
+            project = (JSONProject) it.getSerializableExtra("project");
+            user = (JSONUser) it.getSerializableExtra("user");
             latitude.setText(String.valueOf(lat));
             longitude.setText(String.valueOf(lon));
+            projId.setText(project.getName());
+            creatorId.setText(user.getName());
         }//If the intent exists
 
         mapView.onCreate(savedInstanceState);
@@ -97,13 +103,15 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(!description.getText().toString().equals("")){
+                if(!description.getText().toString().isEmpty()){
                     saveJsonFile(v);
+//                    Intent intent = new Intent();
+//                    intent.putExtra("newRecord", record);
+//                    setResult(RESULT_OK, intent);
                     finish();
                 }
                 else
-                    description.setError("the field can't be null");
+                    description.setError(getString(R.string.txtNoFields));
             }
         });
     }//onCreate
@@ -145,16 +153,19 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
 
     private void createNewSensor(FieldTypes type, String title){
         boolean initialized;
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         switch (type){
             case TEMPERATURE:
-                initialized = initializeSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+                initialized = (sharedPreferences.getBoolean("tempS", false)
+                        && initializeSensor(Sensor.TYPE_AMBIENT_TEMPERATURE));
                 break;
             case HUMIDITY:
-                initialized = initializeSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
+                initialized = (sharedPreferences.getBoolean("humS", false)
+                        && initializeSensor(Sensor.TYPE_RELATIVE_HUMIDITY));
                 break;
             case PRESSURE:
-                initialized = initializeSensor(Sensor.TYPE_PRESSURE);
+                initialized = (sharedPreferences.getBoolean("pressS", false)
+                        && initializeSensor(Sensor.TYPE_PRESSURE));
                 break;
             default:
                 return;
@@ -221,30 +232,25 @@ public class RecordRegistrationActivity extends GlobalActivity implements Sensor
     }  // setSensorFieldValues
 
     private void saveJsonFile(View v){
-        JSONRecord jsonRecord;
         try {
-            jsonRecord = new JSONRecord(v.getContext(),
+            record = new JSONRecord(v.getContext(),
                     description.getText().toString(),
                     Calendar.getInstance().getTime().toString(),
                     creator.getText().toString(),
                     Double.valueOf(latitude.getText().toString()),
-                    Double.valueOf(longitude.getText().toString()));
+                    Double.valueOf(longitude.getText().toString()),
+                    project
+            );
 
             for(AdditionalField a : additionalFieldHash.values()){
-                jsonRecord.addNewField(a.getName(), a.getType(), a.getContent().getText().toString());
+                record.addNewField(a.getName(), a.getType(), a.getContent().getText().toString());
             }
-
-            jsonRecord.save();
-
+            record.setSync(false);
+            record.save();
+            showToast(getString(R.string.txtRecordSaved), Toast.LENGTH_SHORT);
         } catch (Exception e) {
             processException(e);
         }
     }  // saveJsonFile
 
-    private void retrieveJson() throws Exception {
-        List<JSONRecord> records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this);
-        for(JSONRecord j : records){
-            Log.d("Json: ", j.toString());
-        }
-    }
 }
