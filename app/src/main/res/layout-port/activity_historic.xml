@@ -86,13 +86,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/date" />
 
-            <EditText
+            <TextView
                 android:id="@+id/fDateIni"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:inputType="date"
+                android:clickable="true"
                 android:text="07/10/2017"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:focusable="true" />
 
             <TextView
                 android:layout_width="40dp"
@@ -100,13 +101,14 @@
                 android:text="@string/txtTo"
                 android:textAlignment="center" />
 
-            <EditText
+            <TextView
                 android:id="@+id/fDateFin"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:inputType="date"
+                android:clickable="true"
                 android:text="07/10/2017"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:focusable="true" />
 
         </LinearLayout>
     </LinearLayout>

@@ -1,28 +1,30 @@
 package com.juanjo.udl.geotracker.Activities.Layouts;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.juanjo.udl.geotracker.Activities.GlobalActivity.GlobalAppCompatActivity;
 import com.juanjo.udl.geotracker.Adapters.JSONRecordAdapter;
 import com.juanjo.udl.geotracker.JSONObjects.JSONProject;
 import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
-import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.SampleData;
 
 import org.json.JSONException;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,8 +37,8 @@ public class HistoricActivity extends GlobalAppCompatActivity {
 
     Spinner fUser;
     Spinner fProject;
-    EditText fDateIni;
-    EditText fDateFin;
+    TextView fDateIni;
+    TextView fDateFin;
     Button btSearch;
     ListView listView;
 
@@ -46,7 +48,14 @@ public class HistoricActivity extends GlobalAppCompatActivity {
     ArrayList<String> strProjects;
     LinkedList<String> users;
     JSONRecordAdapter itemsAdapter;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.StaticFields.getDataFormat());
+    Calendar myCalendarIni = Calendar.getInstance();
+    Calendar myCalendarFin = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener dateIniDialog;
+    TimePickerDialog.OnTimeSetListener timeIniDialog;
+    DatePickerDialog.OnDateSetListener dateFinDialog;
+    TimePickerDialog.OnTimeSetListener timeFinDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,64 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         fDateFin = findViewById(R.id.fDateFin);
         btSearch = findViewById(R.id.btSearch);
         listView = findViewById(R.id.list);
+
+        dateIniDialog = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+
+                myCalendarIni.set(Calendar.YEAR, year);
+                myCalendarIni.set(Calendar.MONTH, monthOfYear);
+                myCalendarIni.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                new TimePickerDialog(HistoricActivity.this, timeIniDialog, myCalendarIni
+                        .get(Calendar.HOUR_OF_DAY), myCalendarIni.get(Calendar.MINUTE), true).show();
+            }
+        };
+        timeIniDialog = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                myCalendarIni.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                myCalendarIni.set(Calendar.MINUTE, minute);
+                fDateIni.setText(dateFormat.format(myCalendarIni.getTime()));
+            }
+        };
+        dateFinDialog = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+
+                myCalendarFin.set(Calendar.YEAR, year);
+                myCalendarFin.set(Calendar.MONTH, monthOfYear);
+                myCalendarFin.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                new TimePickerDialog(HistoricActivity.this, timeFinDialog, myCalendarFin
+                        .get(Calendar.HOUR_OF_DAY), myCalendarIni.get(Calendar.MINUTE), true).show();
+            }
+        };
+        timeFinDialog = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                myCalendarFin.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                myCalendarFin.set(Calendar.MINUTE, minute);
+                fDateFin.setText(dateFormat.format(myCalendarFin.getTime()));
+            }
+        };
+
+        fDateIni.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(HistoricActivity.this, dateIniDialog, myCalendarIni
+                        .get(Calendar.YEAR), myCalendarIni.get(Calendar.MONTH),
+                        myCalendarIni.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        fDateFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(HistoricActivity.this, dateFinDialog, myCalendarFin
+                        .get(Calendar.YEAR), myCalendarFin.get(Calendar.MONTH),
+                        myCalendarFin.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         defaultSearchValues();
 
@@ -210,6 +277,5 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         dateIni.setTime(dateFin);
         dateIni.add(Calendar.MONTH, -3);
         fDateIni.setText(dateFormat.format(dateIni.getTime()));
-
     }
 }
