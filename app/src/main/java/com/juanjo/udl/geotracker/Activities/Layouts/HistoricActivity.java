@@ -46,7 +46,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
     ArrayList<String> strProjects;
     LinkedList<String> users;
     JSONRecordAdapter itemsAdapter;
-
+    SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.StaticFields.getDataFormat());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,8 @@ public class HistoricActivity extends GlobalAppCompatActivity {
 
             itemsAdapter = new JSONRecordAdapter(this, filteredRecords);
             listView.setAdapter(itemsAdapter);
+
+
 
           // Users
             users = readUsers();
@@ -122,7 +124,10 @@ public class HistoricActivity extends GlobalAppCompatActivity {
                      for(JSONRecord r : records) {
                          if ((r.getUserName().equals(userName) || userName.equals(getString(R.string.txtAll)))
                                  && (r.getProjectName().equals(projectName) || projectName.equals(getString(R.string.txtAll))) ){
-                             filteredRecords.add(r);
+                             Date initData = dateFormat.parse(fDateIni.getText().toString());
+                             Date endData = dateFormat.parse(fDateFin.getText().toString());
+                             Date dateRecord = dateFormat.parse(r.getDate());
+                             if(initData.before(dateRecord) && endData.after(dateRecord)) filteredRecords.add(r);
                          }
                      }
                      itemsAdapter.notifyDataSetChanged();
@@ -199,7 +204,6 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         Date dateFin = null;
 
         dateFin = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         fDateFin.setText(dateFormat.format(dateFin));
 
         Calendar dateIni = Calendar.getInstance();
