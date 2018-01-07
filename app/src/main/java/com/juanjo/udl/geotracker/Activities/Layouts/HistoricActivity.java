@@ -41,9 +41,11 @@ public class HistoricActivity extends GlobalAppCompatActivity {
     ListView listView;
 
     ArrayList<JSONRecord> records;
+    ArrayList<JSONRecord> filteredRecords;
     ArrayList<JSONProject> projects;
     ArrayList<String> strProjects;
     LinkedList<String> users;
+    JSONRecordAdapter itemsAdapter;
 
 
     @Override
@@ -71,12 +73,13 @@ public class HistoricActivity extends GlobalAppCompatActivity {
             //Records
             records = readRecords();
             strProjects = readProjects();
-            if(records.size() == 0) {
+            filteredRecords = readRecords();
+            if(filteredRecords.size() == 0) {
                 showToast(getString(R.string.txtNoRecords), Toast.LENGTH_SHORT);
                 finish();
             }//Must have some records
 
-            final JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(this, records);
+            itemsAdapter = new JSONRecordAdapter(this, filteredRecords);
             listView.setAdapter(itemsAdapter);
 
           // Users
@@ -109,21 +112,25 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         });
 
         btSearch.setOnClickListener(new View.OnClickListener()
-            {
-                 @Override
-                 public void onClick(View v) {
-                     try {
-                         records = readRecords();
-                     } catch (Exception e) {
-                         processException(e);
+        {
+             @Override
+             public void onClick(View v) {
+                 try {
+                     String userName = (String)fUser.getSelectedItem();
+                     String projectName = (String)fProject.getSelectedItem();
+                     filteredRecords.clear();
+                     for(JSONRecord r : records) {
+                         if ((r.getUserName().equals(userName) || userName.equals(getString(R.string.txtAll)))
+                                 && (r.getProjectName().equals(projectName) || projectName.equals(getString(R.string.txtAll))) ){
+                             filteredRecords.add(r);
+                         }
                      }
-                     JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(getBaseContext(), records);
-                 ListView listView = findViewById(R.id.list);
-                 listView.setAdapter(itemsAdapter);
+                     itemsAdapter.notifyDataSetChanged();
+                 } catch (Exception e) {
+                     processException(e);
                  }
-            }
-        );
-
+             }
+        });
     }
 
     private ArrayList<JSONRecord> readRecords() throws IOException, JSONException {
