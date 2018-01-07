@@ -24,7 +24,7 @@ public class Constants {
         private static final String folderOfRecords = "/records/";
         private static final String folderOfProjects = "/projects/";
         private static final String folderOfUsers = "/users/";
-        private static final String dataFormat = "dd-MM-yy hh:mm:ss";
+        private static final String dataFormat = "dd-MM-yy HH:mm:ss";
 
         public static String getFolderOfRecords() { return folderOfRecords; }//getFolderOfRecords
         public static String getFolderOfProjects() { return folderOfProjects; }//getFolderOfProjects
