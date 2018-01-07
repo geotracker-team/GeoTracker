@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 public class HistoricActivity extends GlobalAppCompatActivity {
 
@@ -41,7 +43,7 @@ public class HistoricActivity extends GlobalAppCompatActivity {
     ArrayList<JSONRecord> records;
     ArrayList<JSONProject> projects;
     ArrayList<String> strProjects;
-    ArrayList<String> users;
+    LinkedList<String> users;
 
 
     @Override
@@ -77,12 +79,13 @@ public class HistoricActivity extends GlobalAppCompatActivity {
             final JSONRecordAdapter itemsAdapter = new JSONRecordAdapter(this, records);
             listView.setAdapter(itemsAdapter);
 
-           /* //Users
+          // Users
             users = readUsers();
+            users.addFirst(getResources().getString(R.string.txtAll));
             ArrayAdapter<String> userAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
             fUser.setAdapter(userAdapter);
-
-            //Projects
+/*
+            //Projectss
             projects = (ArrayList<JSONProject>) Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this);
             for (JSONProject prj : projects){
                 strProjects.add(prj.getName());
@@ -145,23 +148,14 @@ public class HistoricActivity extends GlobalAppCompatActivity {
         return projects;
     }
 
-    private ArrayList<String> readUsers() throws IOException, JSONException {
-        JSONUser user = null;
-        ArrayList<String> users = new ArrayList<String>();
-        users.add(getResources().getString(R.string.txtAll));
-
-        File dir = new File(getFilesDir().getCanonicalPath() + Constants.StaticFields.getFolderOfUsers());
-        File[] files = dir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    user = new JSONUser(this, file);
-                    users.add(user.getName());
-                }
-            }
+    private LinkedList<String> readUsers() throws IOException, JSONException {
+        HashSet<String> userSet = new HashSet<>();
+        for(JSONRecord r : records){
+            userSet.add(r.getUserName());
         }
-
-        return users;
+//        userSet.add(getResources().getString(R.string.txtAll));
+        LinkedList<String> userNames = new LinkedList<>(userSet);
+        return userNames;
     }
 
     private boolean validate(JSONRecord record) {
