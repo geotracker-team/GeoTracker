@@ -30,8 +30,10 @@ import com.juanjo.udl.geotracker.JSONObjects.JSONRecord;
 import com.juanjo.udl.geotracker.JSONObjects.JSONUser;
 import com.juanjo.udl.geotracker.R;
 import com.juanjo.udl.geotracker.Utilities.AdditionalField;
+import com.juanjo.udl.geotracker.Utilities.Constants;
 import com.juanjo.udl.geotracker.Utilities.Constants.FieldTypes;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -233,9 +235,10 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
 
     private void saveJsonFile(View v){
         try {
+            SimpleDateFormat sf = new SimpleDateFormat(Constants.StaticFields.getDataFormat());
             record = new JSONRecord(v.getContext(),
                     description.getText().toString(),
-                    Calendar.getInstance().getTime().toString(),
+                    sf.format(Calendar.getInstance().getTime()),
                     creator.getText().toString(),
                     Double.valueOf(latitude.getText().toString()),
                     Double.valueOf(longitude.getText().toString()),

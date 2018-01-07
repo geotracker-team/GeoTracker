@@ -24,10 +24,12 @@ public class Constants {
         private static final String folderOfRecords = "/records/";
         private static final String folderOfProjects = "/projects/";
         private static final String folderOfUsers = "/users/";
+        private static final String dataFormat = "dd-MM-yy hh:mm:ss";
 
         public static String getFolderOfRecords() { return folderOfRecords; }//getFolderOfRecords
         public static String getFolderOfProjects() { return folderOfProjects; }//getFolderOfProjects
         public static String getFolderOfUsers() { return folderOfUsers; }//getFolderOfUsers
+        public static String getDataFormat() { return dataFormat; }//getDataFormat
 
     }//StaticFields
 
