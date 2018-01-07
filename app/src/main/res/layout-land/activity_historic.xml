@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,33 +29,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user" />
-
-                    <Spinner
-                        android:id="@+id/fUser"
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="@dimen/label_historic_with"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="@string/user"
+                    style="@style/Label"/>
+                <Spinner
+                    android:id="@+id/fUser"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+                <TextView
+                    android:layout_width="@dimen/label_historic_with"
+                    android:layout_height="wrap_content"
+                    android:text="@string/project"
+                    style="@style/Label"/>
 
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/project" />
-
-                    <Spinner
-                        android:id="@+id/fProject"
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/spinnerProj" />
+                <Spinner
+                    android:id="@+id/fProject"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/spinnerProj"
+                    />
 
                 </LinearLayout>
             </LinearLayout>
@@ -85,6 +81,11 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="@string/date" />
+                <TextView
+                    android:layout_width="@dimen/label_historic_with"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    style="@style/Label"/>
 
             <TextView
                 android:id="@+id/fDateIni"
@@ -100,6 +101,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txtTo"
                 android:textAlignment="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" to "
+                    style="@style/Label"/>
 
             <TextView
                 android:id="@+id/fDateFin"
@@ -109,11 +115,8 @@
                 android:text="07/10/2017"
                 android:textSize="16sp"
                 android:focusable="true" />
-
         </LinearLayout>
     </LinearLayout>
-
-    >
 
     <ListView
         android:id="@+id/list"
