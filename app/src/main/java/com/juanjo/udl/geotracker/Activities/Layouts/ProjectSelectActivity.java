@@ -81,7 +81,7 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
     }
 
     private void loadServerData() throws IOException, JSONException, InterruptedException {
-        if(isConnected()){
+        if(isConnectionAllowed()){
             dataManagement.getProjectsOfUser(user.getName(), user.getPass(), loadProjectsHandler);
         }//If there are connection, load from the server
         else processData(); //read offline
@@ -110,6 +110,7 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         mDataset.addAll(Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this));
         if(mDataset.size() == 0) {
             showToast(getText(R.string.txtNoProjects).toString(), Toast.LENGTH_SHORT);
+            finish();
         }
         mAdapter.notifyDataSetChanged();
         first = false;

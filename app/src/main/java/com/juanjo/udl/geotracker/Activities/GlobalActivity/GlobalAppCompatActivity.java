@@ -139,7 +139,9 @@ public class GlobalAppCompatActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(dialog != null && dialog.isShowing()) dialog.dismiss();
+                if(!isFinishing()){
+                    if(dialog != null && dialog.isShowing()) dialog.dismiss();
+                }
             }
         });
     }//dismissDialog
