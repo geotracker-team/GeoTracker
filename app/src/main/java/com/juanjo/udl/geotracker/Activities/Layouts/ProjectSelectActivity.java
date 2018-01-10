@@ -110,6 +110,7 @@ public class ProjectSelectActivity extends GlobalAppCompatActivity {
         mDataset.addAll(Constants.AuxiliarFunctions.getLocalSavedJsonProjects(this));
         if(mDataset.size() == 0) {
             showToast(getText(R.string.txtNoProjects).toString(), Toast.LENGTH_SHORT);
+            finish();
         }
         mAdapter.notifyDataSetChanged();
         first = false;
