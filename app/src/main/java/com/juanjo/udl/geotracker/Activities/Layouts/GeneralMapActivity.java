@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +42,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     private JSONProject project;
     private JSONUser user;
     private boolean followGPS = true, first = true;
+    private double mapLatitude, mapLongitude;
+    private float mapZoom;
     private static final int EDIT = 01, NEW = 00;
 
     @Override
@@ -57,6 +61,10 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
 
         if (savedInstanceState != null) {
             followGPS = savedInstanceState.getBoolean("followGPS");
+            first = savedInstanceState.getBoolean("first");
+            mapZoom = savedInstanceState.getFloat("mapZoom");
+            mapLatitude = savedInstanceState.getDouble("mapLatitude");
+            mapLongitude = savedInstanceState.getDouble("mapLongitude");
             if(followGPS) showToast(getString(R.string.txtFollowGPSOn), Toast.LENGTH_SHORT);
             else showToast(getString(R.string.txtFollowGPSOff), Toast.LENGTH_SHORT);
         }//Restore saved data
@@ -70,20 +78,12 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     }//onCreate
 
     @Override
-    public void onResume(){
-        super.onResume();
-        if(!first) {
-            try {
-                fillMap();
-            } catch (Exception ex){
-                processException(ex);
-            }
-        }//If it's not the first time, the map is loaded so we can refresh
-    }//onResume
-
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean("followGPS", followGPS);//Save data
+        savedInstanceState.putBoolean("first", first);
+        savedInstanceState.putFloat("mapZoom", mMap.getCameraPosition().zoom);
+        savedInstanceState.putDouble("mapLatitude", mMap.getCameraPosition().target.latitude);
+        savedInstanceState.putDouble("mapLongitude", mMap.getCameraPosition().target.longitude);
         super.onSaveInstanceState(savedInstanceState);
     }//onSaveInstanceState
 
@@ -125,12 +125,11 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         }
     }//sendEditedRecordToServer
 
-    private void fillMap() throws IOException, JSONException, InterruptedException {
-        showDialog();
-        if(records!= null) records.clear();
+    private void fillMap(boolean isRefresh) throws IOException, JSONException, InterruptedException {
+        if(isRefresh)showDialog();
         mMap.clear();
-        records = Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId());
-        loadServerData();
+        if(isRefresh) loadServerData();
+        else processData();
     }//fillMap
 
     private void loadServerData() throws IOException, JSONException, InterruptedException {
@@ -158,8 +157,8 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         dismissDialog();
     }//processData
 
-    private void sendPendingRecords(){
-        for(JSONRecord r : records){
+    private void sendPendingRecords() throws IOException, JSONException {
+        for(JSONRecord r : Constants.AuxiliarFunctions.getLocalSavedJsonRecords(this, project.getId())){
             if(!r.isSync()) sendNewRecordToServer(r);
             else if(r.isEdited()) sendEditedRecordToServer(r);
         }//send not synched records to the server
@@ -198,9 +197,14 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap map) {
         super.onMapReady(map);
-
         try {
-            fillMap();
+            fillMap(first);
+            if(!first){
+                LatLng position = new LatLng(mapLatitude, mapLongitude);
+                moveCamera(position);
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(mapZoom);
+                mMap.moveCamera(zoom);
+            }//Reset the map to the old camera position
             first = false;
         } catch (Exception e) {
             processException(e);
