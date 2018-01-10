@@ -309,6 +309,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 return true;
             case R.id.menu_history:
                 intent = new Intent(this, HistoricActivity.class);
+                intent.putExtra("idProject", project.getId());
                 startActivity(intent);
                 return true;
             case R.id.menuFollowGPS:

@@ -41,24 +41,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/label_historic_with"
-                        android:layout_height="wrap_content"
-                        android:text="@string/project"
-                        style="@style/Label"/>
-
-                    <Spinner
-                        android:id="@+id/fProject"
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/spinnerProj" />
-
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
