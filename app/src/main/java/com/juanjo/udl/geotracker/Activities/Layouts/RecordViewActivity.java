@@ -207,5 +207,8 @@ public class RecordViewActivity extends GlobalAppCompatActivity {
         jsonRecord.setEdited(true);
         jsonRecord.save();
         showToast(getString(R.string.txtRecordSaved), Toast.LENGTH_SHORT);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

@@ -107,9 +107,8 @@ public class RecordRegistrationActivity extends GlobalAppCompatActivity implemen
             public void onClick(View v) {
                 if(!description.getText().toString().isEmpty()){
                     saveJsonFile(v);
-//                    Intent intent = new Intent();
-//                    intent.putExtra("newRecord", record);
-//                    setResult(RESULT_OK, intent);
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
                 else

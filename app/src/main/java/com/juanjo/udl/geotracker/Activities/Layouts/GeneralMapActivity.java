@@ -87,7 +87,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 processException(e);
             }
         }
-    }
+    }//onResume
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -99,6 +99,18 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         super.onSaveInstanceState(savedInstanceState);
     }//onSaveInstanceState
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(isConnectionAllowed()) try {
+                sendPendingRecords();
+            } catch (Exception e) {
+                processException(e);
+            }
+        }//If the return is OK can be a new edit or addition, then send it to the server in background
+    }//onActivityResult
+
     private void sendNewRecordToServer(final JSONRecord newRecord){
         DataHandler h = new DataHandler(this){
             @Override
@@ -109,7 +121,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 newRecord.save();
             }
         };
-        if(isConnected()) {
+        if(isConnectionAllowed()) {
             try {
                 dataManagement.addRecord(user.getName(), user.getPass(), newRecord, h);
             } catch (Exception e) {
@@ -128,7 +140,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 showToast((String) obj, Toast.LENGTH_SHORT);
             }
         };
-        if(isConnected()) {
+        if(isConnectionAllowed()) {
             try {
                 dataManagement.editRecord(user.getName(), user.getPass(), editedRecord, h);
             } catch (Exception e) {
@@ -152,7 +164,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
                 processData();
             }
         };
-        if(isConnected()){
+        if(isConnectionAllowed()){
             sendPendingRecords();
             dataManagement.getRecordsOfProject(user.getName(), user.getPass(), project.getId(), getServer);
         }//If there are connection, load from the server
