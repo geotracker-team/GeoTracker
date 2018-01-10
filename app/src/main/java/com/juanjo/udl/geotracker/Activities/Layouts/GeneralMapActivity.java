@@ -78,6 +78,18 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     }//onCreate
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if(!first && mMap != null) {
+            try {
+                fillMap(first);
+            } catch (Exception e) {
+                processException(e);
+            }
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean("followGPS", followGPS);//Save data
         savedInstanceState.putBoolean("first", first);
@@ -126,7 +138,7 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
     }//sendEditedRecordToServer
 
     private void fillMap(boolean isRefresh) throws IOException, JSONException, InterruptedException {
-        if(isRefresh)showDialog();
+        showDialog();
         mMap.clear();
         if(isRefresh) loadServerData();
         else processData();
