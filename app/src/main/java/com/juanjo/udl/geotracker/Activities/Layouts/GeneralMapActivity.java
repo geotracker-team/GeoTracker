@@ -300,12 +300,15 @@ public class GeneralMapActivity extends GlobalMapActivity implements OnMapReadyC
         Intent intent;
         switch (item.getItemId()){
             case R.id.menu_add_record:
-                intent = new Intent(this, RecordRegistrationActivity.class);
-                intent.putExtra("latitude", mLastLocation.getLatitude());
-                intent.putExtra("longitude", mLastLocation.getLongitude());
-                intent.putExtra("project", project);
-                intent.putExtra("user", user);
-                startActivityForResult(intent, NEW);
+                if(mLastLocation != null) {
+                    intent = new Intent(this, RecordRegistrationActivity.class);
+                    intent.putExtra("latitude", mLastLocation.getLatitude());
+                    intent.putExtra("longitude", mLastLocation.getLongitude());
+                    intent.putExtra("project", project);
+                    intent.putExtra("user", user);
+                    startActivityForResult(intent, NEW);
+                } else processException(new Exception("Error: GPS off"));
+
                 return true;
             case R.id.menu_history:
                 intent = new Intent(this, HistoricActivity.class);

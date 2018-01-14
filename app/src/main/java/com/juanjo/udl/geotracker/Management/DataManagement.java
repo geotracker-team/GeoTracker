@@ -121,7 +121,7 @@ public class DataManagement {
             } catch (JSONException e) {
                 ApiResponse = new ApiResponse();
                 ApiResponse.setOk(false);
-                e.printStackTrace();
+                ApiResponse.setExtra(e.toString());
             }
             return ApiResponse;
         }
